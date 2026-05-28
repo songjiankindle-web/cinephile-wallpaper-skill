@@ -1,0 +1,109 @@
+# 迷影桌面开发日志
+
+## 项目当前状态
+
+- Electron + React + TypeScript + Vite Demo 已初始化。
+- 应用定位为 macOS 本地电影壁纸生成工具，优先服务个人豆瓣观影数据。
+- 当前片库数据目标文件为 `data/movies.json`。
+- 产品方向已调整：v0.1 优先把“无图也美”的壁纸模板做好，不把自动抓豆瓣海报作为主路径。
+- v0.99 方向已确立：迷影桌面核心形态从独立 App 转为跨 agent 的电影壁纸生成 skill/workflow，并强化影片影调、角色锚点、风格路由、偏好记忆、低 token 海报优先交付和 quick mode。
+
+## 已完成
+
+- 从 PRD 初始化 Electron 桌面应用骨架。
+- 实现三种模式：重逢、召唤、漫游。
+- 实现三套固定模板：午夜字幕、电影馆留白、彩色场刊。
+- 实现 2560x1440 PNG 生成、历史记录、避免近期重复。
+- 实现 macOS `osascript` 设置桌面能力。
+- 已验证 `npm run typecheck`、`npm run build`、Electron 烟测生成 PNG。
+- 新增个人豆瓣数据库导入脚本与应用内导入口。
+- 新增豆瓣海报补全的保守队列设计与状态文件。
+- 新增命令行豆瓣海报爬虫 `scripts/fetch-douban-posters.mjs`，支持限速、状态记录、可选 `DOUBAN_COOKIE`。
+- 强化三套壁纸模板的无图状态：没有海报/剧照时也使用片名、标签、日期和模式文案生成完整视觉。
+- 新增 PRD v0.6：`docs/迷影桌面 PRD v0.6.md`。
+- 新增 PRD v0.8：`docs/迷影桌面 PRD v0.8.md`。
+- 新增 PRD v0.9：`docs/迷影桌面 PRD v0.9.md`，作为当前主 PRD。
+- 新增 PRD v0.99：`docs/迷影桌面 PRD v0.99.md`，作为发布候选主 PRD。
+- 创建通用 agent skill：`skills/cinephile-wallpaper/`。
+- Skill 新增要求：优先自动识别设备屏幕分辨率，同时允许用户自定义壁纸尺寸；输出目录优先用偏好或默认路径，无法写入时才询问。
+- Skill 交付策略调整：提示词包保存到 manifest/输出文件，但成功生成图片时默认不展开；只有 prompt-only、失败、调试或用户明确要求时才返回。
+- Skill 新增修正：自动识别/允许指定交互语言；prompt 后继续推进到是否设置桌面；视觉 brief 必须做艺术提炼，避免机械剧情元素和写实剧照感。
+- Skill 新增模型路由：prompt-only、当前 agent 生图、外部 API、其他生图 skill/tool、auto；新增海报风格蒸馏规则，避免写实剧照化和直接模仿单一设计师。
+- Skill 新增首个艺术家语法 preset：黄海启发的中国电影海报语法，强调诗性符号、留白、水墨/纸感、单一中心隐喻，而不是直接模仿本人作品。
+- Skill 新增“角色锚点”策略：当抽象海报与电影联系不足时，通过搜索主人公/关键人物视觉特征，引入剪影、背影、局部、服装、道具或姿态，增强识别度但避免剧照化。
+- Skill 方向再次收窄：不内置定时换壁纸；开场引导改为“请告诉我您想看到哪部电影的海报？”；尺寸、保存位置和文字版本逐步改为 quick mode 默认推断。
+- 角色锚点升级：不再默认远景背影，支持近景符号肖像、侧脸、局部、服装道具、主配角组合、split composition、群像星座式构图和环境肖像。
+- Skill 新增硬规则：一律不要真人写实风格，全部转为美术/平面设计海报；涉及人物时必须符合电影中实际角色形象，不捏造角色；带文字版第一行中文片名、第二行原语种原名，导演和国别用中文。
+- Skill 新增“影片影调”规则：生成前必须研究影片自身的彩色/黑白、亮暗、对比度、色温、媒介质感和情绪类型，不再默认阴暗、低饱和或黑底。
+- Skill 新增角色构图强化：允许并鼓励正脸美术肖像、四分之三侧脸、半身像、双人关系构图和关键角色群像；背影/远景小人只作为特定策略，不作为默认。
+- Skill 新增偏好记忆机制：确认分辨率和输出文件夹后，询问用户是否设为默认；在支持持久化的 agent 中下次自动读取并允许覆盖。
+- Skill 新增艺术语言系统：扩展出现当代艺术、古典/古代艺术、地域传统、材料工艺与反差风格，避免生成结果都落入常规插画；要求记录抽象机制、能指/所指层次和风格选择理由。
+- Skill 新增体验优化：电影确认后一轮集中询问尺寸、保存位置、文字版本、生图方式和默认记忆，减少多轮打断。
+- Skill 新增文字渲染优化：带文字海报默认可由生图模型直接生成；后期排版只作为精确文字、批量一致性或模型文字失败时的兜底。
+- Skill 新增构图优先规则：不再为了后期文字刻意制造大面积留白；整体海报设计优先，文字应整合进画面或轻量覆盖。
+- Skill 新增 `style_escalation`：当输出仍像常规插画或概念图时，下一次必须用更激进艺术语言、抽象机制和材料约束进行结构性升级；《色，戒》加入麻将立体主义、工笔间谍细密画、构成主义欲望陷阱等示例。
+- Skill 新增角色身份锁定：只要海报中出现具体电影角色，必须记录角色名、演员/表演者、片名年份、必要脸部/发型/服装/姿态/道具特征和禁止替换项。
+- Skill 新增参考图优先机制：支持参考图的生图模型必须使用角色剧照/截图；不支持时询问用户上传，或记录 `text_only` 相似度风险并提供失败重试策略。
+- Skill 新增自动参考图获取机制：如果 agent 具备联网、browser、下载或截帧能力，应先自动搜索/获取角色剧照、官方预告片帧或制作剧照；用户上传只是自动获取失败或模型不支持参考图时的 fallback。
+- Skill 新增低 token 交付机制：默认最终回复只给生成图片/路径和简短状态，不输出研究报告、长视觉 brief、manifest 或完整提示词。
+- Skill 强化角色参考图闸门：只有本地参考图路径存在且实际附加到生图调用时，才能宣称角色形象锚定完成；否则不得承诺正脸/近景相似度，应请求用户剧照或改用非脸识别策略。
+- 修复带文字版变暗问题：`create-wallpaper-html.mjs` 移除全画面暗色渐变和底图滤镜，文字可读性只通过局部小底、文字阴影和排版处理，不再影响整张海报亮度/色彩。
+- Skill 新增风格路由器：每次生成必须选择具体 `style_lane`，例如构成主义、立体主义、波普重复、达达/超现实、CRT 信号、水墨、工笔/细密画、浮世绘、中世纪彩窗、版画、挂毯地图等；禁止只用泛化的 fine-art/painterly/cinematic 风格词，并避免连续重复同类风格。
+- Skill 新增 quick mode：尺寸、输出路径、文字版本和生图模式优先自动推断或读取偏好，只在电影歧义、权限/API/费用风险、参考图失败、路径不可写或用户明确要求时提问。
+
+## 本轮计划
+
+- 从 `/Users/camerabuff/Documents/S.J production/审美/豆瓣档案/database.json` 提取电影数据。
+- 输出项目内 `data/movies.json`，不导入书籍和音乐。
+- 暂停把豆瓣海报补全作为主路径，转向无图高审美模板。
+- 在片库页展示海报状态和补全进度。
+
+## 关键文件
+
+- `src/main/index.ts`：Electron 主进程与 IPC。
+- `src/main/storage.ts`：设置、片库、历史、海报状态读写。
+- `src/main/posterFetcher.ts`：豆瓣海报补全队列。
+- `src/main/doubanImporter.ts`：应用内豆瓣档案导入。
+- `scripts/import-douban-database.mjs`：命令行导入脚本。
+- `scripts/fetch-douban-posters.mjs`：命令行海报爬虫。
+- `src/renderer/main.tsx`：主界面、片库、历史、设置 UI。
+- `data/movies.json`：项目真实电影片库。
+- `data/poster-fetch-status.json`：海报补全状态。
+- `docs/迷影桌面 PRD v0.99.md`：当前发布候选主 PRD，覆盖 skill 方向、quick mode、影调策略、角色锚点、风格路由、偏好记忆和低 token 交付。
+- `docs/迷影桌面 PRD v0.9.md`：历史 PRD，保留作为低 token 交付记录。
+- `docs/迷影桌面 PRD v0.8.md`：历史 PRD，保留作为体验优化记录。
+- `docs/迷影桌面 PRD v0.6.md`：历史 PRD，保留作为产品转向记录。
+- `skills/cinephile-wallpaper/SKILL.md`：通用 agent 技能入口。
+- `skills/cinephile-wallpaper/references/film-tone.md`：影片影调、色彩、亮暗和材质判断规则。
+- `skills/cinephile-wallpaper/references/style-distillation.md`：艺术语言矩阵、抽象机制、反差风格与提示词规则。
+- `skills/cinephile-wallpaper/references/artist-grammars.md`：经典/当代艺术家与海报设计语法的蒸馏 presets。
+
+## 数据来源
+
+- 原始数据库：`/Users/camerabuff/Documents/S.J production/审美/豆瓣档案/database.json`
+- 原始结构：顶层 `metadata` 和 `data`，电影位于 `data.movies`。
+- 当前发现：电影 `3114` 条，其中 `看过 3015`、`想看 99`。
+
+## 运行与验证命令
+
+```bash
+npm install
+npm run import:douban
+npm run fetch:posters -- --limit=20
+npm run typecheck
+npm run build
+npm run dev
+```
+
+## 已知问题
+
+- 豆瓣条目页可能跳转到 `sec.douban.com` 风控页。
+- 海报补全采用保守队列，不绕过验证码、不强依赖登录态。
+- 真实数据目前缺少导演、年份、剧照、台词等字段；模板必须把这种状态视为核心体验，而不是次级降级。
+
+## 下一步
+
+- 继续测试真实数据下的无图模板效果，优先调整字体层级、留白、标签呈现和桌面图标可读性。
+- 后续若需要图片，优先考虑人工策展的本地素材库，而不是自动抓豆瓣海报。
+- 使用 `skills/cinephile-wallpaper` 为《惊魂记》《花样年华》《巴黎，德州》各跑一次端到端样例。
+- 决定首个图像生成模型适配方式；带文字版优先测试模型直接生成文字，HTML/CSS 后期排版仅作为精确性兜底。
