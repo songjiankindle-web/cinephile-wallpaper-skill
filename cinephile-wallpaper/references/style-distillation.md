@@ -128,7 +128,7 @@ Choose one primary art language and one secondary device. Avoid safe illustratio
 
 Every generation must choose one `style_lane` before writing the prompt. Do not default to generic terms like `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, or `movie poster style` as the main style.
 
-Use recent history if available. Do not repeat the same `style_lane` or `movement_family` within the last three successful generations unless the user explicitly asks.
+Choose a fresh lane for the current request based on the film, the user's style preference, and the need to avoid conventional illustration. Do not inspect prior generated outputs as a cache, and do not return an old result for a repeated film request.
 
 Choose one lane:
 

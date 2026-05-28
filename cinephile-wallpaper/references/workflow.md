@@ -4,7 +4,7 @@
 
 1. Start with exactly: `请问你想生成哪部电影的海报壁纸？`
 2. Resolve film ambiguity if needed.
-3. Ask one compact setup question:
+3. Ask one numbered setup message:
    - size/device, with saved size as default if available;
    - output directory, with saved directory as default if available;
    - text mode: with text, no text, or both;
@@ -37,10 +37,15 @@ Keep the actual image prompt portable. It may be in the user's language or Engli
 
 ## One-Turn Setup Prompt
 
-After the film is confirmed, ask the base settings in one turn. Include saved defaults if available:
+After the film is confirmed, ask the base settings in one turn. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available:
 
 ```text
-请一次确认这些设置：尺寸/设备、保存位置、文字版本（带文字/无文字/两者都要）、生图方式（当前生图工具/外部API/只要提示词），以及是否把本次尺寸和保存位置设为默认。
+请一次确认下面 5 项设置：
+1. 您想生成的海报/壁纸尺寸是多少？如果不知道具体分辨率，也可以告诉我目标设备型号或“当前电脑桌面”。
+2. 文件生成后想保存到哪个本地文件夹？如果沿用默认位置，请直接说“默认”。
+3. 您想要哪种版本：带文字、无文字，还是两者都要？
+4. 生图方式选择哪一种：使用当前 agent 的生图能力、外部 API/生图工具，还是只要提示词？
+5. 是否把本次尺寸和保存位置记为默认设置，方便下次沿用？
 ```
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
@@ -63,7 +68,7 @@ Default:
 ```text
 CinephileWallpaper/
 ├── outputs/YYYY/MM/
-└── history/history.json
+└── settings/preferences.json
 ```
 
 Use absolute paths in final responses when running locally.
@@ -79,6 +84,8 @@ Remember changed defaults automatically when the runtime supports local settings
 - default output directory;
 - default text variant;
 - default generation mode, if the user asks for automatic future behavior.
+
+Preference memory is only for setup defaults. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a film again.
 
 Suggested preference path for local agents:
 

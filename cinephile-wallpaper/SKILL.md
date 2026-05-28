@@ -31,7 +31,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If the user asks for a different output language, use it for visible interaction and layout text unless film titles require original language.
 
 2. **Confirm base settings in one turn**
-   - After the film is known and ambiguity is resolved, ask one compact setup question for size/device, output directory, text variant, generation mode, and whether to remember changed defaults.
+   - After the film is known and ambiguity is resolved, ask one setup message with numbered, line-broken questions for size/device, output directory, text variant, generation mode, and whether to remember changed defaults.
    - If saved preferences exist, show them as defaults and let the user say to use defaults.
    - Accept explicit dimensions, device type, or device model.
    - If the user wants a phone wallpaper and does not know the resolution, ask for the exact phone model only if it was not already provided; then look up the resolution online.
@@ -46,12 +46,14 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 4. **Research the film**
    - Verify the film exists.
    - Gather title, original title, year, director, country, key cast, brief plot, themes, visual motifs, and awards when useful.
-   - Identify protagonist(s) or iconic character anchors when characters will appear or when they materially improve film recognition.
+   - Identify protagonist(s), iconic character anchors, and key props/objects when they materially improve film recognition.
    - If characters appear, create a character identity lock before generation.
+   - If key props/objects appear, create a prop identity lock before generation. Confirm the real form/function/name of the object, especially for culturally specific weapons, tools, costumes, vehicles, artifacts, or architecture.
    - Automatically search/acquire character visual references when browser, web, or download tools are available, preferably in-character stills or trailer frames.
    - If the image model supports reference images, pass acquired references into generation and verify they were attached.
    - Ask the user to upload stills only when automatic acquisition fails, access is blocked, references are low quality, or the host cannot pass acquired images to the image model.
    - Fall back to a text-only identity lock only when no usable reference-image path exists; do not promise face likeness in this mode.
+   - Do not substitute generic objects for film-specific props. For example, a wing chun butterfly sword / 八斩刀 must not become generic crossed daggers.
    - Prefer primary or stable sources when available. Preserve source URLs in the manifest.
 
 5. **Create a visual brief**
@@ -61,7 +63,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Read `references/style-distillation.md` and `references/artist-grammars.md` when the visual direction feels too normal, too illustrational, or not bold enough.
    - Translate the film into a poster concept, not a literal scene summary.
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, subject strategy, metaphor, abstraction level, and avoid-list.
-   - Select a concrete `style_lane` and avoid repeating recent lanes when history is available.
+   - Select a concrete `style_lane` for this run. Do not reuse a previous generated wallpaper as a shortcut, even if the same film was generated before.
    - Force an art-direction choice that is bolder than conventional illustration unless the user explicitly asks for a restrained normal poster.
    - Avoid direct replication of official posters.
 
@@ -80,6 +82,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 7. **Save outputs**
    - Save generated visual, wallpaper, prompt package, compact research notes, and manifest.
    - Follow `references/output-schema.md`.
+   - Do not search previous output folders for a finished version to hand back. Each user request creates a fresh generation unless the user explicitly asks to retrieve an old file.
 
 8. **Set current desktop wallpaper if requested**
    - For macOS, use `scripts/set-macos-wallpaper.mjs`.
@@ -111,8 +114,10 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Composition: overall poster design comes first; do not create large empty blank zones merely for future text.
 - Film recognition: include a protagonist/character anchor when abstraction alone would make the film hard to identify.
 - Character identity: if depicting a specific character, use a character identity lock and automatically acquired or user-provided image references when supported; do not rely on generic actor-name prompting.
+- Prop identity: if depicting a distinctive film object, weapon, costume, vehicle, artifact, or architecture, use a prop identity lock and real visual references; do not replace it with a generic lookalike.
 - Character framing: prefer varied close portrait, three-quarter face, medium figure, pair, or ensemble strategies when useful; do not repeatedly hide characters as distant back-view figures.
 - Preference memory: keep default size and output directory; update them when the user asks to remember current settings.
+- Fresh generation: do not reuse or auto-deliver previous generated results for the same film. Previous outputs are not a cache.
 - Safety: do not bypass site protections; do not scrape copyrighted poster art as the default path.
 
 ## User Preferences To Honor
@@ -155,5 +160,5 @@ Reject or revise outputs that look like:
 - `references/style-distillation.md`: poster grammar and art-direction rules.
 - `references/character-reference.md`: protagonist and character-anchor research rules.
 - `references/artist-grammars.md`: distilled poster-artist grammars such as Huang Hai.
-- `references/output-schema.md`: manifest and history schema.
+- `references/output-schema.md`: manifest schema and no-cache output rule.
 - `scripts/set-macos-wallpaper.mjs`: macOS desktop setter.

@@ -45,7 +45,18 @@
    如果电影名有歧义，列出候选并请用户确认。
 
 2. 一轮基础设置  
-   电影确认后，必须把尺寸/设备、保存位置、文字版本、生图方式、是否记忆默认设置集中在一轮对话中询问，不拆成多轮。已有默认值时要展示默认值，允许用户沿用。
+   电影确认后，必须把尺寸/设备、保存位置、文字版本、生图方式、是否记忆默认设置集中在一轮对话中询问，不拆成多轮。已有默认值时要展示默认值，允许用户沿用。问题必须分行编号，不得用一整段文字糊在一起。
+
+   标准模板：
+
+   ```text
+   请一次确认下面 5 项设置：
+   1. 您想生成的海报/壁纸尺寸是多少？如果不知道具体分辨率，也可以告诉我目标设备型号或“当前电脑桌面”。
+   2. 文件生成后想保存到哪个本地文件夹？如果沿用默认位置，请直接说“默认”。
+   3. 您想要哪种版本：带文字、无文字，还是两者都要？
+   4. 生图方式选择哪一种：使用当前 agent 的生图能力、外部 API/生图工具，还是只要提示词？
+   5. 是否把本次尺寸和保存位置记为默认设置，方便下次沿用？
+   ```
 
 3. 目标尺寸  
    支持：
@@ -91,7 +102,8 @@ Skill 应先完成：
 4. 海报装置；
 5. 艺术语言；
 6. 影片影调；
-7. 角色锚点。
+7. 角色锚点；
+8. 关键道具/物件锚点。
 
 ### 4.1.1 艺术语言系统
 
@@ -108,7 +120,7 @@ Skill 应为每次生成选择：
 
 默认不能把 `fine-art poster`、`painterly`、`cinematic`、`beautiful illustration`、`movie poster style` 当成主风格。它们只能作为辅助描述，不能作为风格系统。
 
-如果存在历史记录，连续三次成功生成不得重复同一个 `style_lane` 或同一个大类 `movement_family`，除非用户明确指定。
+每次用户请求生成时都应重新生成，不得把之前同一影片的成品当缓存直接交付。风格选择应基于本次影片、用户偏好和当前视觉问题，而不是复用旧结果。
 
 `style_lane` 可选：
 
@@ -383,6 +395,23 @@ Skill 应搜索并提取主人公、主演或关键角色的视觉特征：
 4. 强化必须保留特征和禁止替换项；
 5. 如果模型仍无法保留角色身份，改用非脸策略：手、服装、道具、剪影、物件身体融合或文字主导海报。
 
+### 4.3.4 关键道具/物件身份锁定
+
+只要海报中出现能影响影片识别的道具、武器、服装、车辆、建筑、器物、乐器、工艺物或其他文化/历史特定物件，skill 必须先建立物件身份锁定。不得用泛化物件替代。
+
+物件身份锁定包括：
+
+- 物件在电影中的名称与必要原文名；
+- 真实类别、用途和文化/历史语境；
+- 形状、比例、材质、颜色、握持/使用方式、磨损或装饰细节；
+- 电影中谁使用、出现在哪类场景、承担什么象征功能；
+- 可用视觉参考或可靠文字来源；
+- 禁止替换项。
+
+例如《师父》中的咏春八斩刀，必须先确认八斩刀/蝴蝶双刀的真实形制、握柄、短宽刀身、成对使用方式和咏春语境，不得生成成普通匕首、军刀、武士刀或奇幻武器。
+
+如果无法找到可靠物件参考，应询问用户提供剧照/参考图，或降低该物件在画面中的识别权重。一个显眼但错误的关键道具，比不用这个道具更破坏沉浸感。
+
 ## 5. 文字策略
 
 文字策略以图像模型直接生成完整海报为唯一主路径。带文字版本的文字、构图和排版必须一起进入生图提示词，由生图模型完成。
@@ -429,8 +458,10 @@ CinephileWallpaper/
 │   ├── YYYY-MM-DD_HHMM_Title_wallpaper_with_text.png
 │   ├── YYYY-MM-DD_HHMM_Title_wallpaper_no_text.png
 │   └── YYYY-MM-DD_HHMM_Title_manifest.json
-└── history/history.json
+└── settings/preferences.json
 ```
+
+历史成品不得作为自动复用缓存。用户再次请求同一影片时，默认重新生成；只有用户明确要求“找回上次那张图/旧文件”时，才检索旧输出。
 
 ### 6.1 用户可见交付
 
@@ -507,7 +538,7 @@ Manifest 必须记录：
     "semiotic_layers": [],
     "counterpoint_bridge": "",
     "rationale": "",
-    "avoided_recent_lanes": []
+    "fresh_generation": true
   },
   "typography": {
     "title_zh": "",
@@ -543,6 +574,25 @@ Manifest 必须记录：
       "failure_recovery_used": false,
       "notes": ""
     }
+  },
+  "prop_reference": {
+    "enabled": false,
+    "props": [],
+    "identity_locks": [],
+    "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only | none",
+    "reference_images": [],
+    "local_reference_paths": [],
+    "source_urls": [],
+    "required_traits": {
+      "category_function": "",
+      "shape": [],
+      "material": [],
+      "scale": [],
+      "usage_pose": [],
+      "film_context": []
+    },
+    "forbidden_substitutions": [],
+    "text_only_prop_risk": false
   },
   "model": {
     "provider": "",

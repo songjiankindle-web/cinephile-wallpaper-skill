@@ -8,6 +8,8 @@ Add film recognition through protagonist or character anchors without turning th
 
 Core rule: if a specific film character is depicted, the agent must establish a **character identity lock** before generation. If face likeness matters, the lock is not complete until real reference images are attached to the image-generation call or explicitly unavailable.
 
+Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, building, instrument, or craft object is depicted, the agent must establish a **prop identity lock** before generation. Do not replace culturally or historically specific objects with generic lookalikes.
+
 ## Research Steps
 
 1. Identify the protagonist(s), antagonist, and important character system: male lead, female lead, key supporting roles, rival, mentor, child, monster, or symbolic non-human character.
@@ -55,6 +57,49 @@ Core rule: if a specific film character is depicted, the agent must establish a 
    - repeated gesture.
    Do not invent character designs that do not exist in the film.
 11. Record source URLs, local reference paths, acquisition method, whether actual image references were attached, and any likeness risk in the manifest.
+
+## Prop Identity Lock
+
+Use this whenever an object carries recognition value. The goal is to avoid failures such as rendering wing chun butterfly swords / 八斩刀 as generic crossed daggers.
+
+Before prompting, identify:
+
+- object name in the film and, when useful, the original-language name;
+- real-world category and function;
+- shape, scale, material, construction, grip/handle, blade/head/body, color, wear, and carrying/use posture;
+- how it appears in the film: who uses it, scene context, symbolic meaning;
+- at least one visual reference or trusted descriptive source when browser/web tools are available;
+- forbidden substitutions.
+
+Use this structure:
+
+```json
+{
+  "prop": "",
+  "film": "",
+  "year": "",
+  "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only",
+  "reference_images": [],
+  "local_reference_paths": [],
+  "source_urls": [],
+  "required_traits": {
+    "category_function": "",
+    "shape": [],
+    "material": [],
+    "scale": [],
+    "usage_pose": [],
+    "film_context": []
+  },
+  "forbidden_substitutions": [
+    "generic dagger",
+    "fantasy weapon",
+    "modern tactical knife",
+    "unrelated prop from another film"
+  ]
+}
+```
+
+If no reliable prop reference is found, either ask the user for a still/reference or avoid showing the prop prominently. A prominent but wrong object is worse than a subtler non-object metaphor.
 
 ## Character Identity Lock
 
@@ -140,6 +185,13 @@ Fallback choices when the gate fails:
 
 Text prompts alone are not sufficient for exact actor/character likeness.
 
+Before generating a prominent film-specific object:
+
+1. Confirm the object's real name and visual category.
+2. Confirm at least one reliable visual or descriptive reference exists.
+3. Confirm the prompt forbids common wrong substitutions.
+4. If any of the above is false, do not make the object a central recognizable element.
+
 ## Character Anchor Strategies
 
 Choose one or combine two when useful:
@@ -189,6 +241,15 @@ as this film character, not a generic person. Integrate the character into the
 poster metaphor: [metaphor].
 ```
 
+For important props:
+
+```text
+Prop identity lock: depict [prop/object name] from [film title, year], not a
+generic substitute. Preserve [shape], [scale], [material], [use posture], and
+[film context] from references. Forbidden substitutions: [wrong objects].
+Render it through the selected art language while keeping the object readable.
+```
+
 For multi-character films:
 
 ```text
@@ -210,6 +271,7 @@ back-view figure and avoid generic replacement faces.
 - using character only as decorative fan art.
 - relying on actor-name alone without in-film character traits;
 - using modern actor publicity photos as the main reference when in-character stills exist.
+- replacing specific props, weapons, costumes, or craft objects with generic versions.
 
 ## Recognition Check
 
@@ -221,6 +283,7 @@ Before finalizing the prompt, ask:
 - Were those reference images actually attached to the image-generation call?
 - If not, did the agent ask for user-provided stills or record `text_only` risk?
 - Does the character anchor serve the central metaphor?
+- Are any film-specific props or costumes accurate enough to be recognized?
 - Is the result still a poster, not a screenshot?
 - Is the framing varied enough, or is it falling back to the same distant back-view figure pattern?
 
@@ -233,4 +296,5 @@ If the generated character does not resemble the film character:
 3. Reduce the number of characters and focus on the most important one or two.
 4. Move from full-body to face/upper-body if likeness matters.
 5. Strengthen required traits and forbidden substitutions.
-6. If the model cannot preserve identity, offer a non-face strategy: hands, costume, prop, silhouette, object-body fusion, or typography-led poster.
+6. If the prop is wrong, acquire a clearer prop/still reference or remove it from the central composition.
+7. If the model cannot preserve identity, offer a non-face strategy: hands, costume, prop, silhouette, object-body fusion, or typography-led poster.

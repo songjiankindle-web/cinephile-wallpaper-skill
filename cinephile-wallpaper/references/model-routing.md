@@ -14,14 +14,14 @@ Use one of these modes:
 - `image_skill`: call a separate image-generation skill/tool if the host has one.
 - `external_api`: use a user-configured image model API.
 - `prompt_only`: return prompt package and stop before image generation.
-- `auto`: reuse a previously chosen mode/provider for future runs.
+- `auto`: choose the best available mode/provider from current defaults and capabilities.
 
 Default routing order:
 
-1. saved `auto` provider;
-2. current agent image tool;
-3. image skill/tool;
-4. configured external API;
+1. current agent image tool;
+2. image skill/tool;
+3. configured external API;
+4. saved provider preference, if the user explicitly made it a default;
 5. prompt-only.
 
 Ask only when credentials are missing, multiple available paid providers have meaningful cost differences, or the user explicitly wants to choose.

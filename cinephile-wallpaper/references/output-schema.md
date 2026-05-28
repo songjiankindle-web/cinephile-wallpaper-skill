@@ -35,7 +35,7 @@ Write one manifest per generated wallpaper:
     "semiotic_layers": [],
     "counterpoint_bridge": "",
     "rationale": "",
-    "avoided_recent_lanes": []
+    "fresh_generation": true
   },
   "typography": {
     "title_zh": "",
@@ -73,6 +73,25 @@ Write one manifest per generated wallpaper:
       "failure_recovery_used": false,
       "notes": ""
     }
+  },
+  "prop_reference": {
+    "enabled": false,
+    "props": [],
+    "identity_locks": [],
+    "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only | none",
+    "reference_images": [],
+    "local_reference_paths": [],
+    "source_urls": [],
+    "required_traits": {
+      "category_function": "",
+      "shape": [],
+      "material": [],
+      "scale": [],
+      "usage_pose": [],
+      "film_context": []
+    },
+    "forbidden_substitutions": [],
+    "text_only_prop_risk": false
   },
   "model": {
     "provider": "",
@@ -116,20 +135,9 @@ Write one manifest per generated wallpaper:
 }
 ```
 
-## History Item
+## No Output Cache
 
-Append to history:
-
-```json
-{
-  "created_at": "",
-  "film_title": "",
-  "film_year": "",
-  "wallpaper": "",
-  "manifest": "",
-  "status": "completed"
-}
-```
+Do not maintain a generated-poster cache for reuse. A repeated film request should create a fresh image unless the user explicitly asks to retrieve a previous file.
 
 ## File Naming
 

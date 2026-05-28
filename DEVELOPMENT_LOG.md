@@ -52,6 +52,9 @@
 - Skill 恢复一轮基础设置：尺寸/设备、保存位置、文字版本、生图方式和是否记忆默认设置必须集中在一轮对话中确认。
 - Skill 新增无生图能力固定话术：`您的agent没有生图能力，我可以为您提供对应的提示词，您可以自行在其他生图模型中使用。`
 - Skill 提示词交付改为统一大提示词：不再拆分正向提示词、负向提示词和文字排版提示词。
+- Skill 修正 v0.99 体验问题：基础设置引导改为 5 项编号分行问题，避免一整段长句；偏好记忆只记尺寸/路径等设置，不把历史成品当缓存。
+- Skill 新增关键道具/物件身份锁定：涉及八斩刀、服装、车辆、建筑、器物等电影识别物件时，必须先确认真实形制和视觉参考，禁止用泛化匕首、奇幻武器或无关物件替代。
+- Skill 新增强制新生成规则：用户再次请求同一影片时默认重新生成，不检索和交付旧输出；只有用户明确要求找回旧文件时才查找历史输出。
 
 ## 本轮计划
 
@@ -78,6 +81,7 @@
 - `skills/cinephile-wallpaper/SKILL.md`：通用 agent 技能入口。
 - `skills/cinephile-wallpaper/references/film-tone.md`：影片影调、色彩、亮暗和材质判断规则。
 - `skills/cinephile-wallpaper/references/style-distillation.md`：艺术语言矩阵、抽象机制、反差风格与提示词规则。
+- `skills/cinephile-wallpaper/references/character-reference.md`：人物与关键道具/物件身份锁定、参考图闸门和失败恢复规则。
 - `skills/cinephile-wallpaper/references/artist-grammars.md`：经典/当代艺术家与海报设计语法的蒸馏 presets。
 
 ## 数据来源

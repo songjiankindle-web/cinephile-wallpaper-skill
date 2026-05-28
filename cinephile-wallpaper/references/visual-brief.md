@@ -59,6 +59,20 @@
       "strategy": "close portrait abstraction | frontal portrait | three-quarter face | profile | medium figure | character pair | character constellation | split composition | environmental portrait | silhouette | partial figure | costume and prop | reflection | back view | tiny figure",
       "source_urls": []
     },
+    "prop_anchor": {
+      "name": "",
+      "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only | none",
+      "required_traits": {
+        "category_function": "",
+        "shape": [],
+        "material": [],
+        "scale": [],
+        "usage_pose": [],
+        "film_context": []
+      },
+      "forbidden_substitutions": [],
+      "source_urls": []
+    },
     "central_metaphor": "",
     "abstraction_level": "symbolic | semi-abstract | abstract",
     "palette": [],
@@ -82,9 +96,9 @@
 - Style must be more ambitious than normal illustration when the user asks for stronger art direction. Use `style-distillation.md` and `artist-grammars.md` to choose from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies.
 - Do not merely list art movements. Select one primary art language, one secondary device, one abstraction mechanism, and one reason this style reveals the film.
 - Before writing the prompt, choose a `style_lane` from `style-distillation.md`. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
-- Do not repeat the same `style_lane` or `movement_family` from recent successful generations when history is available.
+- Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
-- If the previous result looked conventional, safe, or like ordinary illustration, the next prompt must use `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
+- If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
 - Allow bold counterpoint when it deepens meaning, such as a science-fiction film rendered through Chinese ink, ukiyo-e, medieval manuscript, or Renaissance allegory.
 - Do not mechanically list plot elements. Distill the film into a central metaphor or visual thesis first.
 - Favor poster language over scene language: symbol, negative space, graphic structure, silhouette, material texture, iconic object, ritualized gesture, and integrated typography when requested.
@@ -92,6 +106,7 @@
 - Read `style-distillation.md` when the output feels too realistic or when the user requests stronger art direction.
 - Read `character-reference.md` whenever a visible film character appears, not only after recognition fails.
 - Use film-inspired motifs: locations, objects, light, geometry, weather, costume silhouettes, era texture.
+- Use film-specific object accuracy: if a recognizable prop, weapon, costume, vehicle, artifact, building, instrument, or craft object appears, establish a prop identity lock from `character-reference.md`.
 - Make the prompt art-directed and non-photorealistic. Do not switch to live-action realism.
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
