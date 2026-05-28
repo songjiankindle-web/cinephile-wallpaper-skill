@@ -40,6 +40,21 @@ Write one manifest per generated wallpaper:
     "random_style_kept": true,
     "fresh_generation": true
   },
+  "visual_density": {
+    "mode": "dense | balanced | sparse | single_stroke",
+    "selection_mode": "user_specified | random | corrective",
+    "focal_point": "",
+    "negative_space_role": "",
+    "max_primary_elements": 3,
+    "detail_budget": "low | medium | high",
+    "quiet_area_ratio": "10-25% | 25-45% | 45-70% | 70%+",
+    "rationale": "",
+    "clutter_control": {
+      "clear_first_read": false,
+      "removed_extra_motifs": [],
+      "hierarchy_notes": ""
+    }
+  },
   "typography": {
     "title_zh": "",
     "original_title": "",

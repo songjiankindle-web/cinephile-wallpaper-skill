@@ -92,6 +92,8 @@ v0.8 起，视觉风格不应停留在“正常插画”或常规电影概念图
 
 v0.99 起，默认风格选择改为随机抽取：影片理解负责决定海报中出现的元素、人物、关键道具、影调线索和中心隐喻；美术风格默认从风格池随机抽取。除非用户明确指定风格，否则不要让 agent 因为“更适合影片”而自动改回安全、匹配、常规的电影插画风格。
 
+v0.99 起，新增视觉密度控制：每次生成必须选择 `visual_density`。海报可以热闹丰富，也可以简约、留白、点睛一笔。不得因为研究到很多剧情元素就把画面铺满。
+
 如果用户反馈生成结果仍然常规、插画化、太安全，下一次生成必须启用 `style_escalation`，通过更激进的艺术语言、抽象机制和材料约束改变图像结构，而不是简单增加“更艺术、更大胆”等形容词。
 
 ### 4.1 艺术提炼
@@ -105,7 +107,8 @@ Skill 应先完成：
 5. 艺术语言；
 6. 影片影调；
 7. 角色锚点；
-8. 关键道具/物件锚点。
+8. 关键道具/物件锚点；
+9. 视觉密度。
 
 ### 4.1.1 艺术语言系统
 
@@ -156,6 +159,32 @@ Skill 应为每次生成选择：
 - 木刻、蚀刻、丝网印刷、risograph、挂毯、刺绣等材料/工艺变体。
 
 提示词必须让 `style_lane` 控制构图、材质和抽象机制，而不是把风格当装饰性形容词。
+
+### 4.1.2 视觉密度系统
+
+Skill 应为每次生成选择：
+
+- `visual_density.mode`：`dense`、`balanced`、`sparse` 或 `single_stroke`；
+- `selection_mode`：`user_specified`、`random` 或 `corrective`；
+- 一个明确第一视觉焦点；
+- 负空间/留白的作用；
+- 最大主元素数量；
+- 细节预算；
+- 安静区域比例；
+- 构图层级说明。
+
+四种密度模式：
+
+- `dense`：多符号、多层纹理、壁画/拼贴/挂毯逻辑。只能在风格或影片确实需要丰富性时使用，且必须有清晰主次。
+- `balanced`：一个主视觉对象，一到两个辅助符号，有可呼吸的留白，是稳健的默认设计密度。
+- `sparse`：一个主符号，大面积有意图的安静区域，少量辅助肌理，适合优雅、孤独、悬疑、诗性或图标化海报。
+- `single_stroke`：一个决定性物件、手势、笔触、脸部局部或图形动作，极高留白，强调“点睛一笔”。
+
+密度选择默认可随机抽取。如果用户反馈画面太满、太累、抓不住重点，则下一次必须用 `corrective`，优先选择 `balanced`、`sparse` 或 `single_stroke`。
+
+留白不是为了后期放文字的死白。好的留白必须产生焦点、节奏、呼吸、象征性沉默或尺度张力。坏的留白是明显空出来的标题框、死区或未完成区域。
+
+如果选择 `sparse` 或 `single_stroke`，主元素最多一到两个，不得继续加入背景剧情碎片、装饰粒子、额外人物和多个道具。如果选择 `dense`，也必须写清楚前景焦点、次级节奏和背景肌理，避免全画面等权重堆满。
 
 可选艺术语言包括但不限于：
 
@@ -558,6 +587,21 @@ Manifest 必须记录：
     "random_style_kept": true,
     "fresh_generation": true
   },
+  "visual_density": {
+    "mode": "dense | balanced | sparse | single_stroke",
+    "selection_mode": "user_specified | random | corrective",
+    "focal_point": "",
+    "negative_space_role": "",
+    "max_primary_elements": 3,
+    "detail_budget": "low | medium | high",
+    "quiet_area_ratio": "10-25% | 25-45% | 45-70% | 70%+",
+    "rationale": "",
+    "clutter_control": {
+      "clear_first_read": false,
+      "removed_extra_motifs": [],
+      "hierarchy_notes": ""
+    }
+  },
   "typography": {
     "title_zh": "",
     "original_title": "",
@@ -725,6 +769,10 @@ v0.99 不做：
 - 每次生成能记录并执行具体 `style_lane`；
 - 未指定风格时能随机抽取 `style_lane` 和 `style_variant`；
 - 能生成印象派、立体主义、水墨、极简主义等经典美术风格，而不只是常规插画；
+- 每次生成能选择并记录 `visual_density`；
+- 能生成 `sparse` 和 `single_stroke` 这类留白、简约、点睛一笔式海报；
+- 能区分设计性的负空间和为了文字预留的死白；
+- 能避免全画面等权重铺满元素，保证第一视觉焦点清晰；
 - 能选择现当代、古典、地域传统、材料工艺或反差风格作为艺术语言；
 - 能在随机风格和影片内容之间建立 `counterpoint_bridge`；
 - 能产生抽象感、意境感和能指/所指层次，而不是只做剧情插图；
