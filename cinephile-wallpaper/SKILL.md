@@ -26,7 +26,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 1. **Ask for the film**
    - Accept a film title or film URL.
    - If title/year is ambiguous, ask the user to identify the correct film.
-   - If no model/style is specified, choose a style lane from `references/style-distillation.md`; do not use generic visual defaults.
+   - If no model/style is specified, randomly draw a style lane from `references/style-distillation.md`; do not let plot analysis choose the safest matching style.
    - Auto-detect the user's interaction language from their request and respond in that language.
    - If the user asks for a different output language, use it for visible interaction and layout text unless film titles require original language.
 
@@ -63,7 +63,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Read `references/style-distillation.md` and `references/artist-grammars.md` when the visual direction feels too normal, too illustrational, or not bold enough.
    - Translate the film into a poster concept, not a literal scene summary.
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, subject strategy, metaphor, abstraction level, and avoid-list.
-   - Select a concrete `style_lane` for this run. Do not reuse a previous generated wallpaper as a shortcut, even if the same film was generated before.
+   - Select a concrete `style_lane` by random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
    - Force an art-direction choice that is bolder than conventional illustration unless the user explicitly asks for a restrained normal poster.
    - Avoid direct replication of official posters.
 
@@ -107,10 +107,11 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Style: concrete style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
+- Style: concrete randomly drawn style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
 - Style lane: every run must choose one concrete style lane; generic `fine-art poster` wording is not enough.
+- Style randomness: default style selection is random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style.
 - Composition: overall poster design comes first; do not create large empty blank zones merely for future text.
 - Film recognition: include a protagonist/character anchor when abstraction alone would make the film hard to identify.
 - Character identity: if depicting a specific character, use a character identity lock and automatically acquired or user-provided image references when supported; do not rely on generic actor-name prompting.

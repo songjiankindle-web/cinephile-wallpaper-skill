@@ -56,16 +56,22 @@ Use these as ingredients, not labels:
 
 ## Art Direction Matrix
 
-Choose one primary art language and one secondary device. Avoid safe illustration as the default. When a prior output stayed conventional, escalate by choosing from the stronger sets below and writing the escalation directly into the prompt.
+Default behavior: randomly draw one primary art language and one secondary device unless the user explicitly names a style. Film analysis should decide what appears in the poster, not which art-history style is allowed. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
+
+Avoid safe illustration as the default. When an output stays conventional, escalate by choosing from the stronger sets below and writing the escalation directly into the prompt.
 
 ### Modern And Contemporary
 
+- impressionism;
+- post-impressionism;
+- pointillism;
+- Symbolism;
 - abstraction;
 - abstract expressionism;
 - color-field painting;
 - constructivism;
 - suprematism;
-- cubism;
+- cubism, including analytic cubism, synthetic cubism, and Picasso/Braque-style fractured planes described as observable traits rather than direct copying;
 - futurism;
 - fauvism;
 - dada;
@@ -84,6 +90,9 @@ Choose one primary art language and one secondary device. Avoid safe illustratio
 
 ### Pre-Modern, Classical, And Regional
 
+- ancient Egyptian wall painting;
+- Greek vase painting;
+- Roman fresco and mosaic;
 - medieval illuminated manuscript;
 - Byzantine icon;
 - Gothic stained glass;
@@ -104,6 +113,10 @@ Choose one primary art language and one secondary device. Avoid safe illustratio
 - Art Deco;
 - Soviet poster art;
 - Mexican muralism.
+- Chinese ink wash;
+- Chinese literati painting;
+- Chinese splashed-ink / pomo ink;
+- Zen ink painting;
 
 ### Material And Process
 
@@ -128,18 +141,36 @@ Choose one primary art language and one secondary device. Avoid safe illustratio
 
 Every generation must choose one `style_lane` before writing the prompt. Do not default to generic terms like `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, or `movie poster style` as the main style.
 
-Choose a fresh lane for the current request based on the film, the user's style preference, and the need to avoid conventional illustration. Do not inspect prior generated outputs as a cache, and do not return an old result for a repeated film request.
+Default selection method:
+
+1. If the user names a style, use it.
+2. Otherwise randomly draw one `style_lane` from the full lane list. Use a host random function when available; if not, use the current timestamp or simply pick a lane without optimizing for film-style suitability.
+3. Then randomly draw a narrower `style_variant` inside that lane by the same method.
+4. Use film research only to choose the poster's elements, characters, props, symbols, tone references, and metaphor.
+5. Do not replace the random style with a "more suitable" or safer style unless it would make the film unrecognizable or violate a user instruction.
+6. Do not inspect prior generated outputs as a cache, and do not return an old result for a repeated film request.
+
+Record the random draw in the manifest:
+
+```json
+{
+  "style_selection_mode": "user_specified | random",
+  "style_lane": "",
+  "style_variant": "",
+  "random_style_kept": true
+}
+```
 
 Choose one lane:
 
 1. **geometric_avant_garde**: constructivism, suprematism, Bauhaus, De Stijl, Swiss grid, hard diagonals, primary geometry.
-2. **fragmented_modernism**: cubism, futurism, fractured viewpoint, faceted faces/objects, analytic collage.
+2. **fragmented_modernism**: analytic cubism, synthetic cubism, Picasso/Braque-style fractured planes, futurism, fractured viewpoint, faceted faces/objects, analytic collage.
 3. **expressive_color**: fauvism, expressionism, neo-expressionism, unnatural emotional color, raw contour.
 4. **pop_repetition_media**: pop art, screen print, halftone, repeated faces/objects, commercial color, image-culture critique.
 5. **conceptual_dada_surreal**: Dada, surrealism, conceptual displacement, impossible objects, dry absurdity.
 6. **optical_digital_signal**: op art, kinetic grids, CRT, VHS, datamosh, cybernetic diagrams, signal noise.
 7. **material_arte_povera**: ash, cloth, metal, paper, rope, dust, found-material assemblage, ritual object.
-8. **east_asian_ink**: Chinese ink, literati painting, nihonga, empty space, brush rhythm, mist and paper grain.
+8. **east_asian_ink**: Chinese ink wash, literati painting, splashed ink, Zen ink, nihonga, empty space, brush rhythm, mist and paper grain.
 9. **gongbi_miniature**: Chinese gongbi, Persian/Indian miniature, precise line, mineral color, dense symbolic detail.
 10. **ukiyo_e_flatworld**: ukiyo-e, flat planes, patterned fabric, seasonal framing, theatrical contour.
 11. **medieval_icon_glass**: illuminated manuscript, Byzantine icon, Gothic stained glass, gold ground, sacred flat space.
@@ -147,6 +178,39 @@ Choose one lane:
 13. **social_mural_realism**: Russian realist gravity, Mexican muralism, Soviet poster force, public historical drama.
 14. **print_process**: woodcut, linocut, etching, lithograph, risograph, screen print, tactile ink limits.
 15. **textile_tapestry_map**: tapestry, embroidery, woven grids, map/diagram as image structure.
+16. **impressionist_light_field**: impressionism, post-impressionism, pointillism, broken color, plein-air light logic, atmospheric brushwork.
+17. **minimalist_reduction**: minimalism, hard-edge painting, sparse geometry, one or two charged elements, disciplined emptiness, quiet scale tension.
+
+## Style Variant Pool
+
+After drawing a lane, draw or choose one specific variant from that lane. Put the variant in the prompt as a structural instruction.
+
+- `geometric_avant_garde`: Russian constructivist diagonals; suprematist floating geometry; Bauhaus poster grid; De Stijl primary rectangles; Swiss grid with asymmetrical type blocks.
+- `fragmented_modernism`: analytic cubist portrait/object fracture; synthetic cubist collage; Picasso/Braque-like faceted planes without copying a painting; futurist motion decomposition; fractured surveillance geometry.
+- `expressive_color`: fauvist non-natural color; German expressionist contour; neo-expressionist scraped figure; Symbolist dream color; post-impressionist emotional contour.
+- `pop_repetition_media`: Warholian repetition described as silkscreen repetition/halftone commercial color; Lichtenstein-like comic dots without copying panels; consumer packaging color grid; media-image degradation.
+- `conceptual_dada_surreal`: Magritte-like conceptual displacement described as impossible object logic; Dada photomontage; absurd scale; dry museum-installation metaphor; symbolic object substitution.
+- `optical_digital_signal`: op-art vibration; CRT scanlines; VHS ghosting; datamosh block field; cybernetic diagram.
+- `material_arte_povera`: ash drawing; cloth/rope assemblage; rusted metal and paper; earth pigment; found-object altar.
+- `east_asian_ink`: Chinese ink wash landscape; literati blankness and brush rhythm; splashed-ink abstraction; Zen ink economy; nihonga mineral haze.
+- `gongbi_miniature`: Chinese gongbi line and mineral color; Persian miniature architecture; Indian miniature color fields; dense symbolic border; jewel-like flat space.
+- `ukiyo_e_flatworld`: ukiyo-e theatrical portrait; landscape cartouche; patterned fabric planes; seasonal weather; flattened waves/clouds.
+- `medieval_icon_glass`: illuminated manuscript page; Byzantine icon flat gold; Gothic stained glass; marginalia symbols; sacred flat space.
+- `renaissance_baroque_allegory`: Renaissance fresco grouping; neoclassical allegory; Baroque chiaroscuro; Romantic landscape drama; classical anatomy translated into poster symbols.
+- `social_mural_realism`: Repin-school moral gravity; Mexican mural massing; Soviet poster force; public-history frieze; earthy social realism without photography.
+- `print_process`: woodcut; linocut; etching; lithograph; risograph; screen print; high-contrast ink limits.
+- `textile_tapestry_map`: medieval battle tapestry; embroidery grid; woven map; textile diagram; thread-like contour system.
+- `impressionist_light_field`: Monet-like broken light without direct imitation; Renoir-like warm figure light without copying; Degas-like cropped movement; Seurat-like pointillist color particles; Van Gogh-like directional strokes without copying a specific painting.
+- `minimalist_reduction`: Agnes Martin-like quiet grid described as pale hand-drawn intervals; Ellsworth Kelly-like hard color shape; Donald Judd-like serial blocks translated to flat poster; Japanese ma-like emptiness; one-object minimal poster.
+
+## Randomization Discipline
+
+- The random draw is not a suggestion. Keep it through prompt writing.
+- If the draw feels mismatched, write a `counterpoint_bridge` rather than replacing the style.
+- The prompt must include the exact `style_lane` and `style_variant`.
+- The prompt must include one visible mechanism from the style: brushstroke, faceting, pointillist dots, ink wash, hard-edge reduction, mosaic tesserae, woodcut cuts, textile threads, etc.
+- A generated image fails style QA if the chosen style is only named but not visibly present.
+- Do not let the model collapse to polished contemporary illustration. The style must affect composition, texture, color, and abstraction.
 
 The selected lane must appear in the manifest and in the prompt as structure, not decoration:
 

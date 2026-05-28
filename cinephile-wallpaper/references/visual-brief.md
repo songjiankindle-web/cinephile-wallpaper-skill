@@ -20,6 +20,8 @@
     "art_medium": "oil painting | sketch | gouache | acrylic | watercolor | ink | printmaking | modernism | impressionism | fauvism | abstraction | pop art | collage | other",
     "art_language": {
       "style_lane": "",
+      "style_variant": "",
+      "style_selection_mode": "user_specified | random",
       "primary": "",
       "secondary": "",
       "movement_family": "modern_contemporary | classical | regional_traditional | material_process | counterpoint",
@@ -93,9 +95,10 @@
 - Describe the desired image, not the poster to copy.
 - All generated visuals must be fine-art or graphic poster styles, not photorealistic live-action.
 - Use media such as oil painting, sketch, gouache, acrylic, watercolor, ink, printmaking, modernism, impressionism, fauvism, abstraction, pop art, constructivism, collage, or other art/poster languages.
-- Style must be more ambitious than normal illustration when the user asks for stronger art direction. Use `style-distillation.md` and `artist-grammars.md` to choose from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies.
+- Style must be more ambitious than normal illustration. Use `style-distillation.md` and `artist-grammars.md` to randomly draw from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies unless the user specifies a style.
 - Do not merely list art movements. Select one primary art language, one secondary device, one abstraction mechanism, and one reason this style reveals the film.
-- Before writing the prompt, choose a `style_lane` from `style-distillation.md`. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
+- Before writing the prompt, randomly draw a `style_lane` and `style_variant` from `style-distillation.md` unless the user specified one. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
+- Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it.
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
 - If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
