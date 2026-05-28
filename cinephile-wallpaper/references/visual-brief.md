@@ -44,7 +44,9 @@
       "role": "protagonist | antagonist | supporting | ensemble",
       "actor_or_performer": "",
       "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only",
-      "reference_images": [],
+      "source_stills": [],
+      "character_crops": [],
+      "costume_posture_refs": [],
       "local_reference_paths": [],
       "reference_images_attached": false,
       "acquisition_method": "browser_search | web_search | trailer_frame | user_upload | text_only",
@@ -126,9 +128,10 @@
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
 - If browser/web tools are available, automatically acquire in-character reference images before asking the user to upload.
-- If the host supports reference images, use acquired or user-provided in-character reference images for key characters and verify `reference_images_attached: true`. If it does not, state `text_only` and make the likeness risk explicit in the prompt package.
-- Use frontal/close likeness-heavy compositions only when real reference images are attached; when attached, actively preserve accurate role likeness in the selected art style.
-- Do not confuse non-photorealism with avoiding the actor's face. Avoid copied stills, live-action photorealism, and celebrity glamour portraits detached from the role; preserve accurate stylized likeness through facial structure, expression, hairstyle, costume, posture, and role-specific attributes.
+- For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
+- If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
+- Use frontal/close character compositions only when real cropped reference images are attached.
+- Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
 - Text strategy depends on the run: use model-generated integrated text for speed when requested; use `no text, no logos, no credits` only for no-text or post-layout runs.
 - Overall poster design comes before text accommodation. Do not reserve a large blank region only for text. Text should be integrated into the image, placed over calmer existing regions, or kept minimal.
 - Separate good negative space from bad blank space. Good negative space creates focus, rhythm, breath, symbolic silence, or scale tension. Bad blank space is an obvious empty title block or dead leftover area.
@@ -231,21 +234,21 @@ When recognition is weak, add:
 ```text
 Include a protagonist character anchor through [face/costume/posture/prop],
 strictly matching the film character's visual identity while rendered in
-[fine-art medium]. Preserve accurate stylized likeness to the actor/performer
-as this role; do not avoid the real face. Make it recognizable but not a
-live-action photorealistic portrait, integrated into the central poster metaphor
-rather than copied from a still.
+[fine-art medium]. Use the attached in-character cropped reference image as
+the identity source. Preserve the referenced face/head/hair/costume/posture
+inside the generated poster, without copying the still or making a
+photorealistic live-action frame.
 ```
 
 Stronger character-lock pattern:
 
 ```text
 Character identity lock: [character] from [film, year], played by [performer].
-Use the attached in-character reference images as visual identity anchors.
-Preserve [face], [hair], [costume], [posture], [prop], and [expression] cues.
-The character must read as [character] before the title is seen, while rendered
-as [art language], with accurate stylized likeness to the performer in this
-role; not photorealistic, not a copied still, not a generic replacement.
+Use the attached cropped in-character reference images as the identity source,
+not as loose inspiration. Preserve the referenced face, head, hair, costume,
+posture, prop, and expression inside the poster. The character must read as
+[character] before the title is seen, while rendered as [art language]; not a
+photorealistic copied still, not text-only approximation, not a generic replacement.
 ```
 
 If all prior generations look like distant back-view figures, force variety:

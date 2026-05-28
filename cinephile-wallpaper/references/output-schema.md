@@ -67,10 +67,14 @@ Write one manifest per generated wallpaper:
     "characters": [],
     "identity_locks": [],
     "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only | none",
-    "reference_images": [],
+    "source_stills": [],
+    "character_crops": [],
+    "costume_posture_refs": [],
     "local_reference_paths": [],
     "reference_images_attached": false,
     "acquisition_method": "browser_search | web_search | trailer_frame | user_upload | text_only | none",
+    "image_reference_capable": false,
+    "identity_preservation_mode": "attached_character_crops | user_uploaded_refs | unavailable_non_face_only | text_only_identity_risk",
     "visual_traits": [],
     "required_traits": {
       "face": [],
@@ -84,10 +88,12 @@ Write one manifest per generated wallpaper:
     "strategy": "",
     "source_urls": [],
     "auto_acquisition_attempted": false,
-    "text_only_likeness_risk": false,
+    "text_only_identity_risk": false,
+    "face_restoration_claimed": false,
     "recognition_check": {
       "recognizable_before_title": false,
       "reference_gate_passed": false,
+      "character_crops_attached": false,
       "failure_recovery_used": false,
       "notes": ""
     }

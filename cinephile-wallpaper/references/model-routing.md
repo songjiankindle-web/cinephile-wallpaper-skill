@@ -26,6 +26,8 @@ Default routing order:
 
 Ask only when credentials are missing, multiple available paid providers have meaningful cost differences, or the user explicitly wants to choose.
 
+For posters that visibly include real actor/performer characters, route to a model/tool that supports image references. If the current image tool cannot attach character stills/crops, it cannot satisfy character-face restoration. In that case, ask for a reference-image-capable model/API/tool, ask the user to choose a non-face strategy, or provide a prompt/reference checklist without claiming restoration.
+
 If no image-generation capability is available, say exactly:
 
 ```text
