@@ -42,7 +42,21 @@ Write one manifest per generated wallpaper:
   },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
-    "selection_mode": "user_specified | random | corrective",
+    "selection_mode": "user_specified | weighted_random | corrective",
+    "density_weights": {
+      "dense": 0,
+      "balanced": 0,
+      "sparse": 0,
+      "single_stroke": 0
+    },
+    "density_inputs": {
+      "genres": [],
+      "scale": "intimate | medium | epic",
+      "tempo": "slow | moderate | fast",
+      "narrative_complexity": "minimal | moderate | complex",
+      "authorial_mode": "mainstream | genre | art_cinema | experimental",
+      "visual_world": "realist | stylized | spectacle | austere | unknown"
+    },
     "focal_point": "",
     "negative_space_role": "",
     "max_primary_elements": 3,

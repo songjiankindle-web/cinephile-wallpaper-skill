@@ -83,7 +83,21 @@
     "composition": "",
     "visual_density": {
       "mode": "dense | balanced | sparse | single_stroke",
-      "selection_mode": "user_specified | random | corrective",
+      "selection_mode": "user_specified | weighted_random | corrective",
+      "density_weights": {
+        "dense": 0,
+        "balanced": 0,
+        "sparse": 0,
+        "single_stroke": 0
+      },
+      "density_inputs": {
+        "genres": [],
+        "scale": "intimate | medium | epic",
+        "tempo": "slow | moderate | fast",
+        "narrative_complexity": "minimal | moderate | complex",
+        "authorial_mode": "mainstream | genre | art_cinema | experimental",
+        "visual_world": "realist | stylized | spectacle | austere | unknown"
+      },
       "focal_point": "",
       "negative_space_role": "",
       "max_primary_elements": 3,
@@ -111,7 +125,7 @@
 - Do not merely list art movements. Select one primary art language, one secondary device, one abstraction mechanism, and one reason this style reveals the film.
 - Before writing the prompt, randomly draw a `style_lane` and `style_variant` from `style-distillation.md` unless the user specified one. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
 - Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it.
-- Choose a `visual_density` before writing the prompt. Default may be random across `dense`, `balanced`, `sparse`, and `single_stroke`, or corrective if recent outputs feel too full. The density mode controls how many elements may appear and how much silence/negative space the poster uses.
+- Choose a `visual_density` before writing the prompt. Default is weighted random, not pure random: infer density weights from genre, scale, tempo, narrative complexity, authorial mode, and visual world; then draw one mode from those weights. Use corrective only when recent outputs felt too full or the user asks for more restraint. The density mode controls how many elements may appear and how much silence/negative space the poster uses.
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
 - If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
@@ -148,11 +162,60 @@ Pick one mode before the prompt. The mode is as important as style.
 
 Density rules:
 
-- Randomly draw density when the user has no preference, but bias toward `balanced`, `sparse`, and `single_stroke` if recent results felt too full.
+- Draw density from a weighted distribution when the user has no preference. Do not pick density by pure randomness.
+- Keep a minority chance for surprise. A commercial action film can still become sparse; an art film can still become dense. Weighted means biased, not deterministic.
+- Bias toward `balanced`, `sparse`, and `single_stroke` if recent results felt too full.
 - A minimal poster is not a weak poster. It must carry meaning through scale, placement, texture, color, and the chosen focal sign.
 - For `sparse` and `single_stroke`, cap primary elements at one or two. Do not add background story fragments, decorative particles, extra faces, or multiple props.
 - For `dense`, include an explicit hierarchy: foreground focal sign, secondary rhythm, background texture. No all-over equal-weight clutter.
 - The unified prompt must include the chosen density mode and one density instruction such as `large intentional negative space`, `one dominant sign only`, `single decisive brush mark`, or `balanced hierarchy with two supporting motifs`.
+
+## Density Weighting
+
+Start from this neutral distribution, then adjust:
+
+```json
+{
+  "dense": 25,
+  "balanced": 40,
+  "sparse": 25,
+  "single_stroke": 10
+}
+```
+
+Use film evidence to adjust weights:
+
+- Commercial action, martial arts, superhero, disaster, war spectacle, heist, chase, musical ensemble, broad comedy, or large ensemble: increase `dense` and `balanced`; keep small `sparse`/`single_stroke` chance for iconic counterpoint.
+- Master classic art cinema, slow cinema, chamber drama, existential drama, memory films, spiritual films, restrained melodrama, or films about solitude/absence: increase `sparse` and `single_stroke`; keep `balanced` as fallback.
+- Science fiction: usually increase `sparse`, `single_stroke`, and `balanced` because empty space, scale, geometry, signal, and one iconic object often work well; increase `dense` only for cyberpunk crowds, maximalist worlds, space battles, or techno-baroque settings.
+- Noir, mystery, psychological thriller, horror, and ghost stories: increase `sparse`/`single_stroke` when dread, absence, or one uncanny sign matters; increase `dense` for conspiracy webs, occult systems, or body-horror abundance.
+- Historical epic, fantasy worldbuilding, myth, wuxia ensemble, political fresco, social panorama: increase `dense` and `balanced`.
+- Minimal plot, one-location film, two-character relationship, road movie, or quiet coming-of-age film: increase `balanced`, `sparse`, and sometimes `single_stroke`.
+- Experimental, essay film, conceptual documentary, or structurally abstract film: increase `sparse`, `single_stroke`, or `balanced`; use `dense` only for archival/collage logic.
+
+Suggested final distributions:
+
+```json
+{
+  "commercial_action": {"dense": 45, "balanced": 35, "sparse": 15, "single_stroke": 5},
+  "martial_arts_or_wuxia": {"dense": 35, "balanced": 35, "sparse": 20, "single_stroke": 10},
+  "art_cinema_classic": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
+  "science_fiction_austere": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
+  "science_fiction_spectacle": {"dense": 30, "balanced": 35, "sparse": 25, "single_stroke": 10},
+  "psychological_or_horror": {"dense": 15, "balanced": 30, "sparse": 35, "single_stroke": 20},
+  "historical_epic_or_social_panorama": {"dense": 40, "balanced": 35, "sparse": 15, "single_stroke": 10},
+  "quiet_drama_or_romance": {"dense": 10, "balanced": 40, "sparse": 35, "single_stroke": 15}
+}
+```
+
+If multiple categories apply, average or blend the closest distributions, then draw once.
+
+Record:
+
+- the inferred category or blend;
+- final weights;
+- selected mode;
+- why this density supports the film.
 
 Density QA:
 

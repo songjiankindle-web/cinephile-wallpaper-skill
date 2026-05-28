@@ -165,7 +165,9 @@ Skill 应为每次生成选择：
 Skill 应为每次生成选择：
 
 - `visual_density.mode`：`dense`、`balanced`、`sparse` 或 `single_stroke`；
-- `selection_mode`：`user_specified`、`random` 或 `corrective`；
+- `selection_mode`：`user_specified`、`weighted_random` 或 `corrective`；
+- `density_weights`：四种密度的最终权重；
+- `density_inputs`：影片类型、规模、节奏、叙事复杂度、作者属性和视觉世界；
 - 一个明确第一视觉焦点；
 - 负空间/留白的作用；
 - 最大主元素数量；
@@ -180,11 +182,30 @@ Skill 应为每次生成选择：
 - `sparse`：一个主符号，大面积有意图的安静区域，少量辅助肌理，适合优雅、孤独、悬疑、诗性或图标化海报。
 - `single_stroke`：一个决定性物件、手势、笔触、脸部局部或图形动作，极高留白，强调“点睛一笔”。
 
-密度选择默认可随机抽取。如果用户反馈画面太满、太累、抓不住重点，则下一次必须用 `corrective`，优先选择 `balanced`、`sparse` 或 `single_stroke`。
+密度选择不能纯随机。默认使用带权重随机：先根据影片类型、规模、节奏、叙事复杂度、作者属性和视觉世界推导权重，再从权重中抽取结果。如果用户反馈画面太满、太累、抓不住重点，则下一次必须用 `corrective`，优先选择 `balanced`、`sparse` 或 `single_stroke`。
+
+权重不是确定性规则，必须保留少量反向可能性。例如商业动作片更容易抽到 `dense`，但也可能抽到 `sparse` 的图标式反差海报；大师经典艺术电影更容易抽到 `sparse` 或 `single_stroke`，但也可能抽到 `balanced` 或少量 `dense`。
 
 留白不是为了后期放文字的死白。好的留白必须产生焦点、节奏、呼吸、象征性沉默或尺度张力。坏的留白是明显空出来的标题框、死区或未完成区域。
 
 如果选择 `sparse` 或 `single_stroke`，主元素最多一到两个，不得继续加入背景剧情碎片、装饰粒子、额外人物和多个道具。如果选择 `dense`，也必须写清楚前景焦点、次级节奏和背景肌理，避免全画面等权重堆满。
+
+建议密度权重：
+
+```json
+{
+  "commercial_action": {"dense": 45, "balanced": 35, "sparse": 15, "single_stroke": 5},
+  "martial_arts_or_wuxia": {"dense": 35, "balanced": 35, "sparse": 20, "single_stroke": 10},
+  "art_cinema_classic": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
+  "science_fiction_austere": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
+  "science_fiction_spectacle": {"dense": 30, "balanced": 35, "sparse": 25, "single_stroke": 10},
+  "psychological_or_horror": {"dense": 15, "balanced": 30, "sparse": 35, "single_stroke": 20},
+  "historical_epic_or_social_panorama": {"dense": 40, "balanced": 35, "sparse": 15, "single_stroke": 10},
+  "quiet_drama_or_romance": {"dense": 10, "balanced": 40, "sparse": 35, "single_stroke": 15}
+}
+```
+
+如果影片同时符合多个类别，应混合最接近的两到三个分布，再抽取一次。
 
 可选艺术语言包括但不限于：
 
@@ -599,7 +620,21 @@ Manifest 必须记录：
   },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
-    "selection_mode": "user_specified | random | corrective",
+    "selection_mode": "user_specified | weighted_random | corrective",
+    "density_weights": {
+      "dense": 0,
+      "balanced": 0,
+      "sparse": 0,
+      "single_stroke": 0
+    },
+    "density_inputs": {
+      "genres": [],
+      "scale": "intimate | medium | epic",
+      "tempo": "slow | moderate | fast",
+      "narrative_complexity": "minimal | moderate | complex",
+      "authorial_mode": "mainstream | genre | art_cinema | experimental",
+      "visual_world": "realist | stylized | spectacle | austere | unknown"
+    },
     "focal_point": "",
     "negative_space_role": "",
     "max_primary_elements": 3,
@@ -787,7 +822,8 @@ v0.99 不做：
 - 每次生成能记录并执行具体 `style_lane`；
 - 未指定风格时能随机抽取 `style_lane` 和 `style_variant`；
 - 能生成印象派、立体主义、水墨、极简主义等经典美术风格，而不只是常规插画；
-- 每次生成能选择并记录 `visual_density`；
+- 每次生成能通过带权重随机选择并记录 `visual_density`；
+- 能根据影片类型、规模、节奏、叙事复杂度、作者属性和视觉世界调整密度权重；
 - 能生成 `sparse` 和 `single_stroke` 这类留白、简约、点睛一笔式海报；
 - 能区分设计性的负空间和为了文字预留的死白；
 - 能避免全画面等权重铺满元素，保证第一视觉焦点清晰；

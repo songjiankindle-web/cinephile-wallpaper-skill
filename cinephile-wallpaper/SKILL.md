@@ -66,7 +66,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Translate the film into a poster concept, not a literal scene summary.
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, visual density, subject strategy, metaphor, abstraction level, and avoid-list.
    - Select a concrete `style_lane` by random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
-   - Select a `visual_density` before writing the prompt: `dense`, `balanced`, `sparse`, or `single_stroke`. Do not default to dense multi-element compositions.
+   - Select a `visual_density` before writing the prompt: `dense`, `balanced`, `sparse`, or `single_stroke`. Use weighted randomness based on film genre, rhythm, scale, narrative complexity, and authorial tone; do not use pure random density and do not default to dense multi-element compositions.
    - Force an art-direction choice that is bolder than conventional illustration unless the user explicitly asks for a restrained normal poster.
    - Avoid direct replication of official posters.
 
@@ -115,7 +115,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
 - Style lane: every run must choose one concrete style lane; generic `fine-art poster` wording is not enough.
 - Style randomness: default style selection is random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style.
-- Visual density: every run must choose a density mode. Good posters may be dense, balanced, sparse, or a single decisive visual stroke. Do not fill the canvas just because more film elements were researched.
+- Visual density: every run must choose a density mode through weighted randomness. Good posters may be dense, balanced, sparse, or a single decisive visual stroke. Do not fill the canvas just because more film elements were researched.
 - Composition: overall poster design comes first. Do not create large empty blank zones merely for future text, but do use intentional negative space, silence, asymmetry, and one-point focus when the density mode calls for it.
 - Film recognition: include a protagonist/character anchor when abstraction alone would make the film hard to identify.
 - Character identity: if depicting a specific real actor/performer character, use a character identity lock plus actual in-character image files. Attach cropped character references to the image model when supported; do not rely on text-only prompting, actor-name prompting, or vague style-language approximation.

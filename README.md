@@ -29,7 +29,7 @@ Current v0.99 behavior:
 - fixed opening prompt;
 - numbered one-turn setup for size, output folder, text mode, generation mode, and default memory;
 - randomized `style_lane` and `style_variant` selection unless the user specifies a style;
-- visual-density modes: `dense`, `balanced`, `sparse`, and `single_stroke`;
+- weighted visual-density routing across `dense`, `balanced`, `sparse`, and `single_stroke`;
 - intentional negative space and one-point-focus poster logic, without confusing it with dead blank title areas;
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;
 - fresh generation for every request unless the user explicitly asks to retrieve an old file;
