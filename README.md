@@ -17,7 +17,7 @@ For Codex-style skills:
 ## Start
 
 ```text
-请告诉我您想看到哪部电影的海报？
+请问你想生成哪部电影的海报壁纸？
 ```
 
 ## Version

@@ -1,3 +1,3 @@
 display_name: Cinephile Wallpaper
 short_description: Generate original film wallpapers.
-default_prompt: Ask which real film poster the user wants, confirm compact settings, generate a non-photorealistic art poster/wallpaper with any needed references, save outputs, and reply with only the finished image path unless prompts or debugging details are requested.
+default_prompt: 请问你想生成哪部电影的海报壁纸？

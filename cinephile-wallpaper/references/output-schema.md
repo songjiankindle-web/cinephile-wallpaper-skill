@@ -78,7 +78,7 @@ Write one manifest per generated wallpaper:
     "provider": "",
     "name": "",
     "parameters": {},
-    "generation_mode": "ask | prompt_only | agent_image_tool | external_api | image_skill | auto"
+    "generation_mode": "prompt_only | agent_image_tool | external_api | image_skill | auto"
   },
   "wallpaper_settings": {
     "width": 2560,
@@ -89,9 +89,8 @@ Write one manifest per generated wallpaper:
     "language": "",
     "language_source": "detected | user",
     "text_variants": ["with_text", "no_text"],
-    "text_rendering_mode": "model_text | no_text | post_layout | both",
+    "text_rendering_mode": "model_text | no_text | both",
     "one_turn_setup": true,
-    "quick_mode": true,
     "defaults_used": [],
     "global_text_overlay_used": false
   },
@@ -104,13 +103,10 @@ Write one manifest per generated wallpaper:
     "visual_image": "",
     "wallpaper": "",
     "wallpaper_with_text": "",
-    "wallpaper_no_text": "",
-    "layout_html": ""
+    "wallpaper_no_text": ""
   },
   "prompt": {
-    "image_prompt": "",
-    "negative_prompt": "",
-    "layout_notes": "",
+    "unified_prompt": "",
     "model_notes": "",
     "portable_prompt": true,
     "style_escalation_used": false

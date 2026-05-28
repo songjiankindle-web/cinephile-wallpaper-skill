@@ -26,6 +26,14 @@ Default routing order:
 
 Ask only when credentials are missing, multiple available paid providers have meaningful cost differences, or the user explicitly wants to choose.
 
+If no image-generation capability is available, say exactly:
+
+```text
+您的agent没有生图能力，我可以为您提供对应的提示词，您可以自行在其他生图模型中使用。
+```
+
+Then provide one unified prompt. Do not generate HTML as a substitute for image generation.
+
 ## Codex / OpenAI Notes
 
 Do not assume a Codex skill automatically uses a specific image model. A skill can only use image tools exposed by the host environment.
@@ -51,11 +59,7 @@ Never ask the user to paste secrets into durable project files.
 
 In prompt-only mode only, return:
 
-- visual brief;
-- image prompt;
-- negative prompt;
-- layout notes;
-- suggested model settings.
+- one unified prompt that includes visual direction, style lane, character reference instructions, typography instructions, constraints, and avoid-list.
 
 Do not pretend an image was generated.
 
@@ -70,17 +74,12 @@ For speed, prefer direct image-model text when:
 - the selected model is known to render text reasonably;
 - exact typography is less important than fast visual iteration.
 
-Use deterministic post-layout when:
-
-- the user requests exact text;
-- the title/original title is long or multilingual;
-- generated text is misspelled, unreadable, or in the wrong language;
-- the workflow needs consistent batch typography.
+Do not use HTML or deterministic post-layout to create the poster. If model text is poor, regenerate through the image model with shorter text or provide a no-text image and the unified prompt.
 
 Record the selected text mode as:
 
 ```json
 {
-  "text_rendering_mode": "model_text | no_text | post_layout | both"
+  "text_rendering_mode": "model_text | no_text | both"
 }
 ```

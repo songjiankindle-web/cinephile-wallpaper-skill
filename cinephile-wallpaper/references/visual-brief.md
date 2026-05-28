@@ -67,10 +67,8 @@
     "avoid": []
   },
   "prompt": {
-    "image_prompt": "",
-    "negative_prompt": "",
-    "text_strategy": "model_text | no_text | post_layout | both",
-    "layout_notes": "",
+    "unified_prompt": "",
+    "text_strategy": "model_text | no_text | both",
     "composition_priority": "overall poster first; no oversized reserved blank area"
   }
 }
@@ -252,26 +250,15 @@ Keep typography readable, but never sacrifice the whole poster to a blank title 
 
 ## Prompt Package Handling
 
-Every run should save this package in the manifest or output folder. Do not display it by default after a successful image generation; the user asked for the poster, not the working notes.
+Every run should save one unified prompt in the manifest or output folder. Do not display it by default after a successful image generation; the user asked for the poster, not the working notes.
 
 Display the package only when prompt-only mode is selected, generation fails, the user asks for it, or debugging requires it.
 
 ````markdown
-### Visual Brief
-[short explanation of the chosen visual direction]
-
-### Image Prompt
+### Unified Prompt
 ```text
-[copyable prompt]
+[one copyable prompt that includes visual direction, style lane, character reference instructions, typography instructions, image constraints, and avoid-list]
 ```
-
-### Negative Prompt
-```text
-[copyable negative prompt]
-```
-
-### Layout Notes
-[where typography should go, what text should be added later, safe margins]
 ````
 
 Keep the prompt portable across models. Avoid model-only syntax unless the user chose a specific model.

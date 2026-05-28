@@ -2,23 +2,23 @@
 
 ## Guided Flow
 
-1. Start with: `请告诉我您想看到哪部电影的海报？` or the equivalent in the user's language.
+1. Start with exactly: `请问你想生成哪部电影的海报壁纸？`
 2. Resolve film ambiguity if needed.
-3. Use quick defaults and ask only for missing decisions that cannot be inferred:
-   - size: saved preference, detected current screen, or fallback `2560x1440`;
-   - output directory: saved preference or `CinephileWallpaper/outputs/YYYY/MM`;
-   - text mode: default `with_text`;
-   - generation mode: current image tool, image skill/tool, external API if configured, or prompt-only;
-   - remember defaults only when the user explicitly asks or changes a setting.
+3. Ask one compact setup question:
+   - size/device, with saved size as default if available;
+   - output directory, with saved directory as default if available;
+   - text mode: with text, no text, or both;
+   - generation mode: current image tool, image skill/tool, external API, or prompt-only;
+   - whether to remember changed size/output defaults.
 4. If a device model is provided, look up the screen resolution; see `device-size.md`.
 5. Research the film, film-tone references, style references, and character references.
 6. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
-7. Write and save the prompt package internally.
-8. Generate or request the main visual if the chosen mode continues past prompt-only.
-9. Use direct in-image text for speed when requested and reliable; use deterministic composition only for exact text or failed model text.
+7. Write and save one unified prompt package internally.
+8. Generate the poster through an image model if available.
+9. If no image model is available, show the no-image-capability notice and return one unified prompt.
 10. Save manifest and outputs.
 11. Set the current desktop wallpaper only if explicitly requested or saved as a default.
-12. Final reply should be poster-first and brief: image/path(s), success status, and optional next action. Do not paste research, manifest, or prompts unless requested.
+12. Final reply should be poster-first and brief: image/path(s), success status, and optional next action. Do not paste research or manifest unless requested.
 
 ## Ambiguous Film
 
@@ -37,10 +37,10 @@ Keep the actual image prompt portable. It may be in the user's language or Engli
 
 ## One-Turn Setup Prompt
 
-After the film is confirmed, do not ask setup questions if defaults or saved preferences are usable. If required information is missing, ask only once:
+After the film is confirmed, ask the base settings in one turn. Include saved defaults if available:
 
 ```text
-我可以直接按默认设置生成：当前/默认尺寸、默认保存位置、带文字版、可用生图工具。若要改，请一次告诉我：尺寸/设备、保存位置、文字版本、生图方式。
+请一次确认这些设置：尺寸/设备、保存位置、文字版本（带文字/无文字/两者都要）、生图方式（当前生图工具/外部API/只要提示词），以及是否把本次尺寸和保存位置设为默认。
 ```
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
@@ -51,13 +51,12 @@ After a wallpaper file exists, set it as the desktop only if the user explicitly
 
 1. Save prompt package internally.
 2. Generate or receive visual.
-3. Composite wallpaper only if useful.
-4. Run the setter only when already requested.
-5. Reply with the finished poster path(s), not the intermediate documents.
+3. Run the setter only when already requested.
+4. Reply with the finished poster path(s), not the intermediate documents.
 
 ## Output Directory
 
-Before writing files, use a saved/default output directory unless the user already provided another path. Ask only if the path is unavailable or unsafe. Use a concrete absolute path in local environments.
+Confirm the output directory in the one-turn setup. Use a concrete absolute path in local environments.
 
 Default:
 
@@ -91,7 +90,7 @@ If no persistent storage is available, explain briefly that defaults cannot be r
 
 ## Wallpaper Size
 
-Do not ask for intended size by default. Prefer saved preference, detected current screen, device lookup, or fallback `2560x1440`. Accept:
+Confirm intended size in the one-turn setup. Accept:
 
 - exact dimensions, such as `3840x2160`;
 - aspect ratio, such as `16:9 poster`;
@@ -115,10 +114,10 @@ Record the source in the manifest:
 
 ## Text Variants
 
-Ask only when the default `with_text` is not appropriate or the user asks to choose:
+Ask in the one-turn setup:
 
 ```text
-您想要哪种版本：带文字、无文字，还是两者都要？带文字版可以优先由生图模型直接生成；如果你需要绝对准确文字，我再走后期排版。
+您想要哪种版本：带文字、无文字，还是两者都要？带文字版会由生图模型直接完成文字排版。
 ```
 
 Translate into the user's language. If the user chooses both, save both and record both output paths.
@@ -129,7 +128,6 @@ Use one of:
 
 - `model_text`: the image model generates title and metadata directly in the poster. Fastest. Use for normal runs when the selected model can render text acceptably.
 - `no_text`: prompt explicitly requests no text, no logos, no credits.
-- `post_layout`: generate a no-text visual, then add text with deterministic layout. Use when exact spelling, batch consistency, or typography precision matters.
 - `both`: produce no-text and text versions; prefer `model_text` for the text version unless accuracy fails.
 
 For `model_text`, provide exact short strings:
@@ -139,9 +137,7 @@ For `model_text`, provide exact short strings:
 - director/year;
 - country/region.
 
-If generated text is wrong or ugly, do not pretend it is acceptable. Either regenerate with shorter text or switch to `post_layout`.
-
-For `post_layout`, do not alter the base poster image globally. Text may use shadows, outlines, small local backgrounds, or careful placement, but must not add a full-canvas dark overlay, dimming filter, or global gradient.
+If generated text is wrong or ugly, do not pretend it is acceptable. Regenerate with shorter in-image text or provide a no-text version plus the unified prompt. Do not switch to HTML generation.
 
 ## Out of Scope
 
