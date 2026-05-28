@@ -6,7 +6,9 @@ Use this reference whenever a wallpaper includes identifiable film characters. D
 
 Add film recognition through protagonist or character anchors without turning the wallpaper into a literal still, live-action photorealistic portrait, or copied publicity image. Be willing to use faces when the film needs them: a painted frontal face, three-quarter view, close symbolic portrait, or character constellation is often more recognizable than another distant back-view figure.
 
-Core rule: if a specific film character is depicted, the agent must establish a **character identity lock** before generation. If face likeness matters, the lock is not complete until real reference images are attached to the image-generation call or explicitly unavailable.
+Important distinction: **non-photorealistic does not mean non-likeness**. The skill should avoid photo-like live-action rendering and direct still copying, but it must preserve accurate role likeness when a real actor/performer appears as a film character. A clay, ink, cubist, gouache, minimalist, or pop-art interpretation should still be recognizably that character from that film, not an invented generic person.
+
+Core rule: if a specific film character is depicted, the agent must establish a **character identity lock** before generation. If face likeness matters, the lock is not complete until real reference images are attached to the image-generation call or explicitly unavailable. When references are attached, the prompt must actively request accurate stylized likeness rather than avoiding the actor's face.
 
 Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, building, instrument, or craft object is depicted, the agent must establish a **prop identity lock** before generation. Do not replace culturally or historically specific objects with generic lookalikes.
 
@@ -42,7 +44,7 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
 6. If the host image model supports image references, attach at least one and preferably two to four reference images per key character. Prefer film stills over actor red-carpet photos.
 7. Verify attachment before generation: the manifest or run state must contain local reference paths and `reference_images_attached: true`.
 8. Ask the user to upload stills only when automatic acquisition fails, references are low quality, access is blocked, or the host cannot pass downloaded images to the image model.
-9. If image references cannot be passed, do not promise likeness. Proceed only with a text-only identity lock, warn that likeness will be weaker, and prefer non-face strategies unless the user accepts the risk.
+9. If image references cannot be passed, do not promise exact likeness. Proceed only with a text-only identity lock, warn that likeness will be weaker, and either ask for stills or use non-face strategies only when the user accepts that risk.
 10. Extract visual traits:
    - face shape and defining features when needed;
    - age range and bearing;
@@ -180,7 +182,7 @@ Fallback choices when the gate fails:
 
 - ask the user for stills;
 - switch to costume/prop/gesture/silhouette recognition;
-- avoid frontal likeness-heavy composition;
+- avoid claiming exact facial likeness without references;
 - generate a no-face symbolic poster.
 
 Text prompts alone are not sufficient for exact actor/character likeness.
@@ -201,7 +203,7 @@ Choose one or combine two when useful:
 - **Partial figure**: hand, shoulder, profile, shoe, coat, hair, weapon, bag, umbrella, etc.
 - **Costume + prop**: recognizable outfit and object without exact face.
 - **Tiny figure in symbolic landscape**: preserves poster abstraction while adding film identity.
-- **Reflected/distorted face**: use only as stylized painted/graphic character identity, not live-action likeness.
+- **Reflected/distorted face**: use as stylized painted/graphic character identity while preserving role likeness cues, not as live-action photorealism.
 - **Close portrait abstraction**: face or upper body as graphic planes or painterly forms, strictly based on the actual film character, not a new invented person.
 - **Frontal painted portrait**: the character's face dominates the poster as a fine-art interpretation, using role-accurate face, hair, costume, and expression cues.
 - **Profile or three-quarter view**: stronger character presence without full frontal realism.
@@ -236,7 +238,8 @@ Character identity lock: depict [character name] from [film title, year],
 played by [actor/performer if applicable], using attached reference images
 when available. Preserve these identity traits: [face cues], [hair],
 [costume], [posture], [props], [expression]. Render as [fine-art medium],
-not photorealistic and not copied from a still. The result must be recognizable
+not photorealistic and not copied from a still, but keep accurate stylized
+likeness to the actor/performer as this role. The result must be recognizable
 as this film character, not a generic person. Integrate the character into the
 poster metaphor: [metaphor].
 ```
@@ -263,10 +266,11 @@ back-view figure and avoid generic replacement faces.
 ## Avoid
 
 - copying a still or publicity photo;
-- live-action actor-face likeness;
+- photorealistic live-action actor-face rendering or copied-still portraiture;
+- avoiding actor/performer likeness when depicting a real film character;
 - invented character appearances unrelated to the film;
 - generic handsome/beautiful faces replacing the real character identity;
-- celebrity portrait as the whole image;
+- celebrity glamour portrait detached from the film role;
 - replacing visual metaphor with a literal scene reenactment;
 - using character only as decorative fan art.
 - relying on actor-name alone without in-film character traits;
@@ -297,4 +301,4 @@ If the generated character does not resemble the film character:
 4. Move from full-body to face/upper-body if likeness matters.
 5. Strengthen required traits and forbidden substitutions.
 6. If the prop is wrong, acquire a clearer prop/still reference or remove it from the central composition.
-7. If the model cannot preserve identity, offer a non-face strategy: hands, costume, prop, silhouette, object-body fusion, or typography-led poster.
+7. If the model cannot preserve identity after reference-image retries, say so briefly and offer a non-face strategy: hands, costume, prop, silhouette, object-body fusion, or typography-led poster. Do not frame this as "avoiding" the actor's real face; frame it as fallback after likeness failure.

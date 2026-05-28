@@ -51,6 +51,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If key props/objects appear, create a prop identity lock before generation. Confirm the real form/function/name of the object, especially for culturally specific weapons, tools, costumes, vehicles, artifacts, or architecture.
    - Automatically search/acquire character visual references when browser, web, or download tools are available, preferably in-character stills or trailer frames.
    - If the image model supports reference images, pass acquired references into generation and verify they were attached.
+   - When a real actor/performer appears as a film character, pursue accurate stylized likeness from the actual film role. Do not say or imply that the skill should avoid the actor's face; avoid only photorealistic live-action rendering, copied stills, or generic celebrity glamour portraits.
    - Ask the user to upload stills only when automatic acquisition fails, access is blocked, references are low quality, or the host cannot pass acquired images to the image model.
    - Fall back to a text-only identity lock only when no usable reference-image path exists; do not promise face likeness in this mode.
    - Do not substitute generic objects for film-specific props. For example, a wing chun butterfly sword / 八斩刀 must not become generic crossed daggers.
@@ -77,7 +78,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If using an external API, require the user to provide credentials or endpoint details outside the skill text.
    - If the user requests a text version, allow the image model to generate integrated title and metadata directly in the poster for speed. Keep text short and provide exact strings.
    - If the user requests a no-text version, use `no text, no logos, no credits`.
-   - Never request live-action photorealism, realistic celebrity portraiture, or invented characters. Use the selected style lane's concrete material/process language instead of generic art-poster adjectives.
+   - Never request live-action photorealism, copied stills, or invented characters. If a character appears, request accurate role-specific likeness rendered through the selected art lane's material/process language.
    - Save the prompt package internally, but do not display it by default.
 
 7. **Save outputs**
@@ -116,7 +117,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Visual density: every run must choose a density mode. Good posters may be dense, balanced, sparse, or a single decisive visual stroke. Do not fill the canvas just because more film elements were researched.
 - Composition: overall poster design comes first. Do not create large empty blank zones merely for future text, but do use intentional negative space, silence, asymmetry, and one-point focus when the density mode calls for it.
 - Film recognition: include a protagonist/character anchor when abstraction alone would make the film hard to identify.
-- Character identity: if depicting a specific character, use a character identity lock and automatically acquired or user-provided image references when supported; do not rely on generic actor-name prompting.
+- Character identity: if depicting a specific character, use a character identity lock and automatically acquired or user-provided image references when supported; pursue accurate stylized likeness to the actual film role, not a generic substitute. Do not rely on generic actor-name prompting.
 - Prop identity: if depicting a distinctive film object, weapon, costume, vehicle, artifact, or architecture, use a prop identity lock and real visual references; do not replace it with a generic lookalike.
 - Character framing: prefer varied close portrait, three-quarter face, medium figure, pair, or ensemble strategies when useful; do not repeatedly hide characters as distant back-view figures.
 - Preference memory: keep default size and output directory; update them when the user asks to remember current settings.
@@ -146,7 +147,8 @@ Reject or revise outputs that look like:
 - low-effort AI fantasy art;
 - illegible model-generated lettering;
 - live-action photorealism;
-- realistic celebrity portraiture as the main appeal;
+- copied-still photorealism or celebrity glamour portraiture that ignores the film role;
+- avoiding the actor/performer's real role likeness when the poster depicts that character;
 - invented character designs that do not match the film;
 - cluttered desktop backgrounds.
 - conventional illustration when the user asked for bolder art direction;

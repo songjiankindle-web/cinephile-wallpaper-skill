@@ -127,8 +127,8 @@
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
 - If browser/web tools are available, automatically acquire in-character reference images before asking the user to upload.
 - If the host supports reference images, use acquired or user-provided in-character reference images for key characters and verify `reference_images_attached: true`. If it does not, state `text_only` and make the likeness risk explicit in the prompt package.
-- Do not use frontal/close likeness-heavy compositions unless real reference images are attached. Text-only prompts may describe costume and role, but they cannot guarantee actor likeness.
-- Avoid realistic celebrity portraiture. Prefer stylized likeness through costume, pose, hairstyle, facial structure cues, color, and role-specific attributes.
+- Use frontal/close likeness-heavy compositions only when real reference images are attached; when attached, actively preserve accurate role likeness in the selected art style.
+- Do not confuse non-photorealism with avoiding the actor's face. Avoid copied stills, live-action photorealism, and celebrity glamour portraits detached from the role; preserve accurate stylized likeness through facial structure, expression, hairstyle, costume, posture, and role-specific attributes.
 - Text strategy depends on the run: use model-generated integrated text for speed when requested; use `no text, no logos, no credits` only for no-text or post-layout runs.
 - Overall poster design comes before text accommodation. Do not reserve a large blank region only for text. Text should be integrated into the image, placed over calmer existing regions, or kept minimal.
 - Separate good negative space from bad blank space. Good negative space creates focus, rhythm, breath, symbolic silence, or scale tension. Bad blank space is an obvious empty title block or dead leftover area.
@@ -231,8 +231,10 @@ When recognition is weak, add:
 ```text
 Include a protagonist character anchor through [face/costume/posture/prop],
 strictly matching the film character's visual identity while rendered in
-[fine-art medium], recognizable but not a live-action photorealistic actor
-portrait, integrated into the central poster metaphor rather than copied from a still.
+[fine-art medium]. Preserve accurate stylized likeness to the actor/performer
+as this role; do not avoid the real face. Make it recognizable but not a
+live-action photorealistic portrait, integrated into the central poster metaphor
+rather than copied from a still.
 ```
 
 Stronger character-lock pattern:
@@ -242,8 +244,8 @@ Character identity lock: [character] from [film, year], played by [performer].
 Use the attached in-character reference images as visual identity anchors.
 Preserve [face], [hair], [costume], [posture], [prop], and [expression] cues.
 The character must read as [character] before the title is seen, while rendered
-as [art language], not photorealistic, not a copied still, not a generic
-replacement.
+as [art language], with accurate stylized likeness to the performer in this
+role; not photorealistic, not a copied still, not a generic replacement.
 ```
 
 If all prior generations look like distant back-view figures, force variety:

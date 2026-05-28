@@ -34,6 +34,7 @@ Current v0.99 behavior:
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;
 - fresh generation for every request unless the user explicitly asks to retrieve an old file;
 - image-model poster generation only, with one unified prompt fallback when the agent has no image capability;
-- character and key prop/object reference gates to avoid generic faces or wrong film objects.
+- character reference gates that pursue accurate stylized role likeness, not generic faces;
+- key prop/object reference gates to avoid wrong film objects.
 
 See `docs/迷影桌面 PRD v0.99.md` for the product spec.
