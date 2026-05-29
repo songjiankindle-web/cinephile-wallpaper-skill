@@ -40,10 +40,13 @@
       "avoid_tone": []
     },
     "character_anchor": {
+      "presence": "user_requested | user_declined | inferred | none",
       "name": "",
       "role": "protagonist | antagonist | supporting | ensemble",
       "actor_or_performer": "",
       "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only",
+      "user_upload_prompt_shown": false,
+      "user_uploaded_reference_paths": [],
       "source_stills": [],
       "character_crops": [],
       "costume_posture_refs": [],
@@ -143,7 +146,8 @@
 - Make the prompt art-directed and non-photorealistic. Do not switch to live-action realism.
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
-- If browser/web tools are available, automatically acquire in-character reference images before asking the user to upload.
+- Before image generation, ask whether the user wants recognizable film characters in the poster. If yes, request uploaded character photos/stills and treat them as priority-1 references for the run.
+- If browser/web tools are available, automatically acquire in-character reference images only when the user wants characters and uploaded references are absent or insufficient.
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
 - Use frontal/close character compositions only when real cropped reference images are attached.

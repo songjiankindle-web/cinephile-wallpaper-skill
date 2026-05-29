@@ -10,15 +10,16 @@
    - text mode: with text, no text, or both;
    - generation mode: current image tool, image skill/tool, external API, or prompt-only;
    - whether to remember changed size/output defaults.
-4. If a device model is provided, look up the screen resolution; see `device-size.md`.
-5. Research the film, film-tone references, style references, and character references.
-6. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
-7. Write and save one unified prompt package internally.
-8. Generate the poster through an image model if available.
-9. If no image model is available, show the no-image-capability notice and return one unified prompt.
-10. Save manifest and outputs.
-11. Set the current desktop wallpaper only if explicitly requested or saved as a default.
-12. Final reply should be poster-first and brief: image/path(s), success status, and optional next action. Do not paste research or manifest unless requested.
+4. Ask the character appearance gate before image generation.
+5. If a device model is provided, look up the screen resolution; see `device-size.md`.
+6. Research the film, film-tone references, style references, and character references.
+7. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
+8. Write and save one unified prompt package internally.
+9. Generate the poster through an image model if available.
+10. If no image model is available, show the no-image-capability notice and return one unified prompt.
+11. Save manifest and outputs.
+12. Set the current desktop wallpaper only if explicitly requested or saved as a default.
+13. Final reply should be poster-first and brief: image/path(s), success status, and optional next action. Do not paste research or manifest unless requested.
 
 ## Ambiguous Film
 
@@ -49,6 +50,33 @@ After the film is confirmed, ask the base settings in one turn. Use line breaks 
 ```
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
+
+## Character Appearance Gate
+
+After the base setup is answered and before research/generation, ask one concise question:
+
+```text
+是否希望海报中出现电影角色形象？如果希望，请在对话里上传一张你希望出现在海报中的角色照片/剧照（清晰正脸、侧脸或半身优先）；如果不希望，请说“不出现人物”。
+```
+
+Adapt this to the user's language. If the user already answered this in the setup reply, do not ask again.
+
+If the user says yes:
+
+- require at least one uploaded or locally acquired image file before claiming character-face restoration;
+- prefer in-character stills/screenshots over actor publicity photos;
+- ask the user to label images when multiple characters appear;
+- accept one image per key character, or one clear group image if the intended characters are obvious;
+- use uploaded images as priority-1 references for the current run;
+- attach the reference image files to the image-generation call when the selected model supports references.
+
+If the user says yes but no usable image is available, pause with a short request:
+
+```text
+请上传一张角色照片/剧照后我再继续生图；没有参考图的话，我不能承诺人物形象精准还原。
+```
+
+If the user says no, route the poster toward props, atmosphere, abstract symbols, typography, landscape, architecture, body fragments, or non-face silhouettes. Do not sneak in recognizable actor faces.
 
 ## Desktop Confirmation
 

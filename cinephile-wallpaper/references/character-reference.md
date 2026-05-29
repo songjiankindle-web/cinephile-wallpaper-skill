@@ -12,6 +12,28 @@ Core rule: if a specific film character is depicted, the agent must establish a 
 
 Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, building, instrument, or craft object is depicted, the agent must establish a **prop identity lock** before generation. Do not replace culturally or historically specific objects with generic lookalikes.
 
+## User-Uploaded Character Gate
+
+Before image generation, ask whether the user wants recognizable film characters in the poster.
+
+If yes, ask the user to upload one or more character photos/stills in the conversation. This is the preferred first-pass workflow for precise identity anchoring because the user can choose the exact face, costume, scene, and role version they want.
+
+Use uploaded images with this priority:
+
+1. user-uploaded in-character stills or screenshots;
+2. user-uploaded clear character publicity/still photos from the film;
+3. user-uploaded labeled group stills;
+4. automatically acquired in-character stills/trailer frames;
+5. automatically acquired actor photos only as weak support when no in-character reference exists.
+
+Rules:
+
+- uploaded character references are authoritative for this run;
+- do not replace a user-uploaded reference with a web image unless the user asks;
+- if several faces are in one image, ask the user to label which character(s) to use unless it is obvious;
+- if no uploaded/acquired reference image can be attached to the image-generation call, do not generate a recognizable face and do not claim identity restoration;
+- use only for the current run unless the user explicitly asks to save a reusable reference library.
+
 ## Research Steps
 
 1. Identify the protagonist(s), antagonist, and important character system: male lead, female lead, key supporting roles, rival, mentor, child, monster, or symbolic non-human character.
@@ -23,34 +45,34 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
    - age range and bearing in the film;
    - required face/costume/hair/prop traits;
    - forbidden generic substitutions.
-3. Automatically acquire visual references when the host has browser, web, or download capability:
+3. If the user uploaded character images, inspect and use them first. Save/record the uploaded file paths or attachment identifiers for the run.
+4. Automatically acquire visual references when the host has browser, web, or download capability and uploaded references are absent or insufficient:
    - search the web for in-character stills;
    - open likely source pages;
    - download or capture usable stills when allowed by the environment;
    - extract frames from official trailers or clips when stills are unavailable and the environment supports it;
    - save temporary/local reference files for the generation run.
-4. Prepare a reference-image package:
+5. Prepare a reference-image package:
    - save original source stills/screenshots;
    - crop at least one clear face/upper-body image per key character;
    - crop or save one costume/posture image when useful;
    - keep one wider context image only if it helps the poster concept;
    - avoid using only a written trait list.
-5. Search for visual references from stable sources when available:
+6. Search for visual references from stable sources when available:
    - official stills;
    - trailers or official clips;
    - production stills;
    - trusted film databases;
    - reputable articles or image search results.
    Use multiple references when possible so the prompt captures the role, costume, posture, and face cues instead of overfitting to one still.
-6. Select reference images:
+7. Select reference images:
    - one clear face/upper-body reference;
    - one costume/posture reference;
    - one scene/context reference when useful;
    - avoid near-duplicate images unless the character has very few available references.
-7. If the host image model supports image references, attach at least one cropped character reference and preferably two to four references per key character. Prefer film stills over actor red-carpet photos.
-8. Verify attachment before generation: the manifest or run state must contain local reference paths and `reference_images_attached: true`.
-9. Ask the user to upload stills only when automatic acquisition fails, references are low quality, access is blocked, or the host cannot pass downloaded images to the image model.
-10. If image references cannot be passed, do not promise character-face restoration. Proceed only if the user accepts a non-face/costume/prop/silhouette strategy, or stop with a clear request for an image-capable model/workflow.
+8. If the host image model supports image references, attach at least one cropped character reference and preferably two to four references per key character. Prefer user-uploaded/in-character stills over actor red-carpet photos.
+9. Verify attachment before generation: the manifest or run state must contain local reference paths or uploaded attachment identifiers and `reference_images_attached: true`.
+10. If uploaded/acquired image references cannot be passed, do not promise character-face restoration. Proceed only if the user accepts a non-face/costume/prop/silhouette strategy, or stop with a clear request for an image-capable model/workflow.
 11. Extract visual traits:
    - face shape and defining features when needed;
    - age range and bearing;
@@ -64,7 +86,7 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
    - environment;
    - repeated gesture.
    Do not invent character designs that do not exist in the film.
-12. Record source URLs, original still paths, cropped character reference paths, acquisition method, whether actual image references were attached, and any restoration risk in the manifest.
+12. Record source URLs, uploaded file paths or attachment IDs, original still paths, cropped character reference paths, acquisition method, whether actual image references were attached, and any restoration risk in the manifest.
 
 ## Prop Identity Lock
 
@@ -124,6 +146,7 @@ Use this structure before writing the image prompt:
   "character_crops": [],
   "costume_posture_refs": [],
   "local_reference_paths": [],
+  "uploaded_reference_paths": [],
   "reference_images_attached": false,
   "acquisition_method": "browser_search | web_search | trailer_frame | user_upload | text_only",
   "required_traits": {
@@ -161,6 +184,8 @@ Use this workflow for any poster that visibly depicts a real actor/performer cha
 6. In the prompt, instruct the model to preserve the character identity from attached references while transforming the overall poster language through the selected art style.
 7. After generation, inspect whether the character still reads as the referenced role. If not, retry with fewer characters, tighter crop references, and stronger identity-preservation instructions.
 
+If the user has uploaded reference stills, start at step 2 and treat those files as the primary identity source.
+
 If any of steps 1-5 fails, the skill cannot honestly claim character-face restoration. Ask the user to upload stills or use a non-face recognition strategy.
 
 ## Reference Image Priority
@@ -178,7 +203,7 @@ Avoid using official poster art as the primary character reference because it ca
 
 ## Auto Acquisition Rules
 
-If browser or web tools are available, the agent should try automatic acquisition before asking the user to upload.
+If the user already uploaded character references, skip automatic acquisition unless more references are needed. If no upload exists and browser or web tools are available, the agent may try automatic acquisition before asking for more user files.
 
 Suggested search queries:
 
@@ -192,7 +217,7 @@ Suggested search queries:
 
 Use the fewest images needed for identity. Prefer clear, in-character, non-poster images. Store only local working references needed for this run or for a user-approved project library. Do not bypass paywalls, login gates, bot protections, or watermark/copyright restrictions.
 
-If automatic acquisition finds no reliable references, say so briefly and ask the user for one to four character stills. This is fallback, not the primary path.
+If no reliable references are available, say so briefly and ask the user for one to four character stills.
 
 ## Reference Gate
 
@@ -202,7 +227,7 @@ Before generating a face-forward, three-quarter, or close portrait:
 2. Confirm the image model call can actually receive that reference image file.
 3. Attach the reference image file to the generation call.
 4. Set `reference_images_attached: true`.
-5. If any of the above is false, do not claim the character is visually restored.
+5. If any of the above is false, do not claim the character is visually restored and do not create a recognizable face.
 
 Fallback choices when the gate fails:
 

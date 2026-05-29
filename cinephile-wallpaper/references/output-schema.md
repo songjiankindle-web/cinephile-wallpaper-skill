@@ -79,9 +79,13 @@ Write one manifest per generated wallpaper:
   },
   "character_reference": {
     "enabled": false,
+    "presence": "user_requested | user_declined | inferred | none",
+    "user_upload_prompt_shown": false,
     "characters": [],
     "identity_locks": [],
     "reference_mode": "auto_acquired_refs | user_uploaded_refs | image_references | text_only | none",
+    "user_uploaded_reference_paths": [],
+    "uploaded_attachment_ids": [],
     "source_stills": [],
     "character_crops": [],
     "costume_posture_refs": [],
@@ -103,6 +107,7 @@ Write one manifest per generated wallpaper:
     "strategy": "",
     "source_urls": [],
     "auto_acquisition_attempted": false,
+    "user_uploaded_refs_authoritative": false,
     "text_only_identity_risk": false,
     "face_restoration_claimed": false,
     "recognition_check": {
