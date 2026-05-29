@@ -32,10 +32,10 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 
 2. **Confirm base settings in one turn**
    - After the film is known and ambiguity is resolved, ask one setup message with numbered, line-broken questions for size/device, output directory, text variant, generation mode, and whether to remember changed defaults.
-   - If saved preferences exist, show them as defaults and let the user say to use defaults.
+   - If saved preferences exist for size/device, output directory, text variant, or generation mode, show all saved defaults and let the user say to use all defaults.
    - Accept explicit dimensions, device type, or device model.
    - If the user wants a phone wallpaper and does not know the resolution, ask for the exact phone model only if it was not already provided; then look up the resolution online.
-   - Preserve memory for default size and output directory when the user asks to save or changes them.
+   - Preserve memory for default size/device, output directory, text variant, and generation mode when the user asks to save or changes them.
    - Record whether the size came from user dimensions, device lookup, auto-detection, or default.
 
 3. **Confirm text handling**
@@ -67,6 +67,8 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, visual density, subject strategy, metaphor, abstraction level, and avoid-list.
    - Select a concrete `style_lane` by random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
    - Select a `visual_density` before writing the prompt: `dense`, `balanced`, `sparse`, or `single_stroke`. Use weighted randomness based on film genre, rhythm, scale, narrative complexity, and authorial tone; do not use pure random density and do not default to dense multi-element compositions.
+   - Apply the global minimalism boost in `references/visual-brief.md`: increase the combined chance of `sparse` and `single_stroke` by 40% before drawing density.
+   - If the selected style lane is `real_object_still_life`, focus on exact film props or body fragments; do not show recognizable faces.
    - Force an art-direction choice that is bolder than conventional illustration unless the user explicitly asks for a restrained normal poster.
    - Avoid direct replication of official posters.
 
@@ -121,7 +123,9 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Character identity: if depicting a specific real actor/performer character, use a character identity lock plus actual in-character image files. Attach cropped character references to the image model when supported; do not rely on text-only prompting, actor-name prompting, or vague style-language approximation.
 - Prop identity: if depicting a distinctive film object, weapon, costume, vehicle, artifact, or architecture, use a prop identity lock and real visual references; do not replace it with a generic lookalike.
 - Character framing: prefer varied close portrait, three-quarter face, medium figure, pair, or ensemble strategies when useful; do not repeatedly hide characters as distant back-view figures.
-- Preference memory: keep default size and output directory; update them when the user asks to remember current settings.
+- Face direction: when characters appear, prefer front, profile, or three-quarter views. Back view is uncommon and must be deliberate, not a default.
+- Real object style: the `real_object_still_life` lane is for exact film props and real-world object materiality; people may appear only as body fragments, never recognizable faces.
+- Preference memory: keep default size/device, output directory, text variant, and generation mode; update them when the user asks to remember current settings, and allow `use all defaults` on future runs.
 - Fresh generation: do not reuse or auto-deliver previous generated results for the same film. Previous outputs are not a cache.
 - Safety: do not bypass site protections; do not scrape copyrighted poster art as the default path.
 

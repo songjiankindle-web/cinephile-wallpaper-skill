@@ -27,9 +27,11 @@ v0.99 release candidate.
 Current v0.99 behavior:
 
 - fixed opening prompt;
-- numbered one-turn setup for size, output folder, text mode, generation mode, and default memory;
+- numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
 - randomized `style_lane` and `style_variant` selection unless the user specifies a style;
 - weighted visual-density routing across `dense`, `balanced`, `sparse`, and `single_stroke`;
+- 40% global boost for sparse/single-stroke density after film-profile weighting;
+- real-object still-life lane for exact film props, with no recognizable faces;
 - intentional negative space and one-point-focus poster logic, without confusing it with dead blank title areas;
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;
 - fresh generation for every request unless the user explicitly asks to retrieve an old file;

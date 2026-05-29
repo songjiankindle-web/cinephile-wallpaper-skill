@@ -43,6 +43,7 @@ Write one manifest per generated wallpaper:
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
     "selection_mode": "user_specified | weighted_random | corrective",
+    "minimalism_boost_applied": true,
     "density_weights": {
       "dense": 0,
       "balanced": 0,
@@ -154,6 +155,10 @@ Write one manifest per generated wallpaper:
   "preference_memory": {
     "size_remembered": false,
     "output_dir_remembered": false,
+    "text_variant_remembered": false,
+    "generation_mode_remembered": false,
+    "all_base_settings_remembered": false,
+    "used_all_defaults": false,
     "preferences_path": ""
   },
   "outputs": {

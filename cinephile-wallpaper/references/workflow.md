@@ -45,7 +45,7 @@ After the film is confirmed, ask the base settings in one turn. Use line breaks 
 2. 文件生成后想保存到哪个本地文件夹？如果沿用默认位置，请直接说“默认”。
 3. 您想要哪种版本：带文字、无文字，还是两者都要？
 4. 生图方式选择哪一种：使用当前 agent 的生图能力、外部 API/生图工具，还是只要提示词？
-5. 是否把本次尺寸和保存位置记为默认设置，方便下次沿用？
+5. 是否把以上四项都记为默认设置，方便下次沿用？
 ```
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
@@ -83,7 +83,9 @@ Remember changed defaults automatically when the runtime supports local settings
 - default size source or device model;
 - default output directory;
 - default text variant;
-- default generation mode, if the user asks for automatic future behavior.
+- default generation mode.
+
+The four base setup fields all support memory: size/device, output directory, text variant, and generation mode. On the next run, show the saved defaults in the numbered setup prompt and allow the user to answer `全部默认` / `use all defaults`. If the user only changes one field, keep the other saved defaults.
 
 Preference memory is only for setup defaults. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a film again.
 

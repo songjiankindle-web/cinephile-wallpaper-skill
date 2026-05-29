@@ -84,6 +84,7 @@
     "visual_density": {
       "mode": "dense | balanced | sparse | single_stroke",
       "selection_mode": "user_specified | weighted_random | corrective",
+      "minimalism_boost_applied": true,
       "density_weights": {
         "dense": 0,
         "balanced": 0,
@@ -138,6 +139,7 @@
 - Read `character-reference.md` whenever a visible film character appears, not only after recognition fails.
 - Use film-inspired motifs: locations, objects, light, geometry, weather, costume silhouettes, era texture.
 - Use film-specific object accuracy: if a recognizable prop, weapon, costume, vehicle, artifact, building, instrument, or craft object appears, establish a prop identity lock from `character-reference.md`.
+- If `style_lane` is `real_object_still_life`, make the central subject an exact film prop or real-world object. Do not show recognizable faces; allow only body fragments such as hands, feet, sleeve, glove, shoulder crop, shadow, or silhouette edge.
 - Make the prompt art-directed and non-photorealistic. Do not switch to live-action realism.
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
@@ -145,6 +147,7 @@
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
 - Use frontal/close character compositions only when real cropped reference images are attached.
+- Limit back-view character compositions. If characters appear, prefer front, profile, or three-quarter views; use back view only as a deliberate film-specific motif or non-face fallback.
 - Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
 - Text strategy depends on the run: use model-generated integrated text for speed when requested; use `no text, no logos, no credits` only for no-text or post-layout runs.
 - Overall poster design comes before text accommodation. Do not reserve a large blank region only for text. Text should be integrated into the image, placed over calmer existing regions, or kept minimal.
@@ -163,6 +166,7 @@ Pick one mode before the prompt. The mode is as important as style.
 Density rules:
 
 - Draw density from a weighted distribution when the user has no preference. Do not pick density by pure randomness.
+- Apply a global minimalism boost before drawing: after film-profile weighting, increase `sparse` and `single_stroke` together by 40% of their current combined weight, then renormalize all four weights to 100. This raises the baseline chance of minimal visual density without making it deterministic.
 - Keep a minority chance for surprise. A commercial action film can still become sparse; an art film can still become dense. Weighted means biased, not deterministic.
 - Bias toward `balanced`, `sparse`, and `single_stroke` if recent results felt too full.
 - A minimal poster is not a weak poster. It must carry meaning through scale, placement, texture, color, and the chosen focal sign.
@@ -209,6 +213,8 @@ Suggested final distributions:
 ```
 
 If multiple categories apply, average or blend the closest distributions, then draw once.
+
+Global minimalism boost example: if blended weights are `{dense: 45, balanced: 35, sparse: 15, single_stroke: 5}`, the minimal modes total 20. Add 8 points across `sparse` and `single_stroke` proportionally or with a slight preference to `sparse`, then renormalize. Record `minimalism_boost_applied: true`.
 
 Record:
 

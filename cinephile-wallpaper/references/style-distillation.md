@@ -180,6 +180,7 @@ Choose one lane:
 15. **textile_tapestry_map**: tapestry, embroidery, woven grids, map/diagram as image structure.
 16. **impressionist_light_field**: impressionism, post-impressionism, pointillism, broken color, plein-air light logic, atmospheric brushwork.
 17. **minimalist_reduction**: minimalism, hard-edge painting, sparse geometry, one or two charged elements, disciplined emptiness, quiet scale tension.
+18. **real_object_still_life**: realistic/real-world object still life, exact film prop materiality, product-photography clarity, tactile surfaces, controlled light, no visible faces.
 
 ## Style Variant Pool
 
@@ -202,6 +203,19 @@ After drawing a lane, draw or choose one specific variant from that lane. Put th
 - `textile_tapestry_map`: medieval battle tapestry; embroidery grid; woven map; textile diagram; thread-like contour system.
 - `impressionist_light_field`: Monet-like broken light without direct imitation; Renoir-like warm figure light without copying; Degas-like cropped movement; Seurat-like pointillist color particles; Van Gogh-like directional strokes without copying a specific painting.
 - `minimalist_reduction`: Agnes Martin-like quiet grid described as pale hand-drawn intervals; Ellsworth Kelly-like hard color shape; Donald Judd-like serial blocks translated to flat poster; Japanese ma-like emptiness; one-object minimal poster.
+- `real_object_still_life`: exact film prop still life; forensic object study; museum-object photograph; product-photography lighting; hand/foot/body-part interaction without faces; realistic material detail for key props such as Xu Haofeng's The Final Master's wing chun butterfly swords / 八斩刀, No Country for Old Men's captive bolt pistol/air gun, The Devil Wears Prada's high heel shoes, Harry Potter's wand, a ring, key, cigarette, handbag, cassette, mask, or vehicle detail.
+
+## Real Object Still Life Rules
+
+Use `real_object_still_life` when the poster's strongest anchor is a real object, weapon, costume piece, vehicle part, document, instrument, or artifact from the film.
+
+- It is realistic/real-world in object rendering, but still a designed poster, not an ordinary product ad.
+- It should usually depict key props, not faces.
+- People may appear only as body fragments: hands, feet, shoulder, sleeve, glove, shoe, torso crop, shadow, or silhouette edge.
+- Do not show a recognizable face in this lane.
+- Build a prop identity lock first. The object must match the film-specific form, material, scale, and use.
+- Good uses: 八斩刀 in `The Final Master`, captive bolt pistol/air gun in `No Country for Old Men`, high heels in `The Devil Wears Prada`, wand in `Harry Potter`, a suitcase, ring, chess piece, camera, cassette, or car detail.
+- Avoid generic substitutes, fantasy redesigns, and decorative prop piles.
 
 ## Randomization Discipline
 

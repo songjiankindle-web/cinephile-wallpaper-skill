@@ -225,7 +225,7 @@ Before generating a prominent film-specific object:
 Choose one or combine two when useful:
 
 - **Silhouette**: recognizable outline without face restoration.
-- **Back view**: character posture and costume in a symbolic space.
+- **Back view**: character posture and costume in a symbolic space. Use rarely; do not select by default.
 - **Partial figure**: hand, shoulder, profile, shoe, coat, hair, weapon, bag, umbrella, etc.
 - **Costume + prop**: recognizable outfit and object without exact face.
 - **Tiny figure in symbolic landscape**: preserves poster abstraction while adding film identity.
@@ -256,6 +256,16 @@ Do not default to a tiny back-view figure every time. Treat back view and tiny f
 - hands/props as protagonist surrogate.
 
 Choose the strategy that makes the film recognizable while preserving poster design.
+
+## Face Direction Bias
+
+When a visible character is included and reference-image restoration is possible, bias strongly toward front face, profile, or three-quarter view:
+
+- primary choices: frontal face, three-quarter face, profile, close/medium portrait, character pair facing camera or each other;
+- allowed but uncommon: back view, rear three-quarter view, distant tiny figure;
+- use back view only when it is a deliberate film-specific motif or when face restoration is not available and the user accepts a non-face strategy.
+
+Prompt rule: explicitly say `avoid default back-view figure; prefer front, profile, or three-quarter character view unless a back view is a deliberate film-specific motif`.
 
 ## Prompt Pattern
 
