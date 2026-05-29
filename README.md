@@ -22,9 +22,9 @@ For Codex-style skills:
 
 ## Version
 
-v0.99 release candidate.
+v0.99b release candidate.
 
-Current v0.99 behavior:
+Current v0.99b behavior:
 
 - fixed opening prompt;
 - numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
@@ -40,4 +40,9 @@ Current v0.99 behavior:
 - character reference-image workflow: use uploaded/acquired real stills or crops and attach them to image generation before claiming face restoration;
 - key prop/object reference gates to avoid wrong film objects.
 
-See `docs/迷影桌面 PRD v0.99.md` for the product spec.
+Version archive:
+
+- `v0.99a`: previous release candidate before the required user-uploaded character-reference gate.
+- `v0.99b`: current release candidate with the character appearance gate and uploaded-reference-first workflow.
+
+See `docs/迷影桌面 PRD v0.99b.md` for the product spec.
