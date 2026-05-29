@@ -32,7 +32,25 @@ Rules:
 - do not replace a user-uploaded reference with a web image unless the user asks;
 - if several faces are in one image, ask the user to label which character(s) to use unless it is obvious;
 - if no uploaded/acquired reference image can be attached to the image-generation call, do not generate a recognizable face and do not claim identity restoration;
+- no reference image does not mean no people: use controlled non-face human presence when it helps the poster;
 - use only for the current run unless the user explicitly asks to save a reusable reference library.
+
+## No-Reference Character Fallback
+
+If the user wants characters but does not upload real actor/character photos, the poster may still include people. The constraint is: no readable actor face, no invented replacement face, and no claim of precise identity restoration.
+
+Use restrained, clever, "does not expose weakness" strategies:
+
+- back view with role-specific costume/posture;
+- silhouette or shadow shaped by film-specific light, setting, or object;
+- partial figure: hands, feet, shoulder, sleeve, hair edge, profile without readable face, body crop;
+- costume + prop as the character surrogate;
+- reflection, window, smoke, water, torn paper, mask, or architectural occlusion that hides the face intentionally;
+- small scale figure when composition needs distance or loneliness;
+- body-object fusion, where the character is implied through a key object or environment;
+- group presence as abstract rhythm, not individualized faces.
+
+Do not force a character-free poster unless the concept is stronger without people. Also do not make every no-reference fallback a back view; vary silhouette, partial figure, posture, object, and spatial strategies.
 
 ## Research Steps
 
@@ -72,7 +90,7 @@ Rules:
    - avoid near-duplicate images unless the character has very few available references.
 8. If the host image model supports image references, attach at least one cropped character reference and preferably two to four references per key character. Prefer user-uploaded/in-character stills over actor red-carpet photos.
 9. Verify attachment before generation: the manifest or run state must contain local reference paths or uploaded attachment identifiers and `reference_images_attached: true`.
-10. If uploaded/acquired image references cannot be passed, do not promise character-face restoration. Proceed only if the user accepts a non-face/costume/prop/silhouette strategy, or stop with a clear request for an image-capable model/workflow.
+10. If uploaded/acquired image references cannot be passed, do not promise character-face restoration. Continue with a non-face/costume/prop/silhouette/body-fragment strategy when it fits the film, or request a user still only when a readable face is essential.
 11. Extract visual traits:
    - face shape and defining features when needed;
    - age range and bearing;
@@ -186,7 +204,7 @@ Use this workflow for any poster that visibly depicts a real actor/performer cha
 
 If the user has uploaded reference stills, start at step 2 and treat those files as the primary identity source.
 
-If any of steps 1-5 fails, the skill cannot honestly claim character-face restoration. Ask the user to upload stills or use a non-face recognition strategy.
+If any of steps 1-5 fails, the skill cannot honestly claim character-face restoration. Use a non-face recognition strategy by default when it can produce a strong poster; ask the user to upload stills only when the design truly needs a recognizable face.
 
 ## Reference Image Priority
 
@@ -217,7 +235,7 @@ Suggested search queries:
 
 Use the fewest images needed for identity. Prefer clear, in-character, non-poster images. Store only local working references needed for this run or for a user-approved project library. Do not bypass paywalls, login gates, bot protections, or watermark/copyright restrictions.
 
-If no reliable references are available, say so briefly and ask the user for one to four character stills.
+If no reliable references are available, say so briefly. Ask the user for one to four character stills only if precise face restoration is required; otherwise continue with a no-reference character fallback.
 
 ## Reference Gate
 
@@ -232,9 +250,9 @@ Before generating a face-forward, three-quarter, or close portrait:
 Fallback choices when the gate fails:
 
 - ask the user for stills;
-- switch to costume/prop/gesture/silhouette recognition;
+- switch to costume/prop/gesture/silhouette/back-view/partial-figure recognition;
 - avoid claiming face restoration without attached references;
-- generate a no-face symbolic poster.
+- generate a no-face symbolic poster with restrained human presence when useful.
 
 Text prompts alone are not sufficient for actor/character face restoration.
 
@@ -250,7 +268,7 @@ Before generating a prominent film-specific object:
 Choose one or combine two when useful:
 
 - **Silhouette**: recognizable outline without face restoration.
-- **Back view**: character posture and costume in a symbolic space. Use rarely; do not select by default.
+- **Back view**: character posture and costume in a symbolic space. Use deliberately when no face reference exists or when the concept needs withdrawal, pursuit, solitude, or mystery; do not select by default every time.
 - **Partial figure**: hand, shoulder, profile, shoe, coat, hair, weapon, bag, umbrella, etc.
 - **Costume + prop**: recognizable outfit and object without exact face.
 - **Tiny figure in symbolic landscape**: preserves poster abstraction while adding film identity.
@@ -288,7 +306,7 @@ When a visible character is included and reference-image restoration is possible
 
 - primary choices: frontal face, three-quarter face, profile, close/medium portrait, character pair facing camera or each other;
 - allowed but uncommon: back view, rear three-quarter view, distant tiny figure;
-- use back view only when it is a deliberate film-specific motif or when face restoration is not available and the user accepts a non-face strategy.
+- use back view only when it is a deliberate film-specific motif or when face restoration is not available and a non-face strategy is aesthetically stronger.
 
 Prompt rule: explicitly say `avoid default back-view figure; prefer front, profile, or three-quarter character view unless a back view is a deliberate film-specific motif`.
 
@@ -347,7 +365,7 @@ Before finalizing the prompt, ask:
 - Did the agent first attempt automatic reference acquisition when browser/web tools were available?
 - Did the generation use reference images when the host supports them?
 - Were the cropped character reference images actually attached to the image-generation call?
-- If not, did the agent ask for user-provided stills or record `text_only` risk?
+- If not, did the agent avoid readable faces and use a no-reference fallback, ask for user-provided stills when needed, or record `text_only` risk?
 - Does the character anchor serve the central metaphor?
 - Are any film-specific props or costumes accurate enough to be recognized?
 - Is the result still a poster, not a screenshot?
@@ -365,4 +383,4 @@ If the generated character does not resemble the film character:
 6. Move from full-body to face/upper-body if identity restoration matters.
 7. Strengthen the attached-reference instruction and forbidden substitutions.
 8. If the prop is wrong, acquire a clearer prop/still reference or remove it from the central composition.
-9. If the model cannot preserve identity after reference-image retries, say so briefly and offer a non-face strategy: hands, costume, prop, silhouette, object-body fusion, or typography-led poster. Frame it as fallback after reference-image identity preservation failed.
+9. If the model cannot preserve identity after reference-image retries, say so briefly and offer a non-face strategy: hands, costume, prop, silhouette, back view, partial figure, object-body fusion, or typography-led poster. Frame it as fallback after reference-image identity preservation failed.

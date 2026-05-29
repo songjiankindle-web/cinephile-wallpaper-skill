@@ -73,8 +73,10 @@ If the user says yes:
 If the user says yes but no usable image is available, pause with a short request:
 
 ```text
-请上传一张角色照片/剧照后我再继续生图；没有参考图的话，我不能承诺人物形象精准还原。
+如果想精准还原演员/角色脸部，请上传一张角色照片/剧照；如果不上传，我会继续用背影、剪影、局部、服装姿态或影子等不露脸人物方式来设计。
 ```
+
+Do not block the whole poster only because no reference was uploaded. The hard restriction is on readable face restoration, not on all human presence.
 
 If the user says no, route the poster toward props, atmosphere, abstract symbols, typography, landscape, architecture, body fragments, or non-face silhouettes. Do not sneak in recognizable actor faces.
 

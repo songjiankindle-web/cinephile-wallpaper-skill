@@ -151,6 +151,7 @@
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
 - Use frontal/close character compositions only when real cropped reference images are attached.
+- If the user wants character presence but no actor/character reference image is provided or attachable, do not remove people by default. Use non-face character presence: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection, small figure, or body-object fusion. Avoid readable invented faces.
 - Limit back-view character compositions. If characters appear, prefer front, profile, or three-quarter views; use back view only as a deliberate film-specific motif or non-face fallback.
 - Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
 - Text strategy depends on the run: use model-generated integrated text for speed when requested; use `no text, no logos, no credits` only for no-text or post-layout runs.

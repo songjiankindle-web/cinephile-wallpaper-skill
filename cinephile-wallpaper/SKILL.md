@@ -43,6 +43,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If the user says yes, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded character images as the strongest identity source for this run. Use them before automatic web acquisition.
    - Do not proceed with character-face restoration until at least one uploaded or locally acquired reference image file is actually attachable to the image-generation call.
+   - If the user wants characters but does not provide real actor/character reference images, characters may still appear through restrained non-face strategies: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection without readable face, scale figure, or body-object fusion. Do not force a character-free poster.
    - If the user says no, use non-character, object, atmosphere, typography, silhouette, or symbolic strategies instead.
    - Store uploaded references only for the current run unless the user explicitly asks to build a reusable reference library.
 
@@ -63,7 +64,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If the image model supports reference images, pass the cropped character reference images into generation and verify they were attached.
    - Do not rely on text descriptions, actor names, or style-language approximations to preserve identity. The restoration target is reference-image identity preservation: the generated poster character should be based on the supplied still/crop images.
    - If the user requested characters but did not upload usable references, ask for stills before attempting face restoration. Automatic acquisition may supplement missing or low-quality references when the host supports it.
-   - If no usable character image file can be obtained or the host cannot pass reference images to the image model, do not promise character-face restoration. Either request user-uploaded stills, switch to a non-face strategy with explicit risk, or stop at a prompt/reference checklist.
+   - If no usable character image file can be obtained or the host cannot pass reference images to the image model, do not promise character-face restoration. Use a restrained non-face character strategy when it improves the poster, or ask for a user-uploaded still only if the design truly needs a recognizable face.
    - Do not substitute generic objects for film-specific props. For example, a wing chun butterfly sword / 八斩刀 must not become generic crossed daggers.
    - Prefer primary or stable sources when available. Preserve source URLs in the manifest.
 
@@ -121,7 +122,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Character presence: ask before generation whether recognizable film characters should appear. If yes, require uploaded or locally acquired reference images that can be attached to the image model before claiming face restoration.
+- Character presence: ask before generation whether recognizable film characters should appear. If yes, require uploaded or locally acquired reference images that can be attached to the image model before claiming face restoration. Without references, characters may still appear as non-face anchors.
 - Style: concrete randomly drawn style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
@@ -135,6 +136,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prop identity: if depicting a distinctive film object, weapon, costume, vehicle, artifact, or architecture, use a prop identity lock and real visual references; do not replace it with a generic lookalike.
 - Character framing: prefer varied close portrait, three-quarter face, medium figure, pair, or ensemble strategies when useful; do not repeatedly hide characters as distant back-view figures.
 - Face direction: when characters appear, prefer front, profile, or three-quarter views. Back view is uncommon and must be deliberate, not a default.
+- No-reference character fallback: if no actor/character reference image is provided, avoid readable faces but allow elegant human presence through silhouette, back view, partial figure, hands, costume, posture, shadow, reflection, or body-object fusion. Use this as a design choice, not as a clumsy absence of people.
 - Real object style: the `real_object_still_life` lane is for exact film props and real-world object materiality; people may appear only as body fragments, never recognizable faces.
 - Preference memory: keep default size/device, output directory, text variant, and generation mode; update them when the user asks to remember current settings, and allow `use all defaults` on future runs.
 - Fresh generation: do not reuse or auto-deliver previous generated results for the same film. Previous outputs are not a cache.
@@ -165,7 +167,7 @@ Reject or revise outputs that look like:
 - live-action photorealism;
 - copied-still photorealism or celebrity glamour portraiture that ignores the film role;
 - claiming character-face restoration without attached still/crop reference images;
-- proceeding with recognizable character generation after the user requested characters but no uploaded/acquired reference image can be attached;
+- generating readable actor/character faces after the user requested characters but no uploaded/acquired reference image can be attached;
 - using actor-name or text traits alone when the model can accept image references;
 - invented character designs that do not match the film;
 - cluttered desktop backgrounds.
