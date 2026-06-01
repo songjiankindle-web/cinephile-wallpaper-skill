@@ -153,7 +153,7 @@
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
 - Use frontal/close character compositions only when real cropped reference images are attached.
-- When using uploaded or acquired character references, use them for identity extraction only. Preserve likeness and role traits, but regenerate the figure in a new pose/composition. Do not paste, cut out, trace, clone, or recreate the reference still.
+- When using uploaded or acquired character references, treat the face and appearance as mandatory identity targets. Preserve the real actor/character likeness as accurately as the model allows, but redesign the body pose, action, gesture, lighting, framing, and composition. Do not paste, cut out, trace, clone, or recreate the reference still.
 - If the user wants character presence but no actor/character reference image is provided or attachable, do not remove people by default. Use non-face character presence: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection, small figure, or body-object fusion. Avoid readable invented faces.
 - Limit back-view character compositions. If characters appear, prefer front, profile, or three-quarter views; use back view only as a deliberate film-specific motif or non-face fallback.
 - Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
@@ -312,10 +312,11 @@ When recognition is weak, add:
 Include a protagonist character anchor through [face/costume/posture/prop],
 strictly matching the film character's visual identity while rendered in
 [fine-art medium]. Use the attached in-character cropped reference image as
-the identity source only. Preserve the referenced face/head/hair/costume and
-role bearing, but regenerate the figure in a new poster pose and composition.
+the mandatory identity source for the face and appearance. Accurately preserve
+the referenced face/head/hair/age/expression/costume and role bearing, but
+regenerate the figure in a new poster pose, action, gesture, and composition.
 Do not paste, cut out, trace, clone, or recreate the still; do not copy its
-lighting, background, crop, or exact posture.
+lighting, background, crop, body pose, or exact posture.
 ```
 
 Stronger character-lock pattern:
@@ -323,12 +324,12 @@ Stronger character-lock pattern:
 ```text
 Character identity lock: [character] from [film, year], played by [performer].
 Use the attached cropped in-character reference images as the identity source,
-not as loose inspiration. Preserve the referenced face, head, hair, costume,
-prop, expression range, and role bearing inside the poster, while changing the
-pose, crop, lighting, background, and composition. The character must read as
-[character] before the title is seen, while rendered as [art language]; not a
-photorealistic copied still, not pasted cutout, not text-only approximation,
-not a generic replacement.
+not as loose inspiration. Accurately preserve the referenced face, head, hair,
+eyes, nose, mouth, jaw, costume, prop, expression range, and role bearing
+inside the poster, while changing the pose, action, gesture, crop, lighting,
+background, and composition. The character must read as [character] before the
+title is seen, while rendered as [art language]; not a photorealistic copied
+still, not pasted cutout, not text-only approximation, not a generic replacement.
 ```
 
 If all prior generations look like distant back-view figures, force variety:

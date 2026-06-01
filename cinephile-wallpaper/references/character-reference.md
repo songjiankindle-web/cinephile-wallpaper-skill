@@ -14,11 +14,11 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
 
 ## User-Uploaded Character Gate
 
-Before image generation, ask whether the user wants recognizable film characters in the poster.
+Before image generation, ask whether the user wants to use real film character reference images.
 
 If yes, ask the user to upload one or more character photos/stills in the conversation. This is the preferred first-pass workflow for precise identity anchoring because the user can choose the exact face, costume, scene, and role version they want.
 
-Important: an uploaded character reference is an identity anchor, not a layer to be pasted into the poster. Extract the character's likeness and role traits, then generate a new poster figure through the selected art language.
+Important: an uploaded character reference is an identity anchor, not a layer to be pasted into the poster. The face and appearance must be restored as accurately as the image model allows; the pose, action, gesture, framing, lighting, background, and composition should be redesigned for the poster.
 
 Use uploaded images with this priority:
 
@@ -34,7 +34,8 @@ Rules:
 - do not replace a user-uploaded reference with a web image unless the user asks;
 - do not cut out, paste, trace, clone, or replicate the uploaded image;
 - do not copy the reference pose, lighting, crop, background, camera angle, or composition unless the user explicitly asks for that exact still;
-- use the reference to preserve face structure, hair, age, expression, bearing, costume, posture language, and role identity inside a newly composed poster;
+- use the reference to accurately preserve face structure, eyes, nose, mouth, jaw, skin tone, hair, age, expression range, bearing, costume, and role identity inside a newly composed poster;
+- redesign the body pose, action, gesture, spatial relationship, and poster composition instead of reproducing the reference still;
 - if several faces are in one image, ask the user to label which character(s) to use unless it is obvious;
 - if no uploaded/acquired reference image can be attached to the image-generation call, do not generate a recognizable face and do not claim identity restoration;
 - no reference image does not mean no people: use controlled non-face human presence when it helps the poster;
@@ -217,19 +218,20 @@ If any of steps 1-5 fails, the skill cannot honestly claim character-face restor
 
 When image references are attached, write the prompt so the model understands the reference's purpose:
 
-- preserve: face shape, hairline/hairstyle, age, expression range, costume identity, posture language, role temperament, and key props;
-- transform: pose, composition, color, lighting, background, scale, crop, material, and art style;
+- preserve with high accuracy: face shape, eyes, nose, mouth, jawline, skin tone, hairline/hairstyle, age, expression range, costume identity, role temperament, and key props;
+- transform: body pose, action, gesture, composition, color, lighting, background, scale, crop, material, and art style;
 - forbid: copy-paste cutout, traced outline, same camera angle, same still background, same lighting, same body pose, celebrity glamour portrait, or literal screenshot remake.
 
 Good wording:
 
 ```text
-Use the attached character image only as an identity and costume reference.
-Extract the likeness, facial structure, hair, expression, bearing, and role
-costume, then regenerate the character as a new painted/graphic figure inside
-the poster's original composition. Do not paste, cut out, trace, clone, or
-recreate the reference photo; do not reuse its pose, background, lighting, or
-camera crop.
+Use the attached character image as the mandatory identity source for the
+face and appearance. Accurately preserve the likeness, facial structure,
+eyes, nose, mouth, jaw, hair, age, expression range, bearing, and role costume,
+then regenerate the character as a new painted/graphic figure inside the
+poster's original composition. Do not paste, cut out, trace, clone, or recreate
+the reference photo; redesign the pose, action, gesture, background, lighting,
+camera crop, and composition.
 ```
 
 ## Reference Image Priority
@@ -341,13 +343,15 @@ Prompt rule: explicitly say `avoid default back-view figure; prefer front, profi
 ```text
 Character identity lock: depict [character name] from [film title, year],
 played by [actor/performer if applicable]. Use the attached cropped
-in-character reference images as the identity source for the face, head,
-hair, costume, posture, and expression. Preserve the character identity from
-those image references while rendering the overall poster in [fine-art medium].
-Do not paste, cut out, trace, clone, or recreate the still; do not copy its
-pose, lighting, camera crop, or background; do not make a photorealistic
+in-character reference images as the mandatory identity source for the face,
+head, hair, age, expression range, costume, and role bearing. Accurately
+preserve the real actor/character likeness from those image references while
+rendering the overall poster in [fine-art medium]. Do not paste, cut out,
+trace, clone, or recreate the still; do not copy its body pose, action,
+lighting, camera crop, background, or composition; do not make a photorealistic
 live-action frame; do not replace the role with a generic person. Regenerate
-the character as a new figure inside the poster metaphor: [metaphor].
+the character with a newly designed pose and gesture inside the poster
+metaphor: [metaphor].
 ```
 
 For important props:
@@ -379,6 +383,7 @@ back-view figure and avoid generic replacement faces.
 - using text-only actor names or trait lists as the identity mechanism when image references are possible;
 - invented character appearances unrelated to the film;
 - generic handsome/beautiful faces replacing the real character identity;
+- treating the face as loose inspiration when a reference image was provided;
 - celebrity glamour portrait detached from the film role;
 - replacing visual metaphor with a literal scene reenactment;
 - using character only as decorative fan art.
