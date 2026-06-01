@@ -41,6 +41,8 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 3. **Confirm character reference use**
    - Before image generation, ask whether the user wants to use real film character reference images.
    - Explain that uploading character photos/stills helps the poster restore character likeness more accurately. If the user does not upload references, the skill will decide whether people should appear and how to design them.
+   - In the same question, invite the user to add optional design requirements such as preferred art style, desired elements/props, character treatment, color mood, composition, or anything they want to avoid. If the user has no requirements, tell them to say so and let the AI make the design decisions.
+   - Treat user design requirements as constraints for this run. If no design requirements are provided, set `ai_autonomous_design` and proceed without another confirmation.
    - If the user wants reference-image restoration, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded character images as the strongest identity source for this run. Use them before automatic web acquisition.
    - Use uploaded references to restore the character's face and appearance as accurately as the image model allows: face structure, eyes, nose, mouth, jaw, skin tone, age, hair, expression range, bearing, costume, and role cues are mandatory identity anchors.
@@ -126,7 +128,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Character reference use: ask before generation whether the user wants to use real film character reference images. Uploading references improves character likeness; not uploading references means the skill decides the character strategy, not that people are forbidden. Require attached references before claiming face restoration.
+- Character reference use: ask before generation whether the user wants to use real film character reference images. In the same turn, invite optional design requirements. Uploading references improves character likeness; not uploading references means the skill decides the character strategy, not that people are forbidden. Require attached references before claiming face restoration.
 - Style: concrete weighted-random style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.

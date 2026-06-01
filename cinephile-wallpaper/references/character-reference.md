@@ -14,7 +14,7 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
 
 ## User-Uploaded Character Gate
 
-Before image generation, ask whether the user wants to use real film character reference images.
+Before image generation, ask whether the user wants to use real film character reference images. In the same turn, allow the user to add simple design requirements such as preferred art style, desired elements or props, character treatment, color mood, composition, or avoid-list. If they have no requirements, they can say so and the skill should make the design decisions.
 
 If yes, ask the user to upload one or more character photos/stills in the conversation. This is the preferred first-pass workflow for precise identity anchoring because the user can choose the exact face, costume, scene, and role version they want.
 

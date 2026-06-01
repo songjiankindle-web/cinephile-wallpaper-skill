@@ -57,9 +57,13 @@ After the base setup is answered and before research/generation, ask one concise
 
 ```text
 是否使用真实电影角色参考图？如果上传角色照片/剧照，我会用它提取人物长相、外貌和角色气质，让海报中的人物更准确；如果不上传，我会根据影片自行判断人物是否出现以及如何设计。
+
+你也可以在这一轮顺手补充简单设计需求，例如指定美术风格、想出现的元素/道具、人物呈现方式、色调氛围、构图偏好，或不希望出现的内容；如果没有特别需求，请说“无特别需求”，我将由 AI 自主决策设计。
 ```
 
 Adapt this to the user's language. If the user already answered this in the setup reply, do not ask again.
+
+Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
 
 If the user uploads or says they want to use real character references:
 

@@ -42,6 +42,17 @@ Write one manifest per generated wallpaper:
     "random_style_kept": true,
     "fresh_generation": true
   },
+  "user_design_request": {
+    "provided": false,
+    "raw_notes": "",
+    "style_preference": "",
+    "requested_elements": [],
+    "character_treatment": "",
+    "tone_or_palette": "",
+    "composition_preference": "",
+    "avoid": [],
+    "ai_autonomous_design": true
+  },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
     "selection_mode": "user_specified | weighted_random | corrective",

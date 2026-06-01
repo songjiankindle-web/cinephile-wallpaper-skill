@@ -12,6 +12,17 @@
     "director": "",
     "country": []
   },
+  "user_design_request": {
+    "provided": false,
+    "raw_notes": "",
+    "style_preference": "",
+    "requested_elements": [],
+    "character_treatment": "",
+    "tone_or_palette": "",
+    "composition_preference": "",
+    "avoid": [],
+    "ai_autonomous_design": true
+  },
   "interpretation": {
     "one_sentence_reading": "",
     "mood": [],
@@ -143,6 +154,7 @@
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
 - If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
+- Honor `user_design_request` when provided: user-specified art style, elements, character treatment, tone, composition, or avoid-list override the default random choices unless they conflict with the film identity, safety, or model capability. If not provided, proceed with AI-autonomous style, element, density, and composition decisions.
 - Allow bold counterpoint when it deepens meaning, such as a science-fiction film rendered through Chinese ink, ukiyo-e, medieval manuscript, or Renaissance allegory.
 - Do not mechanically list plot elements. Distill the film into a central metaphor or visual thesis first.
 - Favor poster language over scene language: symbol, negative space, graphic structure, silhouette, material texture, iconic object, ritualized gesture, and integrated typography when requested.
@@ -156,7 +168,7 @@
 - Make the prompt art-directed and non-photorealistic. Do not switch to live-action realism.
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
-- Before image generation, ask whether the user wants to use real film character reference images. Explain that uploaded photos/stills improve character likeness; no upload means the skill will decide whether and how people appear, not that people are forbidden.
+- Before image generation, ask whether the user wants to use real film character reference images. In the same turn, ask for optional design requirements such as preferred style, elements, character treatment, tone, composition, or avoid-list. Explain that uploaded photos/stills improve character likeness; no upload means the skill will decide whether and how people appear, not that people are forbidden. No design requirement means AI-autonomous design.
 - If browser/web tools are available, automatically acquire in-character reference images only when the user wants characters and uploaded references are absent or insufficient.
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
