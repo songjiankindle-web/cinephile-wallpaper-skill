@@ -2,7 +2,7 @@
 
 Generate high-aesthetic, non-photorealistic movie posters and wallpapers from real film titles.
 
-This is a cross-agent skill. It focuses on finished poster delivery, numbered one-turn setup, film-tone analysis, randomized art-history style routing, visual-density control, character-reference anchoring, and prop/object identity locks.
+This is a cross-agent skill. It focuses on finished poster delivery, numbered one-turn setup, film-tone analysis, randomized art-history style routing, visual-density control, user-uploaded image references, character-reference anchoring, and prop/object/scene identity locks.
 
 ## Install
 
@@ -22,9 +22,9 @@ For Codex-style skills:
 
 ## Version
 
-v0.99b release candidate.
+v1.0 stable release.
 
-Current v0.99b behavior:
+Current v1.0 behavior:
 
 - fixed opening prompt;
 - numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
@@ -36,13 +36,15 @@ Current v0.99b behavior:
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;
 - fresh generation for every request unless the user explicitly asks to retrieve an old file;
 - image-model poster generation only, with one unified prompt fallback when the agent has no image capability;
-- character appearance gate before image generation: if the user wants recognizable characters, request uploaded character stills/photos first and attach them as authoritative references;
+- image-reference gate before image generation: ask the user whether to upload images they want represented in the poster, including but not limited to characters, props, and scenes;
+- character appearance workflow: if the user wants recognizable characters, use uploaded character stills/photos first and attach them as authoritative references;
 - character reference-image workflow: use uploaded/acquired real stills or crops and attach them to image generation before claiming face restoration;
 - key prop/object reference gates to avoid wrong film objects.
 
 Version archive:
 
 - `v0.99a`: previous release candidate before the required user-uploaded character-reference gate.
-- `v0.99b`: current release candidate with the character appearance gate and uploaded-reference-first workflow.
+- `v0.99b`: release candidate with the character appearance gate and uploaded-reference-first workflow.
+- `v1.0`: stable release with the broader image-reference gate for characters, props, and scenes.
 
-See `docs/迷影桌面 PRD v0.99b.md` for the product spec.
+See `docs/迷影桌面 PRD v1.0.md` for the product spec.

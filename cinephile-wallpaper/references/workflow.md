@@ -51,12 +51,12 @@ After the film is confirmed, ask the base settings in one turn. Use line breaks 
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
 
-## Character Reference Gate
+## Image Reference Gate
 
 After the base setup is answered and before research/generation, ask one concise question:
 
 ```text
-是否使用真实电影角色参考图？如果上传角色照片/剧照，我会用它提取人物长相、外貌和角色气质，让海报中的人物更准确；如果不上传，我会根据影片自行判断人物是否出现以及如何设计。
+是否上传您想呈现在海报中的形象图片？包括但不限于角色、道具、场景等。如果上传，我会用它锚定人物长相、道具形态、场景氛围或其他视觉细节；如果不上传，我会根据影片自行判断画面中应出现什么以及如何设计。
 
 你也可以在这一轮顺手补充简单设计需求，例如指定美术风格、想出现的元素/道具、人物呈现方式、色调氛围、构图偏好，或不希望出现的内容；如果没有特别需求，请说“无特别需求”，我将由 AI 自主决策设计。
 ```
@@ -65,19 +65,19 @@ Adapt this to the user's language. If the user already answered this in the setu
 
 Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
 
-If the user uploads or says they want to use real character references:
+If the user uploads or says they want to use image references:
 
-- require at least one uploaded or locally acquired image file before claiming character-face restoration;
+- require at least one uploaded or locally acquired image file before claiming precise restoration of any character face, prop form, or scene detail;
 - prefer in-character stills/screenshots over actor publicity photos;
 - ask the user to label images when multiple characters appear;
-- accept one image per key character, or one clear group image if the intended characters are obvious;
+- accept one image per key character/prop/scene, or one clear group image if the intended subjects are obvious;
 - use uploaded images as priority-1 references for the current run;
 - attach the reference image files to the image-generation call when the selected model supports references.
 
 If the user wants accurate face/character restoration but has not uploaded a usable image, ask briefly:
 
 ```text
-如果想精准还原演员/角色脸部，请上传一张角色照片/剧照；如果不上传，我会继续用背影、剪影、局部、服装姿态或影子等不露脸人物方式来设计。
+如果想精准还原演员/角色脸部，请上传一张包含该角色的形象图片；如果不上传，我会继续用背影、剪影、局部、服装姿态或影子等不露脸人物方式来设计。
 ```
 
 Do not block the whole poster only because no reference was uploaded. The hard restriction is on readable face restoration, not on all human presence.

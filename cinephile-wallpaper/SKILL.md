@@ -1,6 +1,6 @@
 ---
 name: cinephile-wallpaper
-description: Generate original high-aesthetic movie posters and device wallpapers for real films. Use when an agent is asked to produce a finished poster/wallpaper from a film title, ask one fixed opening question, confirm required settings in one turn with remembered defaults, use film/character references, call an image-generation model when available, save outputs, or provide one unified prompt when image generation is unavailable.
+description: Generate original high-aesthetic movie posters and device wallpapers for real films. Use when an agent is asked to produce a finished poster/wallpaper from a film title, ask one fixed opening question, confirm required settings in one turn with remembered defaults, use film/character/prop/scene image references, call an image-generation model when available, save outputs, or provide one unified prompt when image generation is unavailable.
 ---
 
 # Cinephile Wallpaper
@@ -38,13 +38,13 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Preserve memory for default size/device, output directory, text variant, and generation mode when the user asks to save or changes them.
    - Record whether the size came from user dimensions, device lookup, auto-detection, or default.
 
-3. **Confirm character reference use**
-   - Before image generation, ask whether the user wants to use real film character reference images.
-   - Explain that uploading character photos/stills helps the poster restore character likeness more accurately. If the user does not upload references, the skill will decide whether people should appear and how to design them.
+3. **Confirm image reference use**
+   - Before image generation, ask whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes.
+   - Explain that uploading image references helps the poster anchor character likeness, prop form, scene atmosphere, or other visual details more accurately. If the user does not upload references, the skill will decide whether people, props, or scenes should appear and how to design them.
    - In the same question, invite the user to add optional design requirements such as preferred art style, desired elements/props, character treatment, color mood, composition, or anything they want to avoid. If the user has no requirements, tell them to say so and let the AI make the design decisions.
    - Treat user design requirements as constraints for this run. If no design requirements are provided, set `ai_autonomous_design` and proceed without another confirmation.
-   - If the user wants reference-image restoration, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
-   - Treat user-uploaded character images as the strongest identity source for this run. Use them before automatic web acquisition.
+   - If the user wants reference-image restoration, ask them to upload one or more images they want represented in the poster, including but not limited to characters, props, and scenes. For characters, prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
+   - Treat user-uploaded reference images as the strongest visual source for this run. Use them before automatic web acquisition.
    - Use uploaded references to restore the character's face and appearance as accurately as the image model allows: face structure, eyes, nose, mouth, jaw, skin tone, age, hair, expression range, bearing, costume, and role cues are mandatory identity anchors.
    - Do not cut out, paste, trace, clone, or replicate the reference image's exact body pose, action, lighting, crop, background, camera angle, or composition. Redesign pose, gesture, action, framing, and poster composition while preserving the real actor/character likeness.
    - Do not proceed with character-face restoration until at least one uploaded or locally acquired reference image file is actually attachable to the image-generation call.
@@ -128,7 +128,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Character reference use: ask before generation whether the user wants to use real film character reference images. In the same turn, invite optional design requirements. Uploading references improves character likeness; not uploading references means the skill decides the character strategy, not that people are forbidden. Require attached references before claiming face restoration.
+- Image reference use: ask before generation whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes. In the same turn, invite optional design requirements. Uploading references improves character likeness, prop accuracy, scene atmosphere, and visual specificity; not uploading references means the skill decides the visual strategy. Require attached character references before claiming face restoration.
 - Style: concrete weighted-random style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
