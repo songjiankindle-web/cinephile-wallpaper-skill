@@ -6,6 +6,8 @@ Use these presets as distilled poster-design grammars. Do not ask the image mode
 
 Use these as distilled visual operations. Do not write "in the style of [living artist]" as the final instruction. For deceased artists, direct historical reference is less risky, but still prefer observable traits over name-dropping.
 
+Important: these presets are not a suitability menu. Do not choose one because it fits a film's topic, rhythm, genre, or tone. Use a preset only after it has been selected by the weighted/random style router, by explicit user request, or by corrective anti-collapse mode. The notes below describe possible bridge material after selection, not reasons to select the preset.
+
 ### Warholian Pop System
 
 - repeated face/object grids;
@@ -14,7 +16,7 @@ Use these as distilled visual operations. Do not write "in the style of [living 
 - celebrity/image-culture critique;
 - emotional distance through repetition.
 
-Use for films about fame, media, consumer culture, icons, superheroes, artificial identity, or repeated trauma.
+After this preset is selected, it can bridge to fame, media, consumer culture, icons, superheroes, artificial identity, or repeated trauma through repeated-image systems.
 
 ### Hockney-Like Spatial Collage
 
@@ -24,7 +26,7 @@ Use for films about fame, media, consumer culture, icons, superheroes, artificia
 - domestic leisure space;
 - clear sunlight and graphic planes.
 
-Use for films about memory, desire, place, youth, sunny surfaces with emotional undertow, or fragmented seeing.
+After this preset is selected, it can bridge to memory, desire, place, youth, sunny surfaces with emotional undertow, or fragmented seeing through fractured spatial collage.
 
 ### Basquiat-Like Neo-Expressionist Mark System
 
@@ -33,7 +35,7 @@ Use for films about memory, desire, place, youth, sunny surfaces with emotional 
 - symbolic aggression;
 - unstable figure-ground.
 
-Use for films about urban pressure, anger, race/class systems, youth energy, violence, or fractured identity. Avoid using legible text unless the user asked for text in-image.
+After this preset is selected, it can bridge to urban pressure, anger, race/class systems, youth energy, violence, or fractured identity through raw symbolic marks. Avoid using legible text unless the user asked for text in-image.
 
 ### Rothko-Like Color Field Pressure
 
@@ -42,7 +44,7 @@ Use for films about urban pressure, anger, race/class systems, youth energy, vio
 - minimal object content;
 - color as metaphysical pressure.
 
-Use when the film's soul is atmosphere, grief, waiting, silence, spiritual pressure, or impossible longing.
+After this preset is selected, it can bridge to atmosphere, grief, waiting, silence, spiritual pressure, or impossible longing through color-field pressure.
 
 ### Kandinsky-Like Musical Abstraction
 
@@ -51,7 +53,7 @@ Use when the film's soul is atmosphere, grief, waiting, silence, spiritual press
 - color as sound;
 - nonrepresentational emotional mapping.
 
-Use for films with music, inner turbulence, city rhythm, cosmic movement, or dream logic.
+After this preset is selected, it can bridge to music, inner turbulence, city rhythm, cosmic movement, or dream logic through abstract rhythm.
 
 ### Malevich/Suprematist Reduction
 
@@ -60,7 +62,7 @@ Use for films with music, inner turbulence, city rhythm, cosmic movement, or dre
 - white or black space as metaphysical field;
 - anti-illustrative purity.
 
-Use for science fiction, spiritual austerity, institutional systems, fate, void, or cosmic abstraction.
+After this preset is selected, it can bridge to science fiction, spiritual austerity, institutional systems, fate, void, or cosmic abstraction through radical geometric reduction.
 
 ### Picasso/Braque Cubist Fragment
 
@@ -69,7 +71,7 @@ Use for science fiction, spiritual austerity, institutional systems, fate, void,
 - broken instruments, rooms, bodies, city fragments;
 - analytic browns or synthetic collage color.
 
-Use for divided identity, memory fracture, surveillance, jealousy, fractured relationships, or films where truth has many angles.
+After this preset is selected, it can bridge to divided identity, memory fracture, surveillance, jealousy, fractured relationships, or unstable truth through multiple viewpoints.
 
 ### Matisse/Fauvist Color Cut
 
@@ -78,7 +80,7 @@ Use for divided identity, memory fracture, surveillance, jealousy, fractured rel
 - arabesque contour;
 - cut-paper rhythm.
 
-Use for sensuality, summer, musicality, dreamlike romance, joyous melancholy, or films where color should be emotionally liberated.
+After this preset is selected, it can bridge to sensuality, summer, musicality, dreamlike romance, joyous melancholy, or liberated emotion through non-natural color.
 
 ### Duchamp/Dada Conceptual Displacement
 
@@ -86,7 +88,7 @@ Use for sensuality, summer, musicality, dreamlike romance, joyous melancholy, or
 - diagram, label-like space, mechanical body, impossible apparatus;
 - dry humor and conceptual unease.
 
-Use for absurdism, bureaucracy, identity games, anti-romance, time loops, or films where the idea is sharper than the scene.
+After this preset is selected, it can bridge to absurdism, bureaucracy, identity games, anti-romance, time loops, or idea-driven cinema through conceptual displacement.
 
 ### Beuys/Arte Povera Material Ritual
 

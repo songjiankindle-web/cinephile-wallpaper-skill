@@ -35,7 +35,7 @@ Hard gate: generation is allowed only after these are complete:
    - Accept a film title or film URL.
    - If the triggering user message already contains a film title or URL, count this step as complete and move to base settings; do not begin generation.
    - If title/year is ambiguous, ask the user to identify the correct film.
-   - If no model/style is specified, draw a style lane from the weighted router in `references/style-distillation.md`; do not let plot analysis choose the safest matching style.
+   - If no model/style is specified, draw a style lane from the weighted router in `references/style-distillation.md`; do not let plot analysis choose the safest or "most suitable" style.
    - Auto-detect the user's interaction language from their request and respond in that language.
    - If the user asks for a different output language, use it for visible interaction and layout text unless film titles require original language.
 
@@ -91,7 +91,8 @@ Hard gate: generation is allowed only after these are complete:
    - Read `references/style-distillation.md` and `references/artist-grammars.md` when the visual direction feels too normal, too illustrational, or not bold enough.
    - Translate the film into a poster concept, not a literal scene summary.
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, visual density, subject strategy, metaphor, abstraction level, and avoid-list.
-   - Select a concrete `style_lane` by weighted random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
+   - Select a concrete `style_lane` by weighted random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not choose, justify, or override the art style by suitability.
+   - Never say or imply that the style was chosen because it is "more suitable," "matches the film," "fits the rhythm," or "best expresses the story." Say the style was drawn/selected from the weighted router, then build a `counterpoint_bridge` between that random style and the film.
    - Apply the classic fine-art boost in `references/style-distillation.md`: lanes such as impressionism, cubism, fauvism/expressionism, abstraction/suprematism, surrealism, pop art, Chinese ink, ukiyo-e, medieval/icon/glass, Renaissance/Baroque, and printmaking must collectively have a high baseline chance, not rare edge-case status.
    - Select a `visual_density` before writing the prompt: `dense`, `balanced`, `sparse`, or `single_stroke`. Use weighted randomness based on film genre, rhythm, scale, narrative complexity, and authorial tone; do not use pure random density and do not default to dense multi-element compositions.
    - Apply the global minimalism boost in `references/visual-brief.md`: increase the combined chance of `sparse` and `single_stroke` by 40% before drawing density.
@@ -146,7 +147,7 @@ Hard gate: generation is allowed only after these are complete:
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
 - Style lane: every run must choose one concrete style lane; generic `fine-art poster` wording is not enough.
-- Style randomness: default style selection is weighted random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style.
+- Style randomness: default style selection is weighted random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style. Do not describe random style selection as suitability-based.
 - Classic style weight: default style selection is weighted so classic fine-art/art-history lanes appear often. Recent absence of impressionism, cubism, abstraction, fauvism, ink, ukiyo-e, medieval/icon/glass, Renaissance/Baroque, or printmaking should trigger corrective weighting toward those lanes.
 - Visual density: every run must choose a density mode through weighted randomness. Good posters may be dense, balanced, sparse, or a single decisive visual stroke. Do not fill the canvas just because more film elements were researched.
 - Composition: overall poster design comes first. Do not create large empty blank zones merely for future text, but do use intentional negative space, silence, asymmetry, and one-point focus when the density mode calls for it.

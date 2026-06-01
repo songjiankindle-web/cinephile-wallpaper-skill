@@ -56,7 +56,9 @@ Use these as ingredients, not labels:
 
 ## Art Direction Matrix
 
-Default behavior: draw one primary art language and one secondary device with weighted randomness unless the user explicitly names a style. Film analysis should decide what appears in the poster, not which art-history style is allowed. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
+Default behavior: draw one primary art language and one secondary device with weighted randomness unless the user explicitly names a style. Film analysis decides what appears in the poster, not which art-history style is selected. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
+
+Core rule: style choice is intentionally decoupled from film content. Do not choose a style because it is "suitable," "matches the film," "fits the rhythm," "fits the genre," or "best expresses the story." Draw the style first, then adapt the film's motifs into that style.
 
 Avoid safe illustration as the default. When an output stays conventional, escalate by choosing from the stronger sets below and writing the escalation directly into the prompt.
 
@@ -147,7 +149,21 @@ Default selection method:
 2. Otherwise draw one `style_lane` with the weighted table below. Use a host random function when available; if not, use the current timestamp or pick from the boosted classic fine-art lanes before choosing safer contemporary poster lanes.
 3. Then draw a narrower `style_variant` inside that lane by the same method.
 4. Use film research only to choose the poster's elements, characters, props, symbols, tone references, and metaphor.
-5. Do not replace the random style with a "more suitable" or safer style unless it would make the film unrecognizable or violate a user instruction.
+5. Do not replace the random style with a "more suitable," "more matching," or safer style unless it would make the film unrecognizable or violate a user instruction.
+6. Explain the relationship as a bridge after the draw, not as the reason for the draw.
+
+Forbidden style-selection language:
+
+- "I chose this style because it suits/fits/matches the film."
+- "This style is more appropriate for the film's rhythm/genre/tone."
+- "The film calls for this style."
+- "I selected this style to better express the story."
+
+Allowed language:
+
+- "The weighted router drew `[style_lane]`; I will bridge it to the film through [motif/metaphor/tone]."
+- "This random counterpoint creates surprise by placing [film element] inside [style mechanism]."
+- "The style is kept as drawn; film research only controls the elements and metaphor."
 6. Do not inspect prior generated outputs as a cache, and do not return an old result for a repeated film request.
 
 Record the weighted draw in the manifest:
@@ -256,7 +272,7 @@ Use `real_object_still_life` when the poster's strongest anchor is a real object
 ## Randomization Discipline
 
 - The weighted draw is not a suggestion. Keep it through prompt writing.
-- If the draw feels mismatched, write a `counterpoint_bridge` rather than replacing the style.
+- If the draw feels mismatched, write a `counterpoint_bridge` rather than replacing the style or retroactively claiming it was chosen for suitability.
 - The prompt must include the exact `style_lane` and `style_variant`.
 - The prompt must include one visible mechanism from the style: brushstroke, faceting, pointillist dots, ink wash, hard-edge reduction, mosaic tesserae, woodcut cuts, textile threads, etc.
 - A generated image fails style QA if the chosen style is only named but not visibly present.
@@ -358,7 +374,7 @@ If outputs are too normal or illustration-like, choose a bolder art language fro
 - one explicit abstraction mechanism;
 - one material/process constraint;
 - one semiotic layer;
-- one reason this style reveals the film.
+- one bridge showing how the randomly drawn style can hold the film's motif without claiming the style was chosen because it fits.
 
 Negative controls for style escalation:
 

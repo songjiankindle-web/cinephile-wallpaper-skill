@@ -147,14 +147,15 @@
 - All generated visuals must be fine-art or graphic poster styles, not photorealistic live-action.
 - Use media such as oil painting, sketch, gouache, acrylic, watercolor, ink, printmaking, modernism, impressionism, fauvism, abstraction, pop art, constructivism, collage, or other art/poster languages.
 - Style must be more ambitious than normal illustration. Use `style-distillation.md` and `artist-grammars.md` to draw from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies unless the user specifies a style.
-- Do not merely list art movements. Select one primary art language, one secondary device, one abstraction mechanism, and one reason this style reveals the film.
+- Do not merely list art movements. Draw one primary art language, one secondary device, and one abstraction mechanism; then write a `counterpoint_bridge` explaining how the random style will hold the film's motif. Do not frame the style as chosen because it suits the film.
 - Before writing the prompt, draw a `style_lane` and `style_variant` from the weighted style router in `style-distillation.md` unless the user specified one. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
-- Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it.
+- Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it or claiming it was more suitable.
 - Choose a `visual_density` before writing the prompt. Default is weighted random, not pure random: infer density weights from genre, scale, tempo, narrative complexity, authorial mode, and visual world; then draw one mode from those weights. Use corrective only when recent outputs felt too full or the user asks for more restraint. The density mode controls how many elements may appear and how much silence/negative space the poster uses.
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
 - If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
 - Honor `user_design_request` when provided: user-specified art style, elements, character treatment, tone, composition, or avoid-list override the default random choices unless they conflict with the film identity, safety, or model capability. If not provided, proceed with AI-autonomous style, element, density, and composition decisions.
+- Forbidden style-selection reasoning: do not say the style was chosen because it fits the film's rhythm, genre, tone, story, or content. Say it was drawn from the weighted router and then bridged to the film.
 - Allow bold counterpoint when it deepens meaning, such as a science-fiction film rendered through Chinese ink, ukiyo-e, medieval manuscript, or Renaissance allegory.
 - Do not mechanically list plot elements. Distill the film into a central metaphor or visual thesis first.
 - Favor poster language over scene language: symbol, negative space, graphic structure, silhouette, material texture, iconic object, ritualized gesture, and integrated typography when requested.
@@ -281,7 +282,7 @@ Style lane: [style_lane]. Create an original key visual inspired by [film],
 using [primary art language] with [secondary material/process]. Do not make a
 conventional illustration or generic art-poster image. Translate [theme] into
 [abstraction mechanism], with semiotic layers of [symbol 1], [symbol 2], and
-[spatial/color logic]. The style choice reveals the film because [reason].
+[spatial/color logic]. The style was drawn independently; bridge it to the film through [motif/metaphor/tone mechanism].
 The composition must be driven by [grid/icon/collage/tapestry/signal field/
 miniature/stained glass/map/diagram/assemblage], not by normal scene depiction.
 No photorealism, no text, no logos, no credits.
