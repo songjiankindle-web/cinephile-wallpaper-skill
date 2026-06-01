@@ -11,9 +11,9 @@ Turn a real film into an original movie poster or device wallpaper through resea
 
 Default stance: image models create the complete poster/wallpaper, including visual design and typography when requested. Do not use HTML to create or composite the poster.
 
-## Opening Prompt
+## Opening And Mandatory Gates
 
-Always start with exactly this one sentence and nothing else:
+If the user has not provided a film title or URL, start with exactly this one sentence and nothing else:
 
 ```text
 请问你想生成哪部电影的海报壁纸？
@@ -21,10 +21,19 @@ Always start with exactly this one sentence and nothing else:
 
 Do not introduce the skill, list features, explain usage, ask about style, or add examples before this sentence.
 
+If the user already provided a film title in the triggering message, do not ask for the film again. Treat the film-title step as answered, resolve ambiguity if needed, then immediately ask the numbered one-turn base settings. Never start research, write a prompt, call an image model, or generate a poster from the first user message alone.
+
+Hard gate: generation is allowed only after these are complete:
+
+1. film identity is known and ambiguity is resolved;
+2. base settings are answered or explicitly accepted as saved defaults;
+3. the image-reference/design-request gate is answered or explicitly skipped.
+
 ## Workflow
 
 1. **Ask for the film**
    - Accept a film title or film URL.
+   - If the triggering user message already contains a film title or URL, count this step as complete and move to base settings; do not begin generation.
    - If title/year is ambiguous, ask the user to identify the correct film.
    - If no model/style is specified, draw a style lane from the weighted router in `references/style-distillation.md`; do not let plot analysis choose the safest matching style.
    - Auto-detect the user's interaction language from their request and respond in that language.
@@ -32,6 +41,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 
 2. **Confirm base settings in one turn**
    - After the film is known and ambiguity is resolved, ask one setup message with numbered, line-broken questions for size/device, output directory, text variant, generation mode, and whether to remember changed defaults.
+   - This setup message is mandatory even when the user's first message already includes the film title, style, or output intent.
    - If saved preferences exist for size/device, output directory, text variant, or generation mode, show all saved defaults and let the user say to use all defaults.
    - Accept explicit dimensions, device type, or device model.
    - If the user wants a phone wallpaper and does not know the resolution, ask for the exact phone model only if it was not already provided; then look up the resolution online.
@@ -40,6 +50,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 
 3. **Confirm image reference use**
    - Before image generation, ask whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes.
+   - This gate is mandatory after base settings and before research/generation unless the user already answered it in the same setup reply.
    - Explain that uploading image references helps the poster anchor character likeness, prop form, scene atmosphere, or other visual details more accurately. If the user does not upload references, the skill will decide whether people, props, or scenes should appear and how to design them.
    - In the same question, invite the user to add optional design requirements such as preferred art style, desired elements/props, character treatment, color mood, composition, or anything they want to avoid. If the user has no requirements, tell them to say so and let the AI make the design decisions.
    - Treat user design requirements as constraints for this run. If no design requirements are provided, set `ai_autonomous_design` and proceed without another confirmation.
@@ -57,6 +68,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - If `both`, generate/save both variants.
 
 5. **Research the film**
+   - Do not start this step until the mandatory gates above are complete.
    - Verify the film exists.
    - Gather title, original title, year, director, country, key cast, brief plot, themes, visual motifs, and awards when useful.
    - Identify protagonist(s), iconic character anchors, and key props/objects when they materially improve film recognition.
@@ -88,6 +100,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Avoid direct replication of official posters.
 
 7. **Generate the visual**
+   - Do not call any image-generation tool until film identity, base settings, and image-reference/design-request gate are complete.
    - Before generating, determine `generation_mode`: `agent_image_tool`, `image_skill`, `external_api`, `prompt_only`, or `auto`.
    - Read `references/model-routing.md` when configuring model/provider behavior.
    - Use the agent’s available image tool if present.

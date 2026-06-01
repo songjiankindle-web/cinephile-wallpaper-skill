@@ -2,15 +2,15 @@
 
 ## Guided Flow
 
-1. Start with exactly: `请问你想生成哪部电影的海报壁纸？`
-2. Resolve film ambiguity if needed.
+1. If the user has not provided a film title, start with exactly: `请问你想生成哪部电影的海报壁纸？`
+2. If the user already provided a film title, treat the film step as answered, resolve ambiguity if needed, and continue to setup. Do not start generation from the initial request alone.
 3. Ask one numbered setup message:
    - size/device, with saved size as default if available;
    - output directory, with saved directory as default if available;
    - text mode: with text, no text, or both;
    - generation mode: current image tool, image skill/tool, external API, or prompt-only;
    - whether to remember changed size/output defaults.
-4. Ask the character appearance gate before image generation.
+4. Ask the image-reference/design-request gate before research or image generation.
 5. If a device model is provided, look up the screen resolution; see `device-size.md`.
 6. Research the film, film-tone references, style references, and character references.
 7. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
@@ -38,7 +38,7 @@ Keep the actual image prompt portable. It may be in the user's language or Engli
 
 ## One-Turn Setup Prompt
 
-After the film is confirmed, ask the base settings in one turn. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available:
+After the film is confirmed, ask the base settings in one turn. This is mandatory even if the initial user message already included a film title, style, or "generate now" wording. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available:
 
 ```text
 请一次确认下面 5 项设置：
@@ -53,7 +53,7 @@ Adapt this to the user's language. Do not split these into several separate turn
 
 ## Image Reference Gate
 
-After the base setup is answered and before research/generation, ask one concise question:
+After the base setup is answered and before research/generation, ask one concise question. This gate is mandatory unless the user already answered it in the same setup reply:
 
 ```text
 是否上传您想呈现在海报中的形象图片？包括但不限于角色、道具、场景等。如果上传，我会用它锚定人物长相、道具形态、场景氛围或其他视觉细节；如果不上传，我会根据影片自行判断画面中应出现什么以及如何设计。
@@ -64,6 +64,10 @@ After the base setup is answered and before research/generation, ask one concise
 Adapt this to the user's language. If the user already answered this in the setup reply, do not ask again.
 
 Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
+
+## No Shortcut Generation
+
+Never treat an initial request like "给我生成一个《某电影》的海报" as permission to generate immediately. It only supplies the film identity. The next assistant response must be the one-turn setup, or ambiguity clarification if the film identity is unclear. Research, prompt writing, image generation, file saving, and wallpaper setting are all blocked until base settings and the image-reference/design-request gate are complete.
 
 If the user uploads or says they want to use image references:
 
