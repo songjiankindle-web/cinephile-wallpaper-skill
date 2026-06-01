@@ -117,6 +117,14 @@
   "prompt": {
     "unified_prompt": "",
     "text_strategy": "model_text | no_text | both",
+    "typography_design": {
+      "role": "major_visual_component | minimal_metadata | none",
+      "lettering_style": "",
+      "style_lane_alignment": "",
+      "placement": "",
+      "integration_method": "",
+      "avoid": []
+    },
     "composition_priority": "overall poster first; no oversized reserved blank area"
   }
 }
@@ -158,6 +166,7 @@
 - Limit back-view character compositions. If characters appear, prefer front, profile, or three-quarter views; use back view only as a deliberate film-specific motif or non-face fallback.
 - Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
 - Text strategy depends on the run: use model-generated integrated text for speed when requested; use `no text, no logos, no credits` only for no-text or post-layout runs.
+- In text-in-image runs, typography is a major visual component. The title lettering must be custom-designed or art-directed, matched to the selected `style_lane`, film tone, original-language title, and composition. Avoid generic default fonts.
 - Overall poster design comes before text accommodation. Do not reserve a large blank region only for text. Text should be integrated into the image, placed over calmer existing regions, or kept minimal.
 - Separate good negative space from bad blank space. Good negative space creates focus, rhythm, breath, symbolic silence, or scale tension. Bad blank space is an obvious empty title block or dead leftover area.
 - Text must not change the whole poster's brightness, color, contrast, saturation, or tone. Do not add full-canvas dark overlays, dimming filters, global gradients, or image-wide mattes to make text readable.
@@ -285,8 +294,12 @@ For text-in-image runs:
 Integrate concise poster typography directly into the artwork. Use exactly
 these text strings: Chinese title "[title_zh]", original title "[original]",
 director/year "[director_zh] / [year]", country "[country_zh]". Keep text
-minimal, intentional, and part of the poster design. Do not create a large
-blank title area; preserve the full composition.
+minimal, intentional, and part of the poster design. Design the title
+lettering as a visual form matched to [style_lane] and [film tone], not as a
+generic font overlay. Use custom letterforms, calligraphic pressure, geometric
+construction, fractured type, hand-painted texture, printmaking ink, stencil,
+seal-like marks, or era-specific lettering when appropriate. Do not create a
+large blank title area; preserve the full composition.
 ```
 
 For post-layout text:
@@ -390,6 +403,18 @@ Typography rule:
 - Second line: original title in the film's country/language of origin, e.g. English for US/UK, French for France, German for Germany, Japanese for Japan.
 - Director and country/region must be in Chinese.
 - Optional: one short curatorial phrase in Chinese unless the user requests another language.
+- Treat typography as image, rhythm, and hierarchy. It should have designed letterforms, not ordinary default font styling.
+- Match lettering to the selected style lane:
+  - `geometric_avant_garde`: bold geometric, constructivist, Bauhaus, Swiss-grid, diagonal or modular lettering.
+  - `fragmented_modernism`: fractured cubist lettering, split planes, collage type, multi-angle title blocks.
+  - `expressive_color`: hand-painted, rough contour, fauvist/expressionist strokes.
+  - `pop_repetition_media`: screen-print, halftone, consumer-color, repeated title marks.
+  - `east_asian_ink`: calligraphic brush, seal-like red marks, ink pressure, controlled blankness.
+  - `ukiyo_e_flatworld`: vertical cartouche, woodblock-style title plaque, patterned title strip.
+  - `medieval_icon_glass`: illuminated initials, gilded manuscript/cathedral label logic.
+  - `renaissance_baroque_allegory`: engraved serif, fresco inscription, theatrical title ribbon.
+  - `print_process`: woodcut/linocut/risograph/screen-print lettering with ink limits.
+  - `minimalist_reduction`: precise sparse lettering, hard-edge spacing, one strong typographic anchor.
 
 Keep typography readable, but never sacrifice the whole poster to a blank title field. If the image is visually busy, use small integrated type, a local micro-matte behind only the text, outline, or text shadow; avoid full-image overlays, huge reserved whitespace, and heavy shadows.
 

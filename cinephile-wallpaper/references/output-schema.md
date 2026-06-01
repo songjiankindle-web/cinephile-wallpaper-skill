@@ -77,7 +77,13 @@ Write one manifest per generated wallpaper:
     "original_title": "",
     "original_title_language": "",
     "director_zh": "",
-    "country_zh": []
+    "country_zh": [],
+    "role": "major_visual_component | minimal_metadata | none",
+    "lettering_style": "",
+    "style_lane_alignment": "",
+    "placement": "",
+    "integration_method": "",
+    "avoid_generic_font": true
   },
   "character_reference": {
     "enabled": false,

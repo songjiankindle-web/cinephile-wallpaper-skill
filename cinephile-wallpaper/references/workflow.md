@@ -165,7 +165,7 @@ Translate into the user's language. If the user chooses both, save both and reco
 
 Use one of:
 
-- `model_text`: the image model generates title and metadata directly in the poster. Fastest. Use for normal runs when the selected model can render text acceptably.
+- `model_text`: the image model generates title and metadata directly in the poster. Fastest. Use for normal runs when the selected model can render text acceptably. The text must be designed lettering integrated into the poster, not a generic font overlay.
 - `no_text`: prompt explicitly requests no text, no logos, no credits.
 - `both`: produce no-text and text versions; prefer `model_text` for the text version unless accuracy fails.
 
@@ -177,6 +177,8 @@ For `model_text`, provide exact short strings:
 - country/region.
 
 If generated text is wrong or ugly, do not pretend it is acceptable. Regenerate with shorter in-image text or provide a no-text version plus the unified prompt. Do not switch to HTML generation.
+
+If generated typography looks ordinary, like a default font, database card, subtitle, or pasted label, treat it as a design failure and retry with stronger custom-lettering instructions.
 
 ## Out of Scope
 

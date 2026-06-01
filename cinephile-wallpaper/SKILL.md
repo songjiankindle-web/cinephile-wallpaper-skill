@@ -93,6 +93,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Then provide one unified copyable prompt and stop before pretending an image was generated.
    - If using an external API, require the user to provide credentials or endpoint details outside the skill text.
    - If the user requests a text version, allow the image model to generate integrated title and metadata directly in the poster for speed. Keep text short and provide exact strings.
+   - Treat typography as a major visual component, not a plain font overlay. The title lettering must be art-directed and matched to the selected `style_lane`, film tone, language, and composition.
    - If the user requests a no-text version, use `no text, no logos, no credits`.
    - Never request live-action photorealism, copied stills, or invented characters. If a real actor/performer character appears, request identity preservation from the attached reference images while rendering the overall poster through the selected art lane's material/process language.
    - Save the prompt package internally, but do not display it by default.
@@ -121,7 +122,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Language: auto-detect from the user request; allow explicit override.
 - Visual: original art-poster image, bolder than normal illustration by default.
 - Tone: infer from the film's own cinematography and emotional register; do not default to dark, low-key, noir, desaturated, or gloomy palettes.
-- Typography: generated directly by the image model as part of the poster when requested; no HTML compositor.
+- Typography: generated directly by the image model as part of the poster when requested; no HTML compositor. Text must be custom, designed, and integrated with the poster's art language, not a generic default font.
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
@@ -181,6 +182,7 @@ Reject or revise outputs that look like:
 - obvious reserved blank space that weakens the poster composition;
 - visually exhausting all-over element coverage when a stronger focal hierarchy or negative space would make the poster more memorable;
 - generated text with incorrect title, misspellings, wrong language, or unreadable letterforms.
+- ordinary default-looking typography, generic sans-serif/serif titles, database-card text, or text that feels pasted on instead of designed as part of the poster.
 
 ## Resources
 
