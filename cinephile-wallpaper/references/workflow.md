@@ -51,17 +51,17 @@ After the film is confirmed, ask the base settings in one turn. Use line breaks 
 
 Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
 
-## Character Appearance Gate
+## Character Reference Gate
 
 After the base setup is answered and before research/generation, ask one concise question:
 
 ```text
-是否希望海报中出现电影角色形象？如果希望，请在对话里上传一张你希望出现在海报中的角色照片/剧照（清晰正脸、侧脸或半身优先）；如果不希望，请说“不出现人物”。
+是否使用真实电影角色参考图？如果上传角色照片/剧照，我会用它提取人物长相、外貌和角色气质，让海报中的人物更准确；如果不上传，我会根据影片自行判断人物是否出现以及如何设计。
 ```
 
 Adapt this to the user's language. If the user already answered this in the setup reply, do not ask again.
 
-If the user says yes:
+If the user uploads or says they want to use real character references:
 
 - require at least one uploaded or locally acquired image file before claiming character-face restoration;
 - prefer in-character stills/screenshots over actor publicity photos;
@@ -70,7 +70,7 @@ If the user says yes:
 - use uploaded images as priority-1 references for the current run;
 - attach the reference image files to the image-generation call when the selected model supports references.
 
-If the user says yes but no usable image is available, pause with a short request:
+If the user wants accurate face/character restoration but has not uploaded a usable image, ask briefly:
 
 ```text
 如果想精准还原演员/角色脸部，请上传一张角色照片/剧照；如果不上传，我会继续用背影、剪影、局部、服装姿态或影子等不露脸人物方式来设计。
@@ -78,7 +78,7 @@ If the user says yes but no usable image is available, pause with a short reques
 
 Do not block the whole poster only because no reference was uploaded. The hard restriction is on readable face restoration, not on all human presence.
 
-If the user says no, route the poster toward props, atmosphere, abstract symbols, typography, landscape, architecture, body fragments, or non-face silhouettes. Do not sneak in recognizable actor faces.
+If the user does not upload references, let the skill decide whether people should appear. It may use props, atmosphere, abstract symbols, typography, landscape, architecture, body fragments, non-face silhouettes, back views, side views, or partial figures. Do not say this means "no people"; it means "no real-face reference restoration."
 
 ## Desktop Confirmation
 

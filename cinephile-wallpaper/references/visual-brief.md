@@ -148,7 +148,7 @@
 - Make the prompt art-directed and non-photorealistic. Do not switch to live-action realism.
 - Avoid asking for official poster replication.
 - If depicting film characters, create a character identity lock and match the actual character design from the film. Do not invent a new unrelated character.
-- Before image generation, ask whether the user wants recognizable film characters in the poster. If yes, request uploaded character photos/stills and treat them as priority-1 references for the run.
+- Before image generation, ask whether the user wants to use real film character reference images. Explain that uploaded photos/stills improve character likeness; no upload means the skill will decide whether and how people appear, not that people are forbidden.
 - If browser/web tools are available, automatically acquire in-character reference images only when the user wants characters and uploaded references are absent or insufficient.
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.

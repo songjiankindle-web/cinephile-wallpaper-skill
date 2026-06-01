@@ -38,14 +38,14 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Preserve memory for default size/device, output directory, text variant, and generation mode when the user asks to save or changes them.
    - Record whether the size came from user dimensions, device lookup, auto-detection, or default.
 
-3. **Confirm character appearance**
-   - Before image generation, ask whether the user wants recognizable film characters to appear.
-   - If the user says yes, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
+3. **Confirm character reference use**
+   - Before image generation, ask whether the user wants to use real film character reference images.
+   - Explain that uploading character photos/stills helps the poster restore character likeness more accurately. If the user does not upload references, the skill will decide whether people should appear and how to design them.
+   - If the user wants reference-image restoration, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded character images as the strongest identity source for this run. Use them before automatic web acquisition.
    - Use uploaded references to extract identity traits only: face structure, age, hair, expression, bearing, costume, posture, and role cues. Do not cut out, paste, trace, clone, or replicate the reference image's exact pose, lighting, crop, background, or composition.
    - Do not proceed with character-face restoration until at least one uploaded or locally acquired reference image file is actually attachable to the image-generation call.
-   - If the user wants characters but does not provide real actor/character reference images, characters may still appear through restrained non-face strategies: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection without readable face, scale figure, or body-object fusion. Do not force a character-free poster.
-   - If the user says no, use non-character, object, atmosphere, typography, silhouette, or symbolic strategies instead.
+   - If the user does not provide real actor/character reference images, characters may still appear through restrained non-face strategies: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection without readable face, scale figure, or body-object fusion. Do not force a character-free poster.
    - Store uploaded references only for the current run unless the user explicitly asks to build a reusable reference library.
 
 4. **Confirm text handling**
@@ -124,7 +124,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Character presence: ask before generation whether recognizable film characters should appear. If yes, require uploaded or locally acquired reference images that can be attached to the image model before claiming face restoration. Without references, characters may still appear as non-face anchors.
+- Character reference use: ask before generation whether the user wants to use real film character reference images. Uploading references improves character likeness; not uploading references means the skill decides the character strategy, not that people are forbidden. Require attached references before claiming face restoration.
 - Style: concrete weighted-random style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
