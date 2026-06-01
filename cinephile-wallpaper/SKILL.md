@@ -27,7 +27,9 @@ Hard gate: generation is allowed only after these are complete:
 
 1. film identity is known and ambiguity is resolved;
 2. base settings are answered or explicitly accepted as saved defaults;
-3. the image-reference/design-request gate is answered or explicitly skipped.
+3. the separate image-reference/design-request gate is answered or explicitly skipped.
+
+The base-settings prompt and the image-reference/design-request prompt are two separate assistant turns. Do not merge them. The base-settings turn asks only size/device, output directory, text variant, generation mode, and default memory. The next assistant turn, after the user answers base settings, asks image references and optional design requirements.
 
 ## Workflow
 
@@ -42,6 +44,7 @@ Hard gate: generation is allowed only after these are complete:
 2. **Confirm base settings in one turn**
    - After the film is known and ambiguity is resolved, ask one setup message with numbered, line-broken questions for size/device, output directory, text variant, generation mode, and whether to remember changed defaults.
    - This setup message is mandatory even when the user's first message already includes the film title, style, or output intent.
+   - Do not include image-reference, character-reference, prop/scene-reference, or design-requirement questions in this setup message.
    - If saved preferences exist for size/device, output directory, text variant, or generation mode, show all saved defaults and let the user say to use all defaults.
    - Accept explicit dimensions, device type, or device model.
    - If the user wants a phone wallpaper and does not know the resolution, ask for the exact phone model only if it was not already provided; then look up the resolution online.
@@ -50,9 +53,9 @@ Hard gate: generation is allowed only after these are complete:
 
 3. **Confirm image reference use**
    - Before image generation, ask whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes.
-   - This gate is mandatory after base settings and before research/generation unless the user already answered it in the same setup reply.
+   - This gate is mandatory after base settings and before research/generation. Ask it as the next assistant turn after the user answers base settings, not inside the base-settings prompt.
    - Explain that uploading image references helps the poster anchor character likeness, prop form, scene atmosphere, or other visual details more accurately. If the user does not upload references, the skill will decide whether people, props, or scenes should appear and how to design them.
-   - In the same question, invite the user to add optional design requirements such as preferred art style, desired elements/props, character treatment, color mood, composition, or anything they want to avoid. If the user has no requirements, tell them to say so and let the AI make the design decisions.
+   - In this separate image-reference question, invite the user to add optional design requirements such as preferred art style, desired elements/props, character treatment, color mood, composition, or anything they want to avoid. If the user has no requirements, tell them to say so and let the AI make the design decisions.
    - Treat user design requirements as constraints for this run. If no design requirements are provided, set `ai_autonomous_design` and proceed without another confirmation.
    - If the user wants reference-image restoration, ask them to upload one or more images they want represented in the poster, including but not limited to characters, props, and scenes. For characters, prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded reference images as the strongest visual source for this run. Use them before automatic web acquisition.
@@ -141,8 +144,8 @@ Hard gate: generation is allowed only after these are complete:
 - Typography: generated directly by the image model as part of the poster when requested; no HTML compositor. Text must be custom, designed, and integrated with the poster's art language, not a generic default font.
 - Prompt package: saved in the manifest/output folder; shown only for prompt-only mode, failure recovery, debugging, or explicit user request.
 - Delivery: default to poster-first, low-token output.
-- Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
-- Image reference use: ask before generation whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes. In the same turn, invite optional design requirements. Uploading references improves character likeness, prop accuracy, scene atmosphere, and visual specificity; not uploading references means the skill decides the visual strategy. Require attached character references before claiming face restoration.
+- Interaction: fixed opening sentence, then one-turn base setup, then a separate image-reference/design-request turn. Do not merge the latter two.
+- Image reference use: ask before generation whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes. In that separate image-reference turn, invite optional design requirements. Uploading references improves character likeness, prop accuracy, scene atmosphere, and visual specificity; not uploading references means the skill decides the visual strategy. Require attached character references before claiming face restoration.
 - Style: concrete weighted-random style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.

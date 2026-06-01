@@ -14,7 +14,7 @@ Second core rule: if a film-specific prop, weapon, costume, vehicle, artifact, b
 
 ## User-Uploaded Character Gate
 
-Before image generation, ask whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes. In the same turn, allow the user to add simple design requirements such as preferred art style, desired elements or props, character treatment, color mood, composition, or avoid-list. If they have no requirements, they can say so and the skill should make the design decisions.
+Before image generation, ask whether the user wants to upload images they want represented in the poster, including but not limited to characters, props, and scenes. This is a separate guided turn after base settings. In this image-reference turn, allow the user to add simple design requirements such as preferred art style, desired elements or props, character treatment, color mood, composition, or avoid-list. If they have no requirements, they can say so and the skill should make the design decisions.
 
 If yes, ask the user to upload one or more images they want represented in the poster: character stills/photos, prop references, scene references, costume references, or atmosphere references. For character identity, this remains the preferred first-pass workflow because the user can choose the exact face, costume, scene, and role version they want.
 

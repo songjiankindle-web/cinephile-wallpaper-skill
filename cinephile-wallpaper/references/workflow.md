@@ -10,7 +10,7 @@
    - text mode: with text, no text, or both;
    - generation mode: current image tool, image skill/tool, external API, or prompt-only;
    - whether to remember changed size/output defaults.
-4. Ask the image-reference/design-request gate before research or image generation.
+4. After the user answers setup, ask the image-reference/design-request gate as a separate assistant turn before research or image generation.
 5. If a device model is provided, look up the screen resolution; see `device-size.md`.
 6. Research the film, film-tone references, style references, and character references.
 7. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
@@ -38,7 +38,7 @@ Keep the actual image prompt portable. It may be in the user's language or Engli
 
 ## One-Turn Setup Prompt
 
-After the film is confirmed, ask the base settings in one turn. This is mandatory even if the initial user message already included a film title, style, or "generate now" wording. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available:
+After the film is confirmed, ask the base settings in one turn. This is mandatory even if the initial user message already included a film title, style, or "generate now" wording. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available. Do not include the image-reference/design-request question here.
 
 ```text
 请一次确认下面 5 项设置：
@@ -49,11 +49,11 @@ After the film is confirmed, ask the base settings in one turn. This is mandator
 5. 是否把以上四项都记为默认设置，方便下次沿用？
 ```
 
-Adapt this to the user's language. Do not split these into several separate turns unless a required answer is missing or ambiguous.
+Adapt this to the user's language. Do not split these five base settings into several separate turns unless a required answer is missing or ambiguous. Also do not append the image-reference/design-request gate to this setup prompt; it is the next separate assistant turn.
 
 ## Image Reference Gate
 
-After the base setup is answered and before research/generation, ask one concise question. This gate is mandatory unless the user already answered it in the same setup reply:
+After the base setup is answered and before research/generation, ask one concise question. This gate is mandatory as a separate assistant turn:
 
 ```text
 是否上传您想呈现在海报中的形象图片？包括但不限于角色、道具、场景等。如果上传，我会用它锚定人物长相、道具形态、场景氛围或其他视觉细节；如果不上传，我会根据影片自行判断画面中应出现什么以及如何设计。
@@ -61,13 +61,13 @@ After the base setup is answered and before research/generation, ask one concise
 你也可以在这一轮顺手补充简单设计需求，例如指定美术风格、想出现的元素/道具、人物呈现方式、色调氛围、构图偏好，或不希望出现的内容；如果没有特别需求，请说“无特别需求”，我将由 AI 自主决策设计。
 ```
 
-Adapt this to the user's language. If the user already answered this in the setup reply, do not ask again.
+Adapt this to the user's language. Do not merge this with the one-turn base setup. If the user volunteered reference/design preferences while answering setup, carry that information forward, but still present this gate as the second guided turn and ask whether they want to add or change anything.
 
 Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
 
 ## No Shortcut Generation
 
-Never treat an initial request like "给我生成一个《某电影》的海报" as permission to generate immediately. It only supplies the film identity. The next assistant response must be the one-turn setup, or ambiguity clarification if the film identity is unclear. Research, prompt writing, image generation, file saving, and wallpaper setting are all blocked until base settings and the image-reference/design-request gate are complete.
+Never treat an initial request like "给我生成一个《某电影》的海报" as permission to generate immediately. It only supplies the film identity. The next assistant response must be the one-turn setup, or ambiguity clarification if the film identity is unclear. After setup is answered, the next assistant response must be the separate image-reference/design-request gate. Research, prompt writing, image generation, file saving, and wallpaper setting are all blocked until both guided turns are complete.
 
 If the user uploads or says they want to use image references:
 
