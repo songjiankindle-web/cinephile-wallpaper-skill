@@ -18,6 +18,8 @@ Before image generation, ask whether the user wants recognizable film characters
 
 If yes, ask the user to upload one or more character photos/stills in the conversation. This is the preferred first-pass workflow for precise identity anchoring because the user can choose the exact face, costume, scene, and role version they want.
 
+Important: an uploaded character reference is an identity anchor, not a layer to be pasted into the poster. Extract the character's likeness and role traits, then generate a new poster figure through the selected art language.
+
 Use uploaded images with this priority:
 
 1. user-uploaded in-character stills or screenshots;
@@ -30,6 +32,9 @@ Rules:
 
 - uploaded character references are authoritative for this run;
 - do not replace a user-uploaded reference with a web image unless the user asks;
+- do not cut out, paste, trace, clone, or replicate the uploaded image;
+- do not copy the reference pose, lighting, crop, background, camera angle, or composition unless the user explicitly asks for that exact still;
+- use the reference to preserve face structure, hair, age, expression, bearing, costume, posture language, and role identity inside a newly composed poster;
 - if several faces are in one image, ask the user to label which character(s) to use unless it is obvious;
 - if no uploaded/acquired reference image can be attached to the image-generation call, do not generate a recognizable face and do not claim identity restoration;
 - no reference image does not mean no people: use controlled non-face human presence when it helps the poster;
@@ -75,6 +80,7 @@ Do not force a character-free poster unless the concept is stronger without peop
    - crop at least one clear face/upper-body image per key character;
    - crop or save one costume/posture image when useful;
    - keep one wider context image only if it helps the poster concept;
+   - mark each image as identity/costume/posture reference, not compositing material;
    - avoid using only a written trait list.
 6. Search for visual references from stable sources when available:
    - official stills;
@@ -200,11 +206,31 @@ Use this workflow for any poster that visibly depicts a real actor/performer cha
 4. Confirm the current image model/tool can accept image references.
 5. Attach the cropped character reference image files to the generation call.
 6. In the prompt, instruct the model to preserve the character identity from attached references while transforming the overall poster language through the selected art style.
-7. After generation, inspect whether the character still reads as the referenced role. If not, retry with fewer characters, tighter crop references, and stronger identity-preservation instructions.
+7. Instruct the model to create a new pose/composition unless the user's design asks for the exact still.
+8. After generation, inspect whether the character still reads as the referenced role and whether the image looks like a pasted cutout. If it resembles cut-and-paste compositing or cloned still placement, reject it and retry with stronger "identity only, no copying" instructions.
 
 If the user has uploaded reference stills, start at step 2 and treat those files as the primary identity source.
 
 If any of steps 1-5 fails, the skill cannot honestly claim character-face restoration. Use a non-face recognition strategy by default when it can produce a strong poster; ask the user to upload stills only when the design truly needs a recognizable face.
+
+## Identity-Only Reference Use
+
+When image references are attached, write the prompt so the model understands the reference's purpose:
+
+- preserve: face shape, hairline/hairstyle, age, expression range, costume identity, posture language, role temperament, and key props;
+- transform: pose, composition, color, lighting, background, scale, crop, material, and art style;
+- forbid: copy-paste cutout, traced outline, same camera angle, same still background, same lighting, same body pose, celebrity glamour portrait, or literal screenshot remake.
+
+Good wording:
+
+```text
+Use the attached character image only as an identity and costume reference.
+Extract the likeness, facial structure, hair, expression, bearing, and role
+costume, then regenerate the character as a new painted/graphic figure inside
+the poster's original composition. Do not paste, cut out, trace, clone, or
+recreate the reference photo; do not reuse its pose, background, lighting, or
+camera crop.
+```
 
 ## Reference Image Priority
 
@@ -318,9 +344,10 @@ played by [actor/performer if applicable]. Use the attached cropped
 in-character reference images as the identity source for the face, head,
 hair, costume, posture, and expression. Preserve the character identity from
 those image references while rendering the overall poster in [fine-art medium].
-Do not copy the still, do not make a photorealistic live-action frame, and do
-not replace the role with a generic person. Integrate the referenced character
-into the poster metaphor: [metaphor].
+Do not paste, cut out, trace, clone, or recreate the still; do not copy its
+pose, lighting, camera crop, or background; do not make a photorealistic
+live-action frame; do not replace the role with a generic person. Regenerate
+the character as a new figure inside the poster metaphor: [metaphor].
 ```
 
 For important props:
@@ -345,6 +372,8 @@ back-view figure and avoid generic replacement faces.
 ## Avoid
 
 - copying a still or publicity photo;
+- pasted/cutout-looking figures from uploaded references;
+- tracing or cloning a reference pose, crop, lighting, background, or exact composition;
 - photorealistic live-action actor-face rendering or copied-still portraiture;
 - claiming face restoration without attached character still/crop references;
 - using text-only actor names or trait lists as the identity mechanism when image references are possible;
@@ -369,6 +398,7 @@ Before finalizing the prompt, ask:
 - Does the character anchor serve the central metaphor?
 - Are any film-specific props or costumes accurate enough to be recognized?
 - Is the result still a poster, not a screenshot?
+- Does the referenced character feel newly generated in the poster world, not pasted from the uploaded image?
 - Is the framing varied enough, or is it falling back to the same distant back-view figure pattern?
 
 ## Failure Recovery
@@ -383,4 +413,5 @@ If the generated character does not resemble the film character:
 6. Move from full-body to face/upper-body if identity restoration matters.
 7. Strengthen the attached-reference instruction and forbidden substitutions.
 8. If the prop is wrong, acquire a clearer prop/still reference or remove it from the central composition.
-9. If the model cannot preserve identity after reference-image retries, say so briefly and offer a non-face strategy: hands, costume, prop, silhouette, back view, partial figure, object-body fusion, or typography-led poster. Frame it as fallback after reference-image identity preservation failed.
+9. If the image looks like the reference was pasted in, retry with identity-only reference wording, a new pose, a different crop, and stronger style/material constraints.
+10. If the model cannot preserve identity after reference-image retries, say so briefly and offer a non-face strategy: hands, costume, prop, silhouette, back view, partial figure, object-body fusion, or typography-led poster. Frame it as fallback after reference-image identity preservation failed.

@@ -56,7 +56,7 @@ Use these as ingredients, not labels:
 
 ## Art Direction Matrix
 
-Default behavior: randomly draw one primary art language and one secondary device unless the user explicitly names a style. Film analysis should decide what appears in the poster, not which art-history style is allowed. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
+Default behavior: draw one primary art language and one secondary device with weighted randomness unless the user explicitly names a style. Film analysis should decide what appears in the poster, not which art-history style is allowed. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
 
 Avoid safe illustration as the default. When an output stays conventional, escalate by choosing from the stronger sets below and writing the escalation directly into the prompt.
 
@@ -144,22 +144,58 @@ Every generation must choose one `style_lane` before writing the prompt. Do not 
 Default selection method:
 
 1. If the user names a style, use it.
-2. Otherwise randomly draw one `style_lane` from the full lane list. Use a host random function when available; if not, use the current timestamp or simply pick a lane without optimizing for film-style suitability.
-3. Then randomly draw a narrower `style_variant` inside that lane by the same method.
+2. Otherwise draw one `style_lane` with the weighted table below. Use a host random function when available; if not, use the current timestamp or pick from the boosted classic fine-art lanes before choosing safer contemporary poster lanes.
+3. Then draw a narrower `style_variant` inside that lane by the same method.
 4. Use film research only to choose the poster's elements, characters, props, symbols, tone references, and metaphor.
 5. Do not replace the random style with a "more suitable" or safer style unless it would make the film unrecognizable or violate a user instruction.
 6. Do not inspect prior generated outputs as a cache, and do not return an old result for a repeated film request.
 
-Record the random draw in the manifest:
+Record the weighted draw in the manifest:
 
 ```json
 {
-  "style_selection_mode": "user_specified | random",
+  "style_selection_mode": "user_specified | weighted_random | corrective",
   "style_lane": "",
   "style_variant": "",
+  "style_weights": {},
+  "classic_style_boost_applied": true,
   "random_style_kept": true
 }
 ```
+
+## Style Weights
+
+The skill was producing too few visibly classic fine-art styles. Unless the user specifies a style, use this baseline weighted distribution. The "classic fine-art boost" means the lanes most directly tied to recognizable art history should collectively be common, not occasional.
+
+```json
+{
+  "impressionist_light_field": 11,
+  "fragmented_modernism": 10,
+  "expressive_color": 9,
+  "geometric_avant_garde": 8,
+  "conceptual_dada_surreal": 8,
+  "east_asian_ink": 8,
+  "renaissance_baroque_allegory": 7,
+  "medieval_icon_glass": 6,
+  "ukiyo_e_flatworld": 6,
+  "print_process": 6,
+  "pop_repetition_media": 5,
+  "minimalist_reduction": 5,
+  "gongbi_miniature": 4,
+  "social_mural_realism": 3,
+  "material_arte_povera": 2,
+  "textile_tapestry_map": 1,
+  "optical_digital_signal": 1,
+  "real_object_still_life": 0
+}
+```
+
+Rules:
+
+- `real_object_still_life` is not part of ordinary random style selection. Use it only when the poster concept centers on an exact film prop/object or the user asks for real-object still life.
+- If recent outputs lacked classic art-history styles, use `corrective` mode and draw only from: `impressionist_light_field`, `fragmented_modernism`, `expressive_color`, `geometric_avant_garde`, `conceptual_dada_surreal`, `east_asian_ink`, `ukiyo_e_flatworld`, `medieval_icon_glass`, `renaissance_baroque_allegory`, `print_process`, or `pop_repetition_media`.
+- Do not let "film suitability" collapse the draw back to normal polished illustration. If the lane feels surprising, write a `counterpoint_bridge`.
+- The prompt must name the selected lane and include a visible mechanism from it, such as broken color, faceting, fauvist contour, ink wash, stained glass tesserae, fresco grouping, woodcut cuts, halftone repetition, or hard-edge geometry.
 
 Choose one lane:
 
@@ -219,7 +255,7 @@ Use `real_object_still_life` when the poster's strongest anchor is a real object
 
 ## Randomization Discipline
 
-- The random draw is not a suggestion. Keep it through prompt writing.
+- The weighted draw is not a suggestion. Keep it through prompt writing.
 - If the draw feels mismatched, write a `counterpoint_bridge` rather than replacing the style.
 - The prompt must include the exact `style_lane` and `style_variant`.
 - The prompt must include one visible mechanism from the style: brushstroke, faceting, pointillist dots, ink wash, hard-edge reduction, mosaic tesserae, woodcut cuts, textile threads, etc.

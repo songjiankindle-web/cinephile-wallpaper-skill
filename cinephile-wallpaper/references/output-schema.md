@@ -27,7 +27,7 @@ Write one manifest per generated wallpaper:
     "avoid_tone": []
   },
   "art_language": {
-    "style_selection_mode": "user_specified | random",
+    "style_selection_mode": "user_specified | weighted_random | corrective",
     "style_lane": "",
     "style_variant": "",
     "primary": "",
@@ -36,6 +36,8 @@ Write one manifest per generated wallpaper:
     "abstraction_mechanism": "",
     "semiotic_layers": [],
     "counterpoint_bridge": "",
+    "style_weights": {},
+    "classic_style_boost_applied": true,
     "rationale": "",
     "random_style_kept": true,
     "fresh_generation": true

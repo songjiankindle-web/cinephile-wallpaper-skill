@@ -21,13 +21,15 @@
     "art_language": {
       "style_lane": "",
       "style_variant": "",
-      "style_selection_mode": "user_specified | random",
+      "style_selection_mode": "user_specified | weighted_random | corrective",
       "primary": "",
       "secondary": "",
       "movement_family": "modern_contemporary | classical | regional_traditional | material_process | counterpoint",
       "abstraction_mechanism": "",
       "semiotic_layers": [],
-      "counterpoint_bridge": ""
+      "counterpoint_bridge": "",
+      "style_weights": {},
+      "classic_style_boost_applied": true
     },
     "film_tone": {
       "color_system": "color | black-and-white | mixed | animation | unknown",
@@ -125,9 +127,9 @@
 - Describe the desired image, not the poster to copy.
 - All generated visuals must be fine-art or graphic poster styles, not photorealistic live-action.
 - Use media such as oil painting, sketch, gouache, acrylic, watercolor, ink, printmaking, modernism, impressionism, fauvism, abstraction, pop art, constructivism, collage, or other art/poster languages.
-- Style must be more ambitious than normal illustration. Use `style-distillation.md` and `artist-grammars.md` to randomly draw from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies unless the user specifies a style.
+- Style must be more ambitious than normal illustration. Use `style-distillation.md` and `artist-grammars.md` to draw from modern/contemporary art, classical art, regional traditions, experimental materials, or deliberate counterpoint strategies unless the user specifies a style.
 - Do not merely list art movements. Select one primary art language, one secondary device, one abstraction mechanism, and one reason this style reveals the film.
-- Before writing the prompt, randomly draw a `style_lane` and `style_variant` from `style-distillation.md` unless the user specified one. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
+- Before writing the prompt, draw a `style_lane` and `style_variant` from the weighted style router in `style-distillation.md` unless the user specified one. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
 - Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it.
 - Choose a `visual_density` before writing the prompt. Default is weighted random, not pure random: infer density weights from genre, scale, tempo, narrative complexity, authorial mode, and visual world; then draw one mode from those weights. Use corrective only when recent outputs felt too full or the user asks for more restraint. The density mode controls how many elements may appear and how much silence/negative space the poster uses.
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
@@ -151,6 +153,7 @@
 - For visible real actor/performer characters, do not rely on text descriptions. Acquire or ask for actual still/screenshot image files, prepare cropped character references, and attach those images to the generation call.
 - If the host supports reference images, use acquired or user-provided in-character crops for key characters and verify `reference_images_attached: true`. If it does not, state that character-face restoration is not available in this agent/model and either ask for an image-reference-capable workflow or use a non-face strategy with explicit risk.
 - Use frontal/close character compositions only when real cropped reference images are attached.
+- When using uploaded or acquired character references, use them for identity extraction only. Preserve likeness and role traits, but regenerate the figure in a new pose/composition. Do not paste, cut out, trace, clone, or recreate the reference still.
 - If the user wants character presence but no actor/character reference image is provided or attachable, do not remove people by default. Use non-face character presence: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection, small figure, or body-object fusion. Avoid readable invented faces.
 - Limit back-view character compositions. If characters appear, prefer front, profile, or three-quarter views; use back view only as a deliberate film-specific motif or non-face fallback.
 - Do not confuse non-photorealism with text-only approximation. Avoid copied stills and live-action photorealism, but preserve identity from the attached character image references.
@@ -309,9 +312,10 @@ When recognition is weak, add:
 Include a protagonist character anchor through [face/costume/posture/prop],
 strictly matching the film character's visual identity while rendered in
 [fine-art medium]. Use the attached in-character cropped reference image as
-the identity source. Preserve the referenced face/head/hair/costume/posture
-inside the generated poster, without copying the still or making a
-photorealistic live-action frame.
+the identity source only. Preserve the referenced face/head/hair/costume and
+role bearing, but regenerate the figure in a new poster pose and composition.
+Do not paste, cut out, trace, clone, or recreate the still; do not copy its
+lighting, background, crop, or exact posture.
 ```
 
 Stronger character-lock pattern:
@@ -320,9 +324,11 @@ Stronger character-lock pattern:
 Character identity lock: [character] from [film, year], played by [performer].
 Use the attached cropped in-character reference images as the identity source,
 not as loose inspiration. Preserve the referenced face, head, hair, costume,
-posture, prop, and expression inside the poster. The character must read as
+prop, expression range, and role bearing inside the poster, while changing the
+pose, crop, lighting, background, and composition. The character must read as
 [character] before the title is seen, while rendered as [art language]; not a
-photorealistic copied still, not text-only approximation, not a generic replacement.
+photorealistic copied still, not pasted cutout, not text-only approximation,
+not a generic replacement.
 ```
 
 If all prior generations look like distant back-view figures, force variety:

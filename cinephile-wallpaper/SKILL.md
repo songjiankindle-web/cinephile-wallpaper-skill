@@ -26,7 +26,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 1. **Ask for the film**
    - Accept a film title or film URL.
    - If title/year is ambiguous, ask the user to identify the correct film.
-   - If no model/style is specified, randomly draw a style lane from `references/style-distillation.md`; do not let plot analysis choose the safest matching style.
+   - If no model/style is specified, draw a style lane from the weighted router in `references/style-distillation.md`; do not let plot analysis choose the safest matching style.
    - Auto-detect the user's interaction language from their request and respond in that language.
    - If the user asks for a different output language, use it for visible interaction and layout text unless film titles require original language.
 
@@ -42,6 +42,7 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Before image generation, ask whether the user wants recognizable film characters to appear.
    - If the user says yes, ask them to upload one or more character photos/stills in the conversation. Prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded character images as the strongest identity source for this run. Use them before automatic web acquisition.
+   - Use uploaded references to extract identity traits only: face structure, age, hair, expression, bearing, costume, posture, and role cues. Do not cut out, paste, trace, clone, or replicate the reference image's exact pose, lighting, crop, background, or composition.
    - Do not proceed with character-face restoration until at least one uploaded or locally acquired reference image file is actually attachable to the image-generation call.
    - If the user wants characters but does not provide real actor/character reference images, characters may still appear through restrained non-face strategies: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection without readable face, scale figure, or body-object fusion. Do not force a character-free poster.
    - If the user says no, use non-character, object, atmosphere, typography, silhouette, or symbolic strategies instead.
@@ -75,7 +76,8 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
    - Read `references/style-distillation.md` and `references/artist-grammars.md` when the visual direction feels too normal, too illustrational, or not bold enough.
    - Translate the film into a poster concept, not a literal scene summary.
    - Extract mood, visual symbols, film-tone diagnosis, art-language strategy, palette, composition, visual density, subject strategy, metaphor, abstraction level, and avoid-list.
-   - Select a concrete `style_lane` by random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
+   - Select a concrete `style_lane` by weighted random draw unless the user specifies a style. Film analysis decides elements, character anchors, props, mood, and metaphor; it must not override the random style draw just because another style feels more obvious.
+   - Apply the classic fine-art boost in `references/style-distillation.md`: lanes such as impressionism, cubism, fauvism/expressionism, abstraction/suprematism, surrealism, pop art, Chinese ink, ukiyo-e, medieval/icon/glass, Renaissance/Baroque, and printmaking must collectively have a high baseline chance, not rare edge-case status.
    - Select a `visual_density` before writing the prompt: `dense`, `balanced`, `sparse`, or `single_stroke`. Use weighted randomness based on film genre, rhythm, scale, narrative complexity, and authorial tone; do not use pure random density and do not default to dense multi-element compositions.
    - Apply the global minimalism boost in `references/visual-brief.md`: increase the combined chance of `sparse` and `single_stroke` by 40% before drawing density.
    - If the selected style lane is `real_object_still_life`, focus on exact film props or body fragments; do not show recognizable faces.
@@ -123,16 +125,18 @@ Do not introduce the skill, list features, explain usage, ask about style, or ad
 - Delivery: default to poster-first, low-token output.
 - Interaction: fixed opening sentence, then one-turn base setup; avoid scattered follow-up confirmations.
 - Character presence: ask before generation whether recognizable film characters should appear. If yes, require uploaded or locally acquired reference images that can be attached to the image model before claiming face restoration. Without references, characters may still appear as non-face anchors.
-- Style: concrete randomly drawn style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
+- Style: concrete weighted-random style-lane-driven art direction, not photorealistic live-action and not generic AI illustration.
 - Style range: draw from modern/contemporary art, classical and pre-modern art, regional traditions, experimental material processes, and controlled counterpoint. Avoid making every output a polished normal illustration.
 - Style source: distill poster/design principles, not direct imitation of a single living artist.
 - Style lane: every run must choose one concrete style lane; generic `fine-art poster` wording is not enough.
-- Style randomness: default style selection is random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style.
+- Style randomness: default style selection is weighted random across the style lane pool. The film's content serves the poster concept and elements, not style matching, unless the user explicitly asks for a specific style.
+- Classic style weight: default style selection is weighted so classic fine-art/art-history lanes appear often. Recent absence of impressionism, cubism, abstraction, fauvism, ink, ukiyo-e, medieval/icon/glass, Renaissance/Baroque, or printmaking should trigger corrective weighting toward those lanes.
 - Visual density: every run must choose a density mode through weighted randomness. Good posters may be dense, balanced, sparse, or a single decisive visual stroke. Do not fill the canvas just because more film elements were researched.
 - Composition: overall poster design comes first. Do not create large empty blank zones merely for future text, but do use intentional negative space, silence, asymmetry, and one-point focus when the density mode calls for it.
 - Film recognition: include a protagonist/character anchor when abstraction alone would make the film hard to identify.
 - Character identity: if depicting a specific real actor/performer character, use a character identity lock plus actual in-character image files. Attach cropped character references to the image model when supported; do not rely on text-only prompting, actor-name prompting, or vague style-language approximation.
 - User-uploaded character reference: first-pass preferred method for precise character anchoring. A user-uploaded still/photo is authoritative for the requested run and outranks automatic web references.
+- Reference use: uploaded images are identity references, not source layers. Extract likeness and role traits, then regenerate the character inside the new poster concept and chosen art language; never copy/paste, cut out, trace, or reproduce the uploaded image as a composited figure.
 - Prop identity: if depicting a distinctive film object, weapon, costume, vehicle, artifact, or architecture, use a prop identity lock and real visual references; do not replace it with a generic lookalike.
 - Character framing: prefer varied close portrait, three-quarter face, medium figure, pair, or ensemble strategies when useful; do not repeatedly hide characters as distant back-view figures.
 - Face direction: when characters appear, prefer front, profile, or three-quarter views. Back view is uncommon and must be deliberate, not a default.
@@ -166,6 +170,7 @@ Reject or revise outputs that look like:
 - illegible model-generated lettering;
 - live-action photorealism;
 - copied-still photorealism or celebrity glamour portraiture that ignores the film role;
+- pasted/cutout-looking reference-image figures, traced poses, copied lighting, copied background, or poster designs that visibly reuse the uploaded reference image as a source layer;
 - claiming character-face restoration without attached still/crop reference images;
 - generating readable actor/character faces after the user requested characters but no uploaded/acquired reference image can be attached;
 - using actor-name or text traits alone when the model can accept image references;
