@@ -32,6 +32,7 @@ Current v1.02 behavior:
 - numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
 - randomized `style_lane` and `style_variant` selection unless the user specifies a style;
 - style selection is decoupled from film content: draw the style first with the weighted router, then bridge the film into that style; do not choose or explain style as "suitable for the film";
+- random style selection now uses `cinephile-wallpaper/scripts/draw-style.mjs`, a film-input-free draw script that records random source, rolls, effective weights, and `film_inputs_used_for_style: false`;
 - weighted visual-density routing across `dense`, `balanced`, `sparse`, and `single_stroke`;
 - 40% global boost for sparse/single-stroke density after film-profile weighting;
 - real-object still-life lane for exact film props, with no recognizable faces;

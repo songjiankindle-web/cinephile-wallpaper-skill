@@ -146,11 +146,12 @@ Every generation must choose one `style_lane` before writing the prompt. Do not 
 Default selection method:
 
 1. If the user names a style, use it.
-2. Otherwise draw one `style_lane` with the weighted table below. Use a host random function when available; if not, use the current timestamp or pick from the boosted classic fine-art lanes before choosing safer contemporary poster lanes.
-3. Then draw a narrower `style_variant` inside that lane by the same method.
-4. Use film research only to choose the poster's elements, characters, props, symbols, tone references, and metaphor.
-5. Do not replace the random style with a "more suitable," "more matching," or safer style unless it would make the film unrecognizable or violate a user instruction.
-6. Explain the relationship as a bridge after the draw, not as the reason for the draw.
+2. Otherwise run `scripts/draw-style.mjs` before film research, film-tone analysis, plot interpretation, or visual brief writing.
+3. Use the script output exactly: `style_lane`, `style_variant`, `effective_style_weights`, `suppressed_recent_lanes`, rolls, and random source.
+4. Do not ask the language model to choose, rank, filter, adjust, or justify style from film content.
+5. Use film research only to choose the poster's elements, characters, props, symbols, tone references, and metaphor after the style has already been drawn.
+6. Do not replace the script-drawn style with a "more suitable," "more matching," or safer style unless it would make the film unrecognizable or violate a user instruction.
+7. Explain the relationship as a bridge after the draw, not as the reason for the draw.
 
 Forbidden style-selection language:
 
@@ -174,6 +175,10 @@ Record the weighted draw in the manifest:
   "style_lane": "",
   "style_variant": "",
   "style_weights": {},
+  "effective_style_weights": {},
+  "suppressed_recent_lanes": [],
+  "random_source": "node_crypto.randomInt",
+  "film_inputs_used_for_style": false,
   "classic_style_boost_applied": true,
   "random_style_kept": true
 }
@@ -181,7 +186,7 @@ Record the weighted draw in the manifest:
 
 ## Style Weights
 
-The skill was producing too few visibly classic fine-art styles. Unless the user specifies a style, use this baseline weighted distribution. The "classic fine-art boost" means the lanes most directly tied to recognizable art history should collectively be common, not occasional.
+The skill was producing too few visibly classic fine-art styles. Unless the user specifies a style, `scripts/draw-style.mjs` uses this baseline weighted distribution. The "classic fine-art boost" means the lanes most directly tied to recognizable art history should collectively be common, not occasional.
 
 ```json
 {
@@ -209,7 +214,8 @@ The skill was producing too few visibly classic fine-art styles. Unless the user
 Rules:
 
 - `real_object_still_life` is not part of ordinary random style selection. Use it only when the poster concept centers on an exact film prop/object or the user asks for real-object still life.
-- If recent outputs lacked classic art-history styles, use `corrective` mode and draw only from: `impressionist_light_field`, `fragmented_modernism`, `expressive_color`, `geometric_avant_garde`, `conceptual_dada_surreal`, `east_asian_ink`, `ukiyo_e_flatworld`, `medieval_icon_glass`, `renaissance_baroque_allegory`, `print_process`, or `pop_repetition_media`.
+- Do not use film content as a corrective signal. Corrective mode may only be triggered by explicit user style feedback or by recent style repetition/absence, never by the current film's plot, genre, rhythm, mood, country, director, or tone.
+- `scripts/draw-style.mjs` suppresses recently drawn lanes by setting their effective weight to zero for the current draw. This prevents repetition without using film content.
 - Do not let "film suitability" collapse the draw back to normal polished illustration. If the lane feels surprising, write a `counterpoint_bridge`.
 - The prompt must name the selected lane and include a visible mechanism from it, such as broken color, faceting, fauvist contour, ink wash, stained glass tesserae, fresco grouping, woodcut cuts, halftone repetition, or hard-edge geometry.
 
