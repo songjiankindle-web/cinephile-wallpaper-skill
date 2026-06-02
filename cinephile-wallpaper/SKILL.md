@@ -60,7 +60,9 @@ The base-settings prompt and the image-reference/design-request prompt are two s
    - If the user wants reference-image restoration, ask them to upload one or more images they want represented in the poster, including but not limited to characters, props, and scenes. For characters, prefer clear in-character stills, screenshots, face/upper-body images, or labeled group stills.
    - Treat user-uploaded reference images as the strongest visual source for this run. Use them before automatic web acquisition.
    - Use uploaded references to restore the character's face and appearance as accurately as the image model allows: face structure, eyes, nose, mouth, jaw, skin tone, age, hair, expression range, bearing, costume, and role cues are mandatory identity anchors.
-   - Do not cut out, paste, trace, clone, or replicate the reference image's exact body pose, action, lighting, crop, background, camera angle, or composition. Redesign pose, gesture, action, framing, and poster composition while preserving the real actor/character likeness.
+   - Character references are identity-only anchors. They are not composition, scale, pose, lighting, or framing references unless the user explicitly asks for that. Preserve who the character is; redesign everything about how the character appears in the poster.
+   - Do not cut out, paste, trace, clone, or replicate the reference image's body pose, action, gesture, facial expression, lighting, crop, background, camera angle, composition, subject size, or subject placement. Redesign pose, gesture, action, expression, figure scale, framing, and poster composition while preserving the real actor/character likeness.
+   - Avoid an automatic large portrait bias. Character scale must be a deliberate design choice and may be close portrait, medium figure, small figure, partial face/body, pair, constellation, environmental portrait, or object-character relation.
    - Do not proceed with character-face restoration until at least one uploaded or locally acquired reference image file is actually attachable to the image-generation call.
    - If the user does not provide real actor/character reference images, characters may still appear through restrained non-face strategies: back view, silhouette, partial figure, hands, costume, posture, shadow, reflection without readable face, scale figure, or body-object fusion. Do not force a character-free poster.
    - Store uploaded references only for the current run unless the user explicitly asks to build a reusable reference library.
@@ -115,7 +117,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
    - If the user requests a text version, allow the image model to generate integrated title and metadata directly in the poster for speed. Keep text short and provide exact strings.
    - Treat typography as a major visual component, not a plain font overlay. The title lettering must be art-directed and matched to the selected `style_lane`, film tone, language, and composition.
    - If the user requests a no-text version, use `no text, no logos, no credits`.
-   - Never request live-action photorealism, copied stills, or invented characters. If a real actor/performer character appears, request identity preservation from the attached reference images while rendering the overall poster through the selected art lane's material/process language.
+   - Never request live-action photorealism, copied stills, or invented characters. If a real actor/performer character appears, request identity preservation from the attached reference images while rendering the character and the overall poster through the selected art lane's material/process language. The character must not fall back to realistic portrait rendering while only the background is stylized.
    - Save the prompt package internally, but do not display it by default.
 
 8. **Save outputs**

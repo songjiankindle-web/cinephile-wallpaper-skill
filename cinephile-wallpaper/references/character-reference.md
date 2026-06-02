@@ -18,7 +18,7 @@ Before image generation, ask whether the user wants to upload images they want r
 
 If yes, ask the user to upload one or more images they want represented in the poster: character stills/photos, prop references, scene references, costume references, or atmosphere references. For character identity, this remains the preferred first-pass workflow because the user can choose the exact face, costume, scene, and role version they want.
 
-Important: an uploaded character reference is an identity anchor, not a layer to be pasted into the poster. The face and appearance must be restored as accurately as the image model allows; the pose, action, gesture, framing, lighting, background, and composition should be redesigned for the poster.
+Important: an uploaded character reference is an identity anchor only, not a layer to be pasted into the poster and not a design template. The face and appearance must be restored as accurately as the image model allows; the pose, action, gesture, expression, figure scale, placement, framing, lighting, background, and composition must be redesigned for the poster.
 
 Use uploaded images with this priority:
 
@@ -33,9 +33,11 @@ Rules:
 - uploaded character references are authoritative for this run;
 - do not replace a user-uploaded reference with a web image unless the user asks;
 - do not cut out, paste, trace, clone, or replicate the uploaded image;
-- do not copy the reference pose, lighting, crop, background, camera angle, or composition unless the user explicitly asks for that exact still;
+- do not copy the reference pose, expression, lighting, crop, background, camera angle, subject scale, subject placement, or composition unless the user explicitly asks for that exact still;
 - use the reference to accurately preserve face structure, eyes, nose, mouth, jaw, skin tone, hair, age, expression range, bearing, costume, and role identity inside a newly composed poster;
-- redesign the body pose, action, gesture, spatial relationship, and poster composition instead of reproducing the reference still;
+- redesign the body pose, action, gesture, expression, figure scale, spatial relationship, and poster composition instead of reproducing the reference still;
+- avoid automatic large-face or large-torso placement. Large portrait is allowed only when it is a deliberate poster strategy; otherwise freely choose medium figure, small figure, partial face/body, profile, pair, ensemble, environmental portrait, object-character relation, or negative-space placement;
+- the selected art style must transform the character itself: face, hair, costume, hands, and body should all be rendered through the chosen material/process language. Do not make a realistic actor face inside a stylized background;
 - if several faces are in one image, ask the user to label which character(s) to use unless it is obvious;
 - if no uploaded/acquired reference image can be attached to the image-generation call, do not generate a recognizable face and do not claim identity restoration;
 - no reference image does not mean no people: use controlled non-face human presence when it helps the poster;
@@ -219,20 +221,49 @@ If any of steps 1-5 fails, the skill cannot honestly claim character-face restor
 When image references are attached, write the prompt so the model understands the reference's purpose:
 
 - preserve with high accuracy: face shape, eyes, nose, mouth, jawline, skin tone, hairline/hairstyle, age, expression range, costume identity, role temperament, and key props;
-- transform: body pose, action, gesture, composition, color, lighting, background, scale, crop, material, and art style;
-- forbid: copy-paste cutout, traced outline, same camera angle, same still background, same lighting, same body pose, celebrity glamour portrait, or literal screenshot remake.
+- transform: facial expression choice, body pose, action, gesture, subject size, placement, composition, color, lighting, background, scale, crop, material, and art style;
+- forbid: copy-paste cutout, traced outline, same camera angle, same still background, same lighting, same body pose, same facial expression, same subject scale, same placement, celebrity glamour portrait, or literal screenshot remake.
 
 Good wording:
 
 ```text
-Use the attached character image as the mandatory identity source for the
-face and appearance. Accurately preserve the likeness, facial structure,
-eyes, nose, mouth, jaw, hair, age, expression range, bearing, and role costume,
-then regenerate the character as a new painted/graphic figure inside the
-poster's original composition. Do not paste, cut out, trace, clone, or recreate
-the reference photo; redesign the pose, action, gesture, background, lighting,
-camera crop, and composition.
+Use the attached character image as the mandatory identity source only for the
+face, appearance, costume identity, and role bearing. Accurately preserve the
+likeness, facial structure, eyes, nose, mouth, jaw, hair, age, expression range,
+and role costume, then regenerate the character as a new painted/graphic figure
+inside the poster's original composition. Do not paste, cut out, trace, clone,
+or recreate the reference photo; redesign the pose, action, gesture, chosen
+expression, subject scale, placement, background, lighting, camera crop, and
+composition. Render the character through the same selected art-language
+mechanism as the rest of the poster; no realistic face pasted into a stylized
+image.
 ```
+
+## Character Scale And Composition Diversity
+
+When references are attached, do not let the reference crop determine the final subject size. Draw or decide a character scale strategy independent of the reference image:
+
+- `close_symbolic_portrait`: face dominates because the concept demands direct confrontation;
+- `medium_figure`: body/costume/gesture share weight with symbols and space;
+- `small_environmental_figure`: character is readable but subordinated to space, object, or atmosphere;
+- `partial_identity_fragment`: eye, mouth, hand, sleeve, hairline, or profile fragment carries identity;
+- `character_pair_or_constellation`: multiple roles arranged as a graphic system;
+- `object_character_relation`: character identity appears through a prop/body relation;
+- `negative_space_identity`: face or body held by surrounding empty space.
+
+Choose scale from the poster concept, density mode, and selected art lane, not from the uploaded image crop. If three recent runs with references produced large faces or large torsos, force a medium, small, partial, constellation, object-relation, or negative-space strategy.
+
+## Style Must Reach The Character
+
+The chosen art lane must visibly transform the character, including face, hair, skin value, costume, hands, and body. Identity preservation means the viewer recognizes the role; it does not mean photographic skin, realistic facial rendering, celebrity portrait lighting, or unstyled actor likeness.
+
+Reject and retry if:
+
+- the background follows the selected art style but the character is realistic;
+- the face looks like a lightly filtered photo;
+- the character scale and placement closely match the uploaded reference;
+- the pose, expression, crop, or lighting clearly comes from the reference image;
+- the image feels like a reference still with an art filter.
 
 ## Reference Image Priority
 

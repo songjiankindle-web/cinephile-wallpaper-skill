@@ -138,6 +138,13 @@ Write one manifest per generated wallpaper:
     "user_uploaded_refs_authoritative": false,
     "text_only_identity_risk": false,
     "face_restoration_claimed": false,
+    "identity_only_reference": true,
+    "reference_pose_copied": false,
+    "reference_scale_copied": false,
+    "reference_placement_copied": false,
+    "character_scale_strategy": "close_symbolic_portrait | medium_figure | small_environmental_figure | partial_identity_fragment | character_pair_or_constellation | object_character_relation | negative_space_identity",
+    "style_applied_to_character": true,
+    "realistic_face_fallback": false,
     "recognition_check": {
       "recognizable_before_title": false,
       "reference_gate_passed": false,

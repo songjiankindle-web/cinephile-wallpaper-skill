@@ -352,10 +352,12 @@ Character identity lock: [character] from [film, year], played by [performer].
 Use the attached cropped in-character reference images as the identity source,
 not as loose inspiration. Accurately preserve the referenced face, head, hair,
 eyes, nose, mouth, jaw, costume, prop, expression range, and role bearing
-inside the poster, while changing the pose, action, gesture, crop, lighting,
-background, and composition. The character must read as [character] before the
-title is seen, while rendered as [art language]; not a photorealistic copied
-still, not pasted cutout, not text-only approximation, not a generic replacement.
+inside the poster, while changing the chosen expression, pose, action, gesture,
+subject scale, placement, crop, lighting, background, and composition. The
+character must read as [character] before the title is seen, while every visible
+part of the character is rendered through [art language]; not a photorealistic
+copied still, not pasted cutout, not text-only approximation, not a generic
+replacement, not a realistic face inserted into a stylized background.
 ```
 
 If all prior generations look like distant back-view figures, force variety:
@@ -365,6 +367,27 @@ Avoid a tiny distant back-view figure. Use [close symbolic portrait / profile /
 three-quarter face / frontal painted portrait / character pair / character
 constellation / split composition / environmental portrait] to make the film's
 key character presence more immediate while staying poster-like.
+```
+
+When references caused overlarge copied-feeling figures, force scale diversity:
+
+```text
+The uploaded reference is for identity only. Do not inherit its crop, subject
+size, pose, expression, lighting, or placement. Choose a new character scale
+strategy from [medium figure / small environmental figure / partial identity
+fragment / character pair or constellation / object-character relation /
+negative-space identity]. Keep the likeness recognizable, but make the poster
+composition independent from the reference image.
+```
+
+When the character is less stylized than the rest of the image, force style reach:
+
+```text
+Apply [style_lane] to the character itself: face, hair, skin values, costume,
+hands, and body must be built from [style mechanism: faceting / ink wash /
+woodcut cuts / halftone dots / hard-edge geometry / stained-glass tesserae /
+gouache planes]. Preserve identity through structure, not through photographic
+realism. No realistic actor portrait inside a stylized background.
 ```
 
 When prior outputs are too dark, force tonal specificity:
