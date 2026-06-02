@@ -1,8 +1,8 @@
 # Cinephile Wallpaper Skill
 
-Generate high-aesthetic, non-photorealistic movie posters and wallpapers from real film titles.
+Generate high-aesthetic, non-photorealistic posters and wallpapers from real film, TV, anime, tokusatsu, documentary, franchise, character, prop, and scene titles.
 
-This is a cross-agent skill. It focuses on finished poster delivery, numbered one-turn setup, film-tone analysis, randomized art-history style routing, visual-density control, user-uploaded image references, character-reference anchoring, and prop/object/scene identity locks.
+This is a cross-agent skill. It focuses on finished poster delivery, broad Chinese/English poster-request triggering, numbered one-turn setup, film/work-tone analysis, randomized art-history style routing, visual-density control, user-uploaded image references, character-reference anchoring, and prop/object/scene identity locks.
 
 ## Install
 
@@ -26,6 +26,7 @@ v1.03 stable release.
 
 Current v1.03 behavior:
 
+- broad trigger metadata for Chinese/English 海报, 电影海报, 影视海报, 角色海报, poster, and wallpaper requests, including TV/anime/tokusatsu works and characters such as “给我做一张《杰克奥特曼》的海报”;
 - fixed opening prompt;
 - no shortcut generation: when the initial request already includes a film title, the skill must still ask the numbered setup and image-reference/design-request gate before research or generation;
 - fixed two-step guidance: ask base settings first, then ask image references/design requirements in a separate assistant turn; do not merge them;

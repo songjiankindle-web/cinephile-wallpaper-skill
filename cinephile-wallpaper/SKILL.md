@@ -1,13 +1,13 @@
 ---
 name: cinephile-wallpaper
-description: Generate original high-aesthetic movie posters and device wallpapers for real films. Use when an agent is asked to produce a finished poster/wallpaper from a film title, ask one fixed opening question, confirm required settings in one turn with remembered defaults, use film/character/prop/scene image references, call an image-generation model when available, save outputs, or provide one unified prompt when image generation is unavailable.
+description: "Generate original high-aesthetic posters and wallpapers for films, movies, TV series, animation, anime, tokusatsu, documentaries, shorts, franchises, characters, props, and scenes. Use when a user asks in English or Chinese to make/generate/create a 海报, 电影海报, 影视海报, 角色海报, poster, wallpaper, or device wallpaper for a named audiovisual work or character, for example “给我做一张《杰克奥特曼》的海报”. The skill must run its fixed guided flow: identify or confirm the work, ask base settings in one turn, ask image references/design requirements in a second turn, draw style independently, call an image-generation model when available, save outputs, or provide one unified prompt when image generation is unavailable."
 ---
 
 # Cinephile Wallpaper
 
 ## Core Idea
 
-Turn a real film into an original movie poster or device wallpaper through research, visual curation, and image generation. Do not treat existing web posters as the main source; use generated or user-provided visuals.
+Turn a real film or audiovisual work into an original poster or device wallpaper through research, visual curation, and image generation. Do not treat existing web posters as the main source; use generated or user-provided visuals.
 
 Default stance: image models create the complete poster/wallpaper, including visual design and typography when requested. Do not use HTML to create or composite the poster.
 
@@ -33,8 +33,8 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 
 ## Workflow
 
-1. **Ask for the film**
-   - Accept a film title or film URL.
+1. **Ask for the film/work**
+   - Accept a film, TV series, animation, anime, tokusatsu, documentary, short, franchise, character, prop, scene title, or URL.
    - If the triggering user message already contains a film title or URL, count this step as complete and move to base settings; do not begin generation.
    - If title/year is ambiguous, ask the user to identify the correct film.
    - If no model/style is specified, draw a style lane from the weighted router in `references/style-distillation.md`; do not let plot analysis choose the safest or "most suitable" style.
