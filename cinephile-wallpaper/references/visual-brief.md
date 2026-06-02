@@ -441,6 +441,7 @@ Use recognizable essence, not literal reenactment.
 
 Typography rule:
 
+- The setup text variant is not a language setting. `with_text` means a designed text poster using the rules below; it does not mean English or Chinese-English by default.
 - First line: Chinese film title.
 - Second line: original title in the film's country/language of origin, e.g. English for US/UK, French for France, German for Germany, Japanese for Japan.
 - Director and country/region must be in Chinese.

@@ -48,6 +48,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Ask only the two mandatory setup turns before research/generation.
 - Remember defaults for size/device, output folder, text variant, and generation mode when the user asks or the runtime supports it.
 - Remember reusable user design ideas, custom styles, typography preferences, and avoid-lists when the user asks to save them.
+- In the base-settings prompt, the text-variant question is only about output variants: with text, no text, or both. Never rewrite it as a language choice such as "Chinese-English bilingual" or any fixed language pair.
 - Generate text directly inside the image model when text is requested; keep typography designed, short, and integrated.
 - Do not darken or globally filter text versions just to improve text readability.
 - Default style selection is weighted random and decoupled from work content. Never explain style as "suitable" for the work unless the user specified it.

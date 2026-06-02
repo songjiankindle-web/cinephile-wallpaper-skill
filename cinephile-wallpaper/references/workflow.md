@@ -51,6 +51,8 @@ After the work identity is confirmed, ask the base settings in one turn. This is
 
 Adapt this to the user's language. Do not split these five base settings into several separate turns unless a required answer is missing or ambiguous. Also do not append the image-reference/design-request gate to this setup prompt; it is the next separate assistant turn.
 
+The third setup question is not a language choice. Do not rewrite it as "Chinese-English bilingual", "带片名文字/无字版/中英双语", or any fixed language-pair option. The only allowed choices are with text, no text, or both. Text language and script are resolved later from film metadata.
+
 ## Image Reference Gate
 
 After the base setup is answered and before research/generation, ask one concise question. This gate is mandatory as a separate assistant turn:
