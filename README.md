@@ -22,10 +22,11 @@ For Codex-style skills:
 
 ## Version
 
-v1.03 stable release.
+v1.04 stable release.
 
-Current v1.03 behavior:
+Current v1.04 behavior:
 
+- lighter `SKILL.md`: the main skill body is reduced from 220 lines to about 93 lines, while detailed rules stay in references and are loaded only when needed;
 - broad trigger metadata for Chinese/English 海报, 电影海报, 影视海报, 角色海报, poster, and wallpaper requests, including TV/anime/tokusatsu works and characters such as “给我做一张《杰克奥特曼》的海报”;
 - fixed opening prompt;
 - no shortcut generation: when the initial request already includes a film title, the skill must still ask the numbered setup and image-reference/design-request gate before research or generation;
@@ -55,6 +56,7 @@ Version archive:
 - `v1.0`: stable release with the broader image-reference gate for characters, props, and scenes.
 - `v1.01`: stable bugfix release that prevents direct film-title requests from skipping the guided setup flow.
 - `v1.02`: stable bugfix release that hardens random style routing and forbids suitability-based style choice explanations.
-- `v1.03`: current stable release, carrying forward two-step guidance, independent style draw, identity-only references, and strong character stylization.
+- `v1.03`: stable release carrying forward two-step guidance, independent style draw, identity-only references, strong character stylization, and broad poster-request trigger metadata.
+- `v1.04`: current stable release, keeping v1.03 behavior while making the main skill more compact and token-efficient.
 
-See `docs/迷影桌面 PRD v1.03.md` for the product spec.
+See `docs/迷影桌面 PRD v1.04.md` for the product spec.

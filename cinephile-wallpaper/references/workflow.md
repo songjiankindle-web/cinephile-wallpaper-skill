@@ -2,8 +2,8 @@
 
 ## Guided Flow
 
-1. If the user has not provided a film title, start with exactly: `请问你想生成哪部电影的海报壁纸？`
-2. If the user already provided a film title, treat the film step as answered, resolve ambiguity if needed, and continue to setup. Do not start generation from the initial request alone.
+1. If the user has not provided a work title, character, prop, scene, or URL, start with exactly: `请问你想生成哪部电影的海报壁纸？`
+2. If the user already provided a work/character/prop/scene name, treat the identity step as answered, resolve ambiguity if needed, and continue to setup. Do not start generation from the initial request alone.
 3. Ask one numbered setup message:
    - size/device, with saved size as default if available;
    - output directory, with saved directory as default if available;
@@ -12,8 +12,8 @@
    - whether to remember changed size/output defaults.
 4. After the user answers setup, ask the image-reference/design-request gate as a separate assistant turn before research or image generation.
 5. If a device model is provided, look up the screen resolution; see `device-size.md`.
-6. Research the film, film-tone references, style references, and character references.
-7. Write a visual brief that distills the film into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
+6. Research the work, tone references, style references, and character/prop/scene references.
+7. Write a visual brief that distills the work into a symbolic poster concept with tonal specificity, character variety, and a bold art-language strategy.
 8. Write and save one unified prompt package internally.
 9. Generate the poster through an image model if available.
 10. If no image model is available, show the no-image-capability notice and return one unified prompt.
@@ -38,7 +38,7 @@ Keep the actual image prompt portable. It may be in the user's language or Engli
 
 ## One-Turn Setup Prompt
 
-After the film is confirmed, ask the base settings in one turn. This is mandatory even if the initial user message already included a film title, style, or "generate now" wording. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available. Do not include the image-reference/design-request question here.
+After the work identity is confirmed, ask the base settings in one turn. This is mandatory even if the initial user message already included a title, style, or "generate now" wording. Use line breaks and numbering so first-time users can answer quickly. Include saved defaults if available. Do not include the image-reference/design-request question here.
 
 ```text
 请一次确认下面 5 项设置：
@@ -67,7 +67,7 @@ Parse any design requirements from this same reply. Do not add a separate design
 
 ## No Shortcut Generation
 
-Never treat an initial request like "给我生成一个《某电影》的海报" as permission to generate immediately. It only supplies the film identity. The next assistant response must be the one-turn setup, or ambiguity clarification if the film identity is unclear. After setup is answered, the next assistant response must be the separate image-reference/design-request gate. Research, prompt writing, image generation, file saving, and wallpaper setting are all blocked until both guided turns are complete.
+Never treat an initial request like "给我生成一个《某电影》的海报" or "给我做一张《杰克奥特曼》的海报" as permission to generate immediately. It only supplies the work identity. The next assistant response must be the one-turn setup, or ambiguity clarification if the identity is unclear. After setup is answered, the next assistant response must be the separate image-reference/design-request gate. Research, prompt writing, image generation, file saving, and wallpaper setting are all blocked until both guided turns are complete.
 
 If the user uploads or says they want to use image references:
 
@@ -125,7 +125,7 @@ Remember changed defaults automatically when the runtime supports local settings
 
 The four base setup fields all support memory: size/device, output directory, text variant, and generation mode. On the next run, show the saved defaults in the numbered setup prompt and allow the user to answer `全部默认` / `use all defaults`. If the user only changes one field, keep the other saved defaults.
 
-Preference memory is only for setup defaults. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a film again.
+Preference memory is only for setup defaults. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a work again.
 
 Suggested preference path for local agents:
 
