@@ -137,6 +137,23 @@ Remember changed defaults automatically when the runtime supports local settings
 - default generation mode.
 - reusable design ideas, custom style profiles, typography preferences, and avoid-lists when the user asks to remember them.
 
+Normalize saved setup preferences before showing or using them. Store canonical values, not conversational labels:
+
+```json
+{
+  "text_variant": "with_text | no_text | both",
+  "generation_mode": "agent_image_tool | image_skill | external_api | prompt_only | auto"
+}
+```
+
+For text variant, accept old or user-facing labels only as input aliases:
+
+- `带文字`, `文字`, `带片名文字`, `with text`, `model_text`, `bilingual`, `双语`, `中英双语` -> `with_text`;
+- `无文字`, `无字版`, `no text`, `no_text` -> `no_text`;
+- `两者都要`, `都要`, `both` -> `both`.
+
+Never display or re-save `中英双语`, `双语`, `bilingual`, or any fixed language-pair label as a default. If an old preference file contains one of those values, silently migrate it to `with_text` and display it as `带文字`. Text language/script remains a typography decision, not a setup preference.
+
 The four base setup fields all support memory: size/device, output directory, text variant, and generation mode. On the next run, show the saved defaults in the numbered setup prompt and allow the user to answer `全部默认` / `use all defaults`. If the user only changes one field, keep the other saved defaults.
 
 Setup preference memory is separate from design memory. Show setup defaults in the base-settings turn; show saved design/style preferences only in the image-reference/design-request turn. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a work again.

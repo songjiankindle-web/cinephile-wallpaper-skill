@@ -79,6 +79,24 @@ If the image tool refuses a request involving a known title, franchise, characte
 
 Do not expose internal trial-and-error narration such as "first attempt failed, second attempt failed" unless the user asks for debugging details.
 
+## Brand And Franchise Risk Reduction
+
+When a user asks for a branded toy/material style such as LEGO-like bricks, do not put the protected brand name, brand logo, official packaging, or trademarked marks into the image prompt. Translate it to generic art direction:
+
+```text
+interlocking plastic toy bricks, visible studs, plates, bevels, translucent plastic pieces, miniature brick-built diorama
+```
+
+If the request also names a major film/franchise/character, reduce refusal risk before the first image attempt:
+
+- avoid official logos, exact insignia, copyrighted emblems, and official poster replication language;
+- avoid actor likeness unless actual reference images are attached and the selected model supports them;
+- describe roles through generic costume silhouettes, color logic, props, posture, and scene grammar;
+- for text variants, keep only the minimal requested title text and do not include long metadata unless necessary;
+- if the first attempt is refused, the safer rewrite should remove exact character names from the image prompt where possible and use role descriptors instead.
+
+Record the original user wording in notes if useful, but the image prompt should use the safer generic wording.
+
 ## Text Rendering Choice
 
 For speed, prefer direct image-model text when:

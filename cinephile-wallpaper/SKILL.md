@@ -47,6 +47,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Auto-detect interaction language; honor explicit output language.
 - Ask only the two mandatory setup turns before research/generation.
 - Remember defaults for size/device, output folder, text variant, and generation mode when the user asks or the runtime supports it.
+- Normalize saved defaults before using them; never display or save `中英双语`/`bilingual` as a text variant.
 - Remember reusable user design ideas, custom styles, typography preferences, and avoid-lists when the user asks to save them.
 - In the base-settings prompt, the text-variant question is only about output variants: with text, no text, or both. Never rewrite it as a language choice such as "Chinese-English bilingual" or any fixed language pair.
 - Generate text directly inside the image model when text is requested; keep typography designed, short, and integrated.
@@ -62,6 +63,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Do not expose internal command counts, sandbox/cache failures, or repeated image-refusal retries unless the user asks for debugging details.
 - If current screen resolution cannot be concretely detected, use a saved confirmed default or ask; do not infer from previous runs.
 - If an image tool refuses a title/character/text variant twice, stop retrying that variant and fall back honestly.
+- For branded material styles such as LEGO-like bricks, use generic material language in image prompts and avoid brand logos or official marks.
 
 ## Quality Bar
 

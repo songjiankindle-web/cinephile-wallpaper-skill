@@ -36,6 +36,8 @@ Current v1.6 behavior:
 - fixed two-step guidance: ask base settings first, then ask image references/design requirements in a separate assistant turn; do not merge them;
 - numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
 - text-mode setup is fixed to "with text / no text / both"; it must never be rewritten as Chinese-English bilingual or any fixed language pair;
+- saved setup defaults are normalized before use, so legacy `中英双语` / `bilingual` text-mode values migrate to `with_text` and display as "带文字";
+- LEGO-like or other branded material requests are translated into generic interlocking-plastic-brick art direction before image prompting, avoiding brand logos and official marks;
 - randomized `style_lane` and `style_variant` selection unless the user specifies a style;
 - style selection is decoupled from film content: draw the style first with the weighted router, then bridge the film into that style; do not choose or explain style as "suitable for the film";
 - random style selection now uses `cinephile-wallpaper/scripts/draw-style.mjs`, a film-input-free draw script that records random source, rolls, effective weights, and `film_inputs_used_for_style: false`;

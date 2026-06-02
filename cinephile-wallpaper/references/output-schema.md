@@ -80,6 +80,15 @@ Write one manifest per generated wallpaper:
     "cache_write_failed": false,
     "cache_fallback": "explicit_history | env_cache_dir | cwd_cache | no_history"
   },
+  "preferences": {
+    "preferences_path": "",
+    "loaded": false,
+    "normalized": false,
+    "text_variant_canonical": "with_text | no_text | both",
+    "text_variant_original_value": "",
+    "generation_mode_canonical": "agent_image_tool | image_skill | external_api | prompt_only | auto",
+    "invalid_saved_values_repaired": []
+  },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
     "selection_mode": "user_specified | weighted_random_script | corrective",
