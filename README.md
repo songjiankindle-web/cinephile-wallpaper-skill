@@ -22,9 +22,9 @@ For Codex-style skills:
 
 ## Version
 
-v1.02 stable release.
+v1.03 stable release.
 
-Current v1.02 behavior:
+Current v1.03 behavior:
 
 - fixed opening prompt;
 - no shortcut generation: when the initial request already includes a film title, the skill must still ask the numbered setup and image-reference/design-request gate before research or generation;
@@ -54,5 +54,6 @@ Version archive:
 - `v1.0`: stable release with the broader image-reference gate for characters, props, and scenes.
 - `v1.01`: stable bugfix release that prevents direct film-title requests from skipping the guided setup flow.
 - `v1.02`: stable bugfix release that hardens random style routing and forbids suitability-based style choice explanations.
+- `v1.03`: current stable release, carrying forward two-step guidance, independent style draw, identity-only references, and strong character stylization.
 
-See `docs/迷影桌面 PRD v1.02.md` for the product spec.
+See `docs/迷影桌面 PRD v1.03.md` for the product spec.
