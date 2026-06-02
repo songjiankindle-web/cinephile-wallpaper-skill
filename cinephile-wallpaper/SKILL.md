@@ -47,6 +47,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Auto-detect interaction language; honor explicit output language.
 - Ask only the two mandatory setup turns before research/generation.
 - Remember defaults for size/device, output folder, text variant, and generation mode when the user asks or the runtime supports it.
+- Remember reusable user design ideas, custom styles, typography preferences, and avoid-lists when the user asks to save them.
 - Generate text directly inside the image model when text is requested; keep typography designed, short, and integrated.
 - Do not darken or globally filter text versions just to improve text readability.
 - Default style selection is weighted random and decoupled from work content. Never explain style as "suitable" for the work unless the user specified it.
@@ -82,6 +83,7 @@ Reject or revise outputs that look like:
 ## Resources
 
 - Read `references/workflow.md` at the start of each run.
+- Read `references/design-memory.md` when the user provides design ideas, custom styles, or asks to remember preferences.
 - Read `references/device-size.md` only for device-size lookup.
 - Read `references/model-routing.md` before generation-mode/provider decisions.
 - Read `references/visual-brief.md` when writing the brief or density strategy.

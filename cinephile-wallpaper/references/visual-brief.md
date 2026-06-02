@@ -12,14 +12,17 @@
     "director": "",
     "country": []
   },
-  "user_design_request": {
-    "provided": false,
-    "raw_notes": "",
-    "style_preference": "",
-    "requested_elements": [],
-    "character_treatment": "",
-    "tone_or_palette": "",
-    "composition_preference": "",
+    "user_design_request": {
+      "provided": false,
+      "raw_notes": "",
+      "style_preference": "",
+      "custom_style_profile": "",
+      "remember_this_design": false,
+      "design_memory_action": "none | save_new | update_existing | use_saved",
+      "requested_elements": [],
+      "character_treatment": "",
+      "tone_or_palette": "",
+      "composition_preference": "",
     "avoid": [],
     "ai_autonomous_design": true
   },

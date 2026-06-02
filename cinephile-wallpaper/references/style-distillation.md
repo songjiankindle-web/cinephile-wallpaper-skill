@@ -56,9 +56,11 @@ Use these as ingredients, not labels:
 
 ## Art Direction Matrix
 
-Default behavior: draw one primary art language and one secondary device with weighted randomness unless the user explicitly names a style. Film analysis decides what appears in the poster, not which art-history style is selected. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
+Default behavior: draw one primary art language and one secondary device with weighted randomness unless the user explicitly names a style or asks to use a saved custom style profile. Film analysis decides what appears in the poster, not which art-history style is selected. The random style may create productive counterpoint; keep it unless it makes the film unrecognizable or violates user constraints.
 
 Core rule: style choice is intentionally decoupled from film content. Do not choose a style because it is "suitable," "matches the film," "fits the rhythm," "fits the genre," or "best expresses the story." Draw the style first, then adapt the film's motifs into that style.
+
+User-specified and remembered styles are different from default random selection. If the user specifies a style, describes a new art direction, or asks to use a saved custom style profile, mark `style_selection_mode: user_specified` or `saved_custom_style`, skip `scripts/draw-style.mjs` for that run, and apply the user's style as a constraint. If the user asks to remember a new style, read `design-memory.md` and save a compact `custom_style_profile`.
 
 Avoid safe illustration as the default. When an output stays conventional, escalate by choosing from the stronger sets below and writing the escalation directly into the prompt.
 

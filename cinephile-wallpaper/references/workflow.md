@@ -58,12 +58,12 @@ After the base setup is answered and before research/generation, ask one concise
 ```text
 是否上传您想呈现在海报中的形象图片？包括但不限于角色、道具、场景等。如果上传，我会用它锚定人物长相、道具形态、场景氛围或其他视觉细节；如果不上传，我会根据影片自行判断画面中应出现什么以及如何设计。
 
-你也可以在这一轮顺手补充简单设计需求，例如指定美术风格、想出现的元素/道具、人物呈现方式、色调氛围、构图偏好，或不希望出现的内容；如果没有特别需求，请说“无特别需求”，我将由 AI 自主决策设计。
+你也可以在这一轮顺手补充简单设计需求，例如指定美术风格、想出现的元素/道具、人物呈现方式、色调氛围、构图偏好，或不希望出现的内容；如果你提出了新的设计想法或未内置的美术风格，也可以告诉我是否记住这次设计，方便以后继续使用。如果没有特别需求，请说“无特别需求”，我将由 AI 自主决策设计。
 ```
 
 Adapt this to the user's language. Do not merge this with the one-turn base setup. If the user volunteered reference/design preferences while answering setup, carry that information forward, but still present this gate as the second guided turn and ask whether they want to add or change anything.
 
-Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
+Parse any design requirements from this same reply. Do not add a separate design-brief confirmation unless the requirement is contradictory, unsafe, or impossible with the selected generation mode. If the user gives a reusable design idea, new art style, typography preference, or avoid-list and asks to remember it, read `design-memory.md` and save a compact design-memory entry. If the user says there are no special requirements or leaves this part blank, record `user_design_request.provided: false` and `ai_autonomous_design: true`.
 
 ## No Shortcut Generation
 
@@ -122,10 +122,11 @@ Remember changed defaults automatically when the runtime supports local settings
 - default output directory;
 - default text variant;
 - default generation mode.
+- reusable design ideas, custom style profiles, typography preferences, and avoid-lists when the user asks to remember them.
 
 The four base setup fields all support memory: size/device, output directory, text variant, and generation mode. On the next run, show the saved defaults in the numbered setup prompt and allow the user to answer `全部默认` / `use all defaults`. If the user only changes one field, keep the other saved defaults.
 
-Preference memory is only for setup defaults. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a work again.
+Setup preference memory is separate from design memory. Show setup defaults in the base-settings turn; show saved design/style preferences only in the image-reference/design-request turn. Do not use previous generated posters as cache entries, and do not return an old file when the user asks to generate a work again.
 
 Suggested preference path for local agents:
 

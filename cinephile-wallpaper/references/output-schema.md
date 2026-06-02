@@ -27,7 +27,7 @@ Write one manifest per generated wallpaper:
     "avoid_tone": []
   },
   "art_language": {
-    "style_selection_mode": "user_specified | weighted_random | corrective",
+    "style_selection_mode": "user_specified | saved_custom_style | weighted_random | corrective",
     "style_lane": "",
     "style_variant": "",
     "primary": "",
@@ -55,12 +55,23 @@ Write one manifest per generated wallpaper:
     "provided": false,
     "raw_notes": "",
     "style_preference": "",
+    "custom_style_profile": "",
+    "remember_this_design": false,
+    "design_memory_action": "none | save_new | update_existing | use_saved",
     "requested_elements": [],
     "character_treatment": "",
     "tone_or_palette": "",
     "composition_preference": "",
     "avoid": [],
     "ai_autonomous_design": true
+  },
+  "design_memory": {
+    "loaded": false,
+    "used_saved_design": false,
+    "saved_this_run": false,
+    "profile_name": "",
+    "preference_path": "",
+    "memory_unavailable_reason": ""
   },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",

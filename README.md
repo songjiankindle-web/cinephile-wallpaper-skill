@@ -22,11 +22,14 @@ For Codex-style skills:
 
 ## Version
 
-v1.04 stable release.
+v1.5 stable release.
 
-Current v1.04 behavior:
+Current v1.5 behavior:
 
 - lighter `SKILL.md`: the main skill body is reduced from 220 lines to about 93 lines, while detailed rules stay in references and are loaded only when needed;
+- design memory: learn and remember reusable user design ideas, custom art styles outside the built-in lanes, typography preferences, and avoid-lists when the user asks to save them;
+- image-reference/design-request gate now reminds users that they can propose their own design ideas and ask the skill to remember the design for future runs;
+- saved custom styles use `saved_custom_style`; user-provided new styles bypass random style drawing for that run, while unspecified styles still use independent random routing;
 - broad trigger metadata for Chinese/English 海报, 电影海报, 影视海报, 角色海报, poster, and wallpaper requests, including TV/anime/tokusatsu works and characters such as “给我做一张《杰克奥特曼》的海报”;
 - fixed opening prompt;
 - no shortcut generation: when the initial request already includes a film title, the skill must still ask the numbered setup and image-reference/design-request gate before research or generation;
@@ -57,6 +60,7 @@ Version archive:
 - `v1.01`: stable bugfix release that prevents direct film-title requests from skipping the guided setup flow.
 - `v1.02`: stable bugfix release that hardens random style routing and forbids suitability-based style choice explanations.
 - `v1.03`: stable release carrying forward two-step guidance, independent style draw, identity-only references, strong character stylization, and broad poster-request trigger metadata.
-- `v1.04`: current stable release, keeping v1.03 behavior while making the main skill more compact and token-efficient.
+- `v1.04`: stable release keeping v1.03 behavior while making the main skill more compact and token-efficient.
+- `v1.5`: current stable release, adding design memory and custom style memory.
 
-See `docs/迷影桌面 PRD v1.04.md` for the product spec.
+See `docs/迷影桌面 PRD v1.5.md` for the product spec.
