@@ -88,6 +88,17 @@ Do not block the whole poster only because no reference was uploaded. The hard r
 
 If the user does not upload references, let the skill decide whether people should appear. It may use props, atmosphere, abstract symbols, typography, landscape, architecture, body fragments, non-face silhouettes, back views, side views, or partial figures. Do not say this means "no people"; it means "no real-face reference restoration."
 
+## Script Cache
+
+When running `scripts/draw-style.mjs` or `scripts/draw-density.mjs`, do not let the scripts write history inside the installed skill directory. Use one of:
+
+- `CINEPHILE_CACHE_DIR=<output directory>/settings/cache`;
+- `--history <output directory>/settings/cache/style-history.json`;
+- `--history <output directory>/settings/cache/density-history.json`;
+- the script default `.cinephile-wallpaper-cache` in the current writable working directory.
+
+If cache writing fails, rerun with `--no-history` and continue. Do not narrate sandbox/cache failures to the user unless they block generation.
+
 ## Desktop Confirmation
 
 After a wallpaper file exists, set it as the desktop only if the user explicitly requested it or saved that preference. Otherwise do not ask every run. Continue the flow:
@@ -152,6 +163,8 @@ Use auto-detection only when the user wants the current machine's wallpaper:
 - macOS: `system_profiler SPDisplaysDataType` or a host-provided screen API.
 - Browser/agent runtime: viewport or screen API if it reflects the actual display.
 - Headless/remote environments: ask the user or use fallback.
+
+If current-screen detection returns only GPU/display-controller information without a concrete pixel width and height, do not infer from previous runs or "past workflow" dimensions. Use a saved confirmed default only if it exists; otherwise ask for the target resolution or device model. If the user already approved a saved default, record `size_source: "saved_default_detection_unavailable"`.
 
 Record the source in the manifest:
 

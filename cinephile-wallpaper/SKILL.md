@@ -58,6 +58,9 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Film-specific props require prop identity locks and visual references when prominent.
 - Every request creates a fresh generation unless the user explicitly asks for an old file.
 - Keep user-facing output brief and save details to files.
+- Do not expose internal command counts, sandbox/cache failures, or repeated image-refusal retries unless the user asks for debugging details.
+- If current screen resolution cannot be concretely detected, use a saved confirmed default or ask; do not infer from previous runs.
+- If an image tool refuses a title/character/text variant twice, stop retrying that variant and fall back honestly.
 
 ## Quality Bar
 

@@ -42,6 +42,9 @@ Current v1.6 behavior:
 - the selected art style must transform characters themselves, not only backgrounds or props;
 - scripted visual-density routing via `scripts/draw-density.mjs` across `dense`, `balanced`, `sparse`, and `single_stroke`;
 - higher minimal-density baseline: neutral `sparse + single_stroke` is 55%, with recent high-density suppression when outputs skew too full;
+- script history cache defaults to a writable working-directory cache instead of the installed skill directory; `CINEPHILE_CACHE_DIR` and explicit `--history` are supported;
+- current-screen detection cannot invent dimensions from old runs when no concrete pixel size is exposed;
+- image-tool refusals are capped: one safe rewrite, then honest fallback to no-text abstract homage or prompt-only for the blocked variant;
 - real-object still-life lane for exact film props, with no recognizable faces;
 - intentional negative space and one-point-focus poster logic, without confusing it with dead blank title areas;
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;

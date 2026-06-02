@@ -67,6 +67,18 @@ Do not pretend an image was generated.
 
 In image-generation modes, save these details but keep the user-facing final answer brief.
 
+## Image Tool Refusals
+
+If the image tool refuses a request involving a known title, franchise, character, logo, or exact in-image title text:
+
+1. Make at most one safer rewrite that removes protected-looking character likeness, logos, insignia, and official-poster replication language while preserving an original abstract homage.
+2. If the second attempt is refused, stop image attempts for that variant. Do not keep probing with repeated minor wording changes.
+3. If a no-text abstract background is likely acceptable, generate only that variant and label it honestly as a no-text abstract homage.
+4. For the blocked text/title variant, provide the unified prompt package or suggest an external image model; do not pretend the text poster was generated.
+5. Record the refusal and fallback in the manifest, but keep the user-facing final response concise.
+
+Do not expose internal trial-and-error narration such as "first attempt failed, second attempt failed" unless the user asks for debugging details.
+
 ## Text Rendering Choice
 
 For speed, prefer direct image-model text when:

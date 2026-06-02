@@ -6,7 +6,7 @@
 - 应用定位为 macOS 本地电影壁纸生成工具，优先服务个人豆瓣观影数据。
 - 当前片库数据目标文件为 `data/movies.json`。
 - 产品方向已调整：v0.1 优先把“无图也美”的壁纸模板做好，不把自动抓豆瓣海报作为主路径。
-- v1.6 已进入正式发布：迷影桌面核心形态从独立 App 转为跨 agent 的影视海报/壁纸生成 skill/workflow；当前版本新增视觉密度独立抽签脚本 `scripts/draw-density.mjs`，提高简约/留白结果概率，并在连续偏满时自动抑制高密度模式。
+- v1.6 已进入正式发布：迷影桌面核心形态从独立 App 转为跨 agent 的影视海报/壁纸生成 skill/workflow；当前版本新增视觉密度独立抽签脚本 `scripts/draw-density.mjs`，并追加修复真实运行中暴露的脚本缓存写入、分辨率推定、图像工具拒绝重试和过程噪音问题。
 
 ## 已完成
 
@@ -85,11 +85,12 @@
 - v1.04 发布：审查并确认 skill 主体偏臃肿，将 `SKILL.md` 从 220 行压缩到约 93 行；保留触发元数据、固定开场、两轮门禁、核心质量底线和资源索引，将角色参考、风格、视觉 brief、模型路由、输出 schema 等细节交由 references 按需读取。
 - v1.5 发布：新增 `references/design-memory.md`，允许用户在形象参考图/设计需求轮提出设计想法或未内置美术风格，并选择让 skill 记住；保存为 compact design memory/custom style profile，后续可在设计需求轮复用。用户指定新风格时按 `user_specified` 或 `saved_custom_style` 处理，跳过默认随机抽签；不指定风格时仍保持随机风格解耦。
 - v1.6 发布：新增 `scripts/draw-density.mjs`，视觉密度不再由大模型凭规则描述选择，而是按 work profile 脚本抽签；中性分布提高简约模式到 `sparse + single_stroke = 55%`，并通过历史记录在连续 `dense/balanced` 后自动向简约模式倾斜。
+- v1.6 追加修复：修复实际运行日志中暴露的问题：`draw-style.mjs`/`draw-density.mjs` 默认缓存路径不再指向 skill 安装目录；当前屏幕检测不到具体宽高时不得用旧经验尺寸推定；图像工具连续拒绝同一变体后最多一次安全改写，第二次仍拒绝则停止该变体；内部命令数量、缓存失败和拒绝试错细节只进 manifest，不默认对用户展开。
 
 ## 本轮计划
 
-- 发布 v1.6 视觉密度脚本抽签版 skill。
-- 同步更新 GitHub 仓库、v1.6 release zip 和本地 Codex 安装目录。
+- 在 v1.6 版本内追加运行鲁棒性修复。
+- 同步更新 GitHub 仓库、v1.6 release zip 和本地 Codex 安装目录，不升级版本号。
 - 验证 source/release/installed 三处 skill 均通过 quick_validate。
 
 ## 关键文件
@@ -103,7 +104,7 @@
 - `src/renderer/main.tsx`：主界面、片库、历史、设置 UI。
 - `data/movies.json`：项目真实电影片库。
 - `data/poster-fetch-status.json`：海报补全状态。
-- `docs/迷影桌面 PRD v1.6.md`：当前正式发布 PRD，覆盖固定开场、两轮设置、生图模型路径、统一提示词、影调策略、角色/道具/场景形象参考图、风格随机解耦、基础偏好记忆、设计/风格记忆、视觉密度脚本抽签、直接给片名时不得跳过引导流程、低 token 交付和主 skill 轻量化策略。
+- `docs/迷影桌面 PRD v1.6.md`：当前正式发布 PRD，覆盖固定开场、两轮设置、生图模型路径、统一提示词、影调策略、角色/道具/场景形象参考图、风格随机解耦、基础偏好记忆、设计/风格记忆、视觉密度脚本抽签、脚本缓存、分辨率检测失败、图像拒绝降级、直接给片名时不得跳过引导流程、低 token 交付和主 skill 轻量化策略。
 - `docs/迷影桌面 PRD v1.5.md`：历史正式发布 PRD，保留设计记忆/风格记忆记录。
 - `docs/迷影桌面 PRD v1.04.md`：历史正式发布 PRD，保留主 skill 轻量化记录。
 - `docs/迷影桌面 PRD v1.03.md`：历史正式发布 PRD，保留触发元数据扩展记录。

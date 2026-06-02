@@ -34,6 +34,7 @@
 - v1.04 起，`SKILL.md` 主体应保持轻量，只保留触发、硬门禁、执行索引和质量底线；详细规则放入 `references/` 按需读取，减少 token 消耗。
 - v1.5 起，新增设计记忆/风格记忆：用户提出自己的设计想法，或指定 skill 内置风格池之外的新美术风格时，skill 可以把它蒸馏为 compact custom style profile，并在后续生成中复用。
 - v1.6 起，视觉密度必须由 `scripts/draw-density.mjs` 抽取，不再交给大模型凭感觉选择。中性权重提高 `sparse + single_stroke` 基准概率，脚本记录历史并在连续偏满时自动抑制 `dense/balanced`。
+- v1.6 追加修复：脚本历史缓存不得写入 skill 安装目录；默认改为当前工作目录 `.cinephile-wallpaper-cache`，也支持 `CINEPHILE_CACHE_DIR` 或显式 `--history`。当前屏幕检测不到具体像素时不得用旧经验尺寸推定。图像工具连续两次拒绝同一变体后必须停止重试并诚实降级。
 
 ## 3. 用户引导
 
@@ -982,6 +983,10 @@ Manifest 必须记录：
 - 脚本支持 work profile，例如商业动作、武侠、艺术电影、科幻、恐怖、历史群像、安静剧情等。
 - 脚本记录 `density-history.json`，当最近输出连续偏满时，自动压低 `dense/balanced`，提高 `sparse/single_stroke`。
 - 输出 manifest 记录 `effective_density_weights`、`recent_modes`、`recent_corrections` 和 `density_prompt_instruction`。
+- 追加修复脚本缓存默认写入 skill 安装目录导致沙盒拒绝的问题；`draw-style.mjs` 和 `draw-density.mjs` 默认写到当前工作目录 `.cinephile-wallpaper-cache`，并支持 `CINEPHILE_CACHE_DIR` 和显式 `--history`。
+- 追加修复设备分辨率检测问题：若只返回显卡/控制器信息而没有具体宽高，不得使用“过去工作流尺寸”推定；只能使用用户确认过的默认值，或回问尺寸/设备型号。
+- 追加修复图像工具拒绝问题：因片名、角色、商标化符号或标题文字拒绝时，最多做一次安全改写；第二次仍拒绝则停止该变体，转为无字抽象致敬底图或 prompt-only。
+- 追加低噪音运行规则：内部命令数量、缓存失败和拒绝试错细节只进 manifest，不默认对用户展开。
 
 ## 8. 非目标
 

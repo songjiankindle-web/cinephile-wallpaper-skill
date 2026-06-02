@@ -73,6 +73,13 @@ Write one manifest per generated wallpaper:
     "preference_path": "",
     "memory_unavailable_reason": ""
   },
+  "runtime": {
+    "cache_dir": "",
+    "style_history_path": "",
+    "density_history_path": "",
+    "cache_write_failed": false,
+    "cache_fallback": "explicit_history | env_cache_dir | cwd_cache | no_history"
+  },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
     "selection_mode": "user_specified | weighted_random_script | corrective",
@@ -124,6 +131,13 @@ Write one manifest per generated wallpaper:
     "placement": "",
     "integration_method": "",
     "avoid_generic_font": true
+  },
+  "generation_fallback": {
+    "image_tool_refusals": [],
+    "safe_rewrite_attempted": false,
+    "stopped_after_second_refusal": false,
+    "delivered_variant": "with_text | no_text | abstract_no_text | prompt_only",
+    "blocked_variants": []
   },
   "character_reference": {
     "enabled": false,

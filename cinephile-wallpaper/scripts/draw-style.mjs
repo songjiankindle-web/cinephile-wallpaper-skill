@@ -5,7 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const skillRoot = path.resolve(__dirname, "..");
+const defaultCacheRoot = process.env.CINEPHILE_CACHE_DIR
+  || path.join(process.cwd(), ".cinephile-wallpaper-cache");
 
 const weights = {
   impressionist_light_field: 11,
@@ -140,7 +141,7 @@ const variants = {
 
 function parseArgs(argv) {
   const args = {
-    history: path.join(skillRoot, ".cache", "style-history.json"),
+    history: path.join(defaultCacheRoot, "style-history.json"),
     recentWindow: 5,
     noHistory: false,
     userStyle: ""

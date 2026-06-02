@@ -5,7 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const skillRoot = path.resolve(__dirname, "..");
+const defaultCacheRoot = process.env.CINEPHILE_CACHE_DIR
+  || path.join(process.cwd(), ".cinephile-wallpaper-cache");
 
 const profiles = {
   neutral: { dense: 10, balanced: 35, sparse: 35, single_stroke: 20 },
@@ -66,7 +67,7 @@ function parseArgs(argv) {
   const args = {
     profile: "neutral",
     weights: "",
-    history: path.join(skillRoot, ".cache", "density-history.json"),
+    history: path.join(defaultCacheRoot, "density-history.json"),
     recentWindow: 4,
     noHistory: false,
     userDensity: ""
