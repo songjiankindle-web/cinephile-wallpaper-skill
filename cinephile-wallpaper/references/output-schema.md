@@ -75,14 +75,23 @@ Write one manifest per generated wallpaper:
   },
   "visual_density": {
     "mode": "dense | balanced | sparse | single_stroke",
-    "selection_mode": "user_specified | weighted_random | corrective",
-    "minimalism_boost_applied": true,
+    "selection_mode": "user_specified | weighted_random_script | corrective",
+    "minimalism_floor_applied": true,
     "density_weights": {
       "dense": 0,
       "balanced": 0,
       "sparse": 0,
       "single_stroke": 0
     },
+    "base_density_weights": {},
+    "effective_density_weights": {},
+    "profile": "neutral | commercial_action | martial_arts_or_wuxia | art_cinema_classic | science_fiction_austere | science_fiction_spectacle | psychological_or_horror | historical_epic_or_social_panorama | quiet_drama_or_romance | experimental_or_essay | large_ensemble_or_comedy",
+    "recent_modes": [],
+    "recent_corrections": [],
+    "random_source": "",
+    "density_roll": 0,
+    "density_total": 0,
+    "density_prompt_instruction": "",
     "density_inputs": {
       "genres": [],
       "scale": "intimate | medium | epic",

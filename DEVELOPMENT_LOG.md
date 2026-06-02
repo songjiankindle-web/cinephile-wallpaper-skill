@@ -6,7 +6,7 @@
 - 应用定位为 macOS 本地电影壁纸生成工具，优先服务个人豆瓣观影数据。
 - 当前片库数据目标文件为 `data/movies.json`。
 - 产品方向已调整：v0.1 优先把“无图也美”的壁纸模板做好，不把自动抓豆瓣海报作为主路径。
-- v1.5 已进入正式发布：迷影桌面核心形态从独立 App 转为跨 agent 的影视海报/壁纸生成 skill/workflow；当前版本新增设计记忆/风格记忆能力，可学习用户提出的设计想法、未内置美术风格、文字偏好和避讳项，同时保留 v1.04 的轻量主 skill、固定开场、两轮引导、参考图锚定、风格随机解耦、基础偏好记忆和低 token 海报优先交付。
+- v1.6 已进入正式发布：迷影桌面核心形态从独立 App 转为跨 agent 的影视海报/壁纸生成 skill/workflow；当前版本新增视觉密度独立抽签脚本 `scripts/draw-density.mjs`，提高简约/留白结果概率，并在连续偏满时自动抑制高密度模式。
 
 ## 已完成
 
@@ -23,7 +23,7 @@
 - 新增 PRD v0.6：`docs/迷影桌面 PRD v0.6.md`。
 - 新增 PRD v0.8：`docs/迷影桌面 PRD v0.8.md`。
 - 新增 PRD v0.9：`docs/迷影桌面 PRD v0.9.md`，作为当前主 PRD。
-- 新增 PRD v1.5：`docs/迷影桌面 PRD v1.5.md`，作为当前正式发布 PRD；v0.99a/v0.99b/v1.0/v1.01/v1.02/v1.03/v1.04 保留为历史发布记录。
+- 新增 PRD v1.6：`docs/迷影桌面 PRD v1.6.md`，作为当前正式发布 PRD；v0.99a/v0.99b/v1.0/v1.01/v1.02/v1.03/v1.04/v1.5 保留为历史发布记录。
 - 创建通用 agent skill：`skills/cinephile-wallpaper/`。
 - Skill 新增要求：优先自动识别设备屏幕分辨率，同时允许用户自定义壁纸尺寸；输出目录优先用偏好或默认路径，无法写入时才询问。
 - Skill 交付策略调整：提示词包保存到 manifest/输出文件，但成功生成图片时默认不展开；只有 prompt-only、失败、调试或用户明确要求时才返回。
@@ -84,11 +84,12 @@
 - v1.03 追加修复：扩展 skill 触发元数据，覆盖中文“海报/电影海报/影视海报/角色海报”以及电影、剧集、动画、特摄、角色、道具、场景等请求，避免“给我做一张《杰克奥特曼》的海报”这类请求被通用生图 skill 直接接管。
 - v1.04 发布：审查并确认 skill 主体偏臃肿，将 `SKILL.md` 从 220 行压缩到约 93 行；保留触发元数据、固定开场、两轮门禁、核心质量底线和资源索引，将角色参考、风格、视觉 brief、模型路由、输出 schema 等细节交由 references 按需读取。
 - v1.5 发布：新增 `references/design-memory.md`，允许用户在形象参考图/设计需求轮提出设计想法或未内置美术风格，并选择让 skill 记住；保存为 compact design memory/custom style profile，后续可在设计需求轮复用。用户指定新风格时按 `user_specified` 或 `saved_custom_style` 处理，跳过默认随机抽签；不指定风格时仍保持随机风格解耦。
+- v1.6 发布：新增 `scripts/draw-density.mjs`，视觉密度不再由大模型凭规则描述选择，而是按 work profile 脚本抽签；中性分布提高简约模式到 `sparse + single_stroke = 55%`，并通过历史记录在连续 `dense/balanced` 后自动向简约模式倾斜。
 
 ## 本轮计划
 
-- 发布 v1.5 设计记忆版 skill。
-- 同步更新 GitHub 仓库、v1.5 release zip 和本地 Codex 安装目录。
+- 发布 v1.6 视觉密度脚本抽签版 skill。
+- 同步更新 GitHub 仓库、v1.6 release zip 和本地 Codex 安装目录。
 - 验证 source/release/installed 三处 skill 均通过 quick_validate。
 
 ## 关键文件
@@ -102,7 +103,8 @@
 - `src/renderer/main.tsx`：主界面、片库、历史、设置 UI。
 - `data/movies.json`：项目真实电影片库。
 - `data/poster-fetch-status.json`：海报补全状态。
-- `docs/迷影桌面 PRD v1.5.md`：当前正式发布 PRD，覆盖固定开场、两轮设置、生图模型路径、统一提示词、影调策略、角色/道具/场景形象参考图、风格随机解耦、基础偏好记忆、设计/风格记忆、直接给片名时不得跳过引导流程、低 token 交付和主 skill 轻量化策略。
+- `docs/迷影桌面 PRD v1.6.md`：当前正式发布 PRD，覆盖固定开场、两轮设置、生图模型路径、统一提示词、影调策略、角色/道具/场景形象参考图、风格随机解耦、基础偏好记忆、设计/风格记忆、视觉密度脚本抽签、直接给片名时不得跳过引导流程、低 token 交付和主 skill 轻量化策略。
+- `docs/迷影桌面 PRD v1.5.md`：历史正式发布 PRD，保留设计记忆/风格记忆记录。
 - `docs/迷影桌面 PRD v1.04.md`：历史正式发布 PRD，保留主 skill 轻量化记录。
 - `docs/迷影桌面 PRD v1.03.md`：历史正式发布 PRD，保留触发元数据扩展记录。
 - v0.99a/v0.99b 作为历史发布候选归档，不再作为当前主 PRD。
@@ -114,6 +116,7 @@
 - `skills/cinephile-wallpaper/references/style-distillation.md`：艺术语言矩阵、抽象机制、反差风格与提示词规则。
 - `skills/cinephile-wallpaper/references/character-reference.md`：人物与关键道具/物件身份锁定、参考图闸门和失败恢复规则。
 - `skills/cinephile-wallpaper/references/design-memory.md`：设计记忆、未内置美术风格记忆和 custom style profile 规则。
+- `skills/cinephile-wallpaper/scripts/draw-density.mjs`：视觉密度脚本抽签器，带 profile 权重、简约基准提高和近期高密度抑制。
 - `skills/cinephile-wallpaper/references/artist-grammars.md`：经典/当代艺术家与海报设计语法的蒸馏 presets。
 
 ## 数据来源

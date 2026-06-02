@@ -22,9 +22,9 @@ For Codex-style skills:
 
 ## Version
 
-v1.5 stable release.
+v1.6 stable release.
 
-Current v1.5 behavior:
+Current v1.6 behavior:
 
 - lighter `SKILL.md`: the main skill body is reduced from 220 lines to about 93 lines, while detailed rules stay in references and are loaded only when needed;
 - design memory: learn and remember reusable user design ideas, custom art styles outside the built-in lanes, typography preferences, and avoid-lists when the user asks to save them;
@@ -40,8 +40,8 @@ Current v1.5 behavior:
 - random style selection now uses `cinephile-wallpaper/scripts/draw-style.mjs`, a film-input-free draw script that records random source, rolls, effective weights, and `film_inputs_used_for_style: false`;
 - image references are identity-only anchors: character references preserve likeness and role identity, but pose, expression, scale, placement, lighting, and composition must be redesigned;
 - the selected art style must transform characters themselves, not only backgrounds or props;
-- weighted visual-density routing across `dense`, `balanced`, `sparse`, and `single_stroke`;
-- 40% global boost for sparse/single-stroke density after film-profile weighting;
+- scripted visual-density routing via `scripts/draw-density.mjs` across `dense`, `balanced`, `sparse`, and `single_stroke`;
+- higher minimal-density baseline: neutral `sparse + single_stroke` is 55%, with recent high-density suppression when outputs skew too full;
 - real-object still-life lane for exact film props, with no recognizable faces;
 - intentional negative space and one-point-focus poster logic, without confusing it with dead blank title areas;
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;
@@ -61,6 +61,7 @@ Version archive:
 - `v1.02`: stable bugfix release that hardens random style routing and forbids suitability-based style choice explanations.
 - `v1.03`: stable release carrying forward two-step guidance, independent style draw, identity-only references, strong character stylization, and broad poster-request trigger metadata.
 - `v1.04`: stable release keeping v1.03 behavior while making the main skill more compact and token-efficient.
-- `v1.5`: current stable release, adding design memory and custom style memory.
+- `v1.5`: stable release adding design memory and custom style memory.
+- `v1.6`: current stable release adding scripted visual-density draw with a stronger minimal baseline and high-density recent-run correction.
 
-See `docs/迷影桌面 PRD v1.5.md` for the product spec.
+See `docs/迷影桌面 PRD v1.6.md` for the product spec.

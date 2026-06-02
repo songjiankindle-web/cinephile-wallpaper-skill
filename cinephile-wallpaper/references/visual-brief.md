@@ -153,7 +153,7 @@
 - Do not merely list art movements. Draw one primary art language, one secondary device, and one abstraction mechanism; then write a `counterpoint_bridge` explaining how the random style will hold the film's motif. Do not frame the style as chosen because it suits the film.
 - Before writing the prompt, if the user did not specify a style, run `scripts/draw-style.mjs` and copy its `style_lane` and `style_variant`. Do this before film interpretation. The lane must control composition, material, and abstraction, not appear as a decorative adjective.
 - Film analysis decides visual elements, character anchors, key props, tone references, and metaphor; it does not choose the style by suitability. If the random style creates tension, write a counterpoint bridge instead of replacing it or claiming it was more suitable.
-- Choose a `visual_density` before writing the prompt. Default is weighted random, not pure random: infer density weights from genre, scale, tempo, narrative complexity, authorial mode, and visual world; then draw one mode from those weights. Use corrective only when recent outputs felt too full or the user asks for more restraint. The density mode controls how many elements may appear and how much silence/negative space the poster uses.
+- Choose a `visual_density` before writing the prompt by running `scripts/draw-density.mjs`. Default density selection is script-based weighted random, not model intuition. Infer a work profile from genre, scale, tempo, narrative complexity, authorial mode, and visual world; pass that profile to the script; then use the returned mode and prompt instruction exactly.
 - Treat each request as a fresh generation. Do not reuse a previous output or hand back an old file for the same film.
 - Avoid generic style anchors as the primary style: `fine-art poster`, `painterly`, `cinematic`, `beautiful illustration`, `high aesthetic`, `movie poster style`.
 - If the current draft or just-generated image looks conventional, safe, or like ordinary illustration, retry with `style_escalation`: choose a more radical art language, an explicit abstraction mechanism, and a material/process constraint.
@@ -191,32 +191,34 @@
 
 Pick one mode before the prompt. The mode is as important as style.
 
-- `dense`: many signs, layered texture, mural/collage/tapestry logic. Use only when the selected style or film truly benefits from abundance. Must still have a clear focal hierarchy.
-- `balanced`: one dominant subject, one or two secondary motifs, readable negative space. This is the default safe design density.
+- `dense`: many signs, layered texture, mural/collage/tapestry logic. Use only when the selected style or film truly benefits from abundance. Must still have a clear focal hierarchy. It is uncommon, not the default.
+- `balanced`: one dominant subject plus at most one supporting sign, readable negative space, no decorative background fragments. This is moderate and restrained, not "medium-full".
 - `sparse`: one dominant visual sign, large intentional quiet area, minimal supporting texture. Use when the poster needs elegance, melancholy, mystery, or a sharper icon.
 - `single_stroke`: one decisive object/gesture/mark/face fragment, very high negative space, "finishing touch" design logic. Use for poetic, iconic, minimal, ink, conceptual, or tension-heavy posters.
 
 Density rules:
 
-- Draw density from a weighted distribution when the user has no preference. Do not pick density by pure randomness.
-- Apply a global minimalism boost before drawing: after film-profile weighting, increase `sparse` and `single_stroke` together by 40% of their current combined weight, then renormalize all four weights to 100. This raises the baseline chance of minimal visual density without making it deterministic.
+- Draw density by running `scripts/draw-density.mjs` when the user has no preference. Do not ask the language model to "choose" density.
+- The script applies a minimalism floor before drawing. Neutral runs should give `sparse + single_stroke` at least 55% probability; art/quiet/austere runs should be higher; spectacle/action profiles still retain a meaningful minimal chance.
+- The script records recent density history and shifts away from repeated `dense`/`balanced` runs when recent outputs skew too full.
 - Keep a minority chance for surprise. A commercial action film can still become sparse; an art film can still become dense. Weighted means biased, not deterministic.
 - Bias toward `balanced`, `sparse`, and `single_stroke` if recent results felt too full.
 - A minimal poster is not a weak poster. It must carry meaning through scale, placement, texture, color, and the chosen focal sign.
-- For `sparse` and `single_stroke`, cap primary elements at one or two. Do not add background story fragments, decorative particles, extra faces, or multiple props.
+- For `sparse` and `single_stroke`, cap primary elements at one. Do not add background story fragments, decorative particles, extra faces, or multiple props.
+- For `balanced`, cap primary elements at two: one dominant subject and one supporting sign. No secondary story fragments.
 - For `dense`, include an explicit hierarchy: foreground focal sign, secondary rhythm, background texture. No all-over equal-weight clutter.
 - The unified prompt must include the chosen density mode and one density instruction such as `large intentional negative space`, `one dominant sign only`, `single decisive brush mark`, or `balanced hierarchy with two supporting motifs`.
 
 ## Density Weighting
 
-Start from this neutral distribution, then adjust:
+Use `scripts/draw-density.mjs`. Its neutral distribution starts more minimal than previous versions:
 
 ```json
 {
-  "dense": 25,
-  "balanced": 40,
-  "sparse": 25,
-  "single_stroke": 10
+  "dense": 10,
+  "balanced": 35,
+  "sparse": 35,
+  "single_stroke": 20
 }
 ```
 
@@ -230,31 +232,32 @@ Use film evidence to adjust weights:
 - Minimal plot, one-location film, two-character relationship, road movie, or quiet coming-of-age film: increase `balanced`, `sparse`, and sometimes `single_stroke`.
 - Experimental, essay film, conceptual documentary, or structurally abstract film: increase `sparse`, `single_stroke`, or `balanced`; use `dense` only for archival/collage logic.
 
-Suggested final distributions:
+Script profile distributions:
 
 ```json
 {
-  "commercial_action": {"dense": 45, "balanced": 35, "sparse": 15, "single_stroke": 5},
-  "martial_arts_or_wuxia": {"dense": 35, "balanced": 35, "sparse": 20, "single_stroke": 10},
-  "art_cinema_classic": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
-  "science_fiction_austere": {"dense": 10, "balanced": 30, "sparse": 40, "single_stroke": 20},
-  "science_fiction_spectacle": {"dense": 30, "balanced": 35, "sparse": 25, "single_stroke": 10},
-  "psychological_or_horror": {"dense": 15, "balanced": 30, "sparse": 35, "single_stroke": 20},
-  "historical_epic_or_social_panorama": {"dense": 40, "balanced": 35, "sparse": 15, "single_stroke": 10},
-  "quiet_drama_or_romance": {"dense": 10, "balanced": 40, "sparse": 35, "single_stroke": 15}
+  "neutral": {"dense": 10, "balanced": 35, "sparse": 35, "single_stroke": 20},
+  "commercial_action": {"dense": 25, "balanced": 30, "sparse": 30, "single_stroke": 15},
+  "martial_arts_or_wuxia": {"dense": 20, "balanced": 30, "sparse": 35, "single_stroke": 15},
+  "art_cinema_classic": {"dense": 5, "balanced": 25, "sparse": 45, "single_stroke": 25},
+  "science_fiction_austere": {"dense": 5, "balanced": 25, "sparse": 45, "single_stroke": 25},
+  "science_fiction_spectacle": {"dense": 18, "balanced": 30, "sparse": 35, "single_stroke": 17},
+  "psychological_or_horror": {"dense": 10, "balanced": 25, "sparse": 40, "single_stroke": 25},
+  "historical_epic_or_social_panorama": {"dense": 25, "balanced": 30, "sparse": 30, "single_stroke": 15},
+  "quiet_drama_or_romance": {"dense": 5, "balanced": 30, "sparse": 45, "single_stroke": 20}
 }
 ```
 
-If multiple categories apply, average or blend the closest distributions, then draw once.
+If multiple categories apply, pick the closest profile or pass custom JSON weights to `--weights`. Then draw once.
 
-Global minimalism boost example: if blended weights are `{dense: 45, balanced: 35, sparse: 15, single_stroke: 5}`, the minimal modes total 20. Add 8 points across `sparse` and `single_stroke` proportionally or with a slight preference to `sparse`, then renormalize. Record `minimalism_boost_applied: true`.
+The script enforces a minimalism floor and records `minimalism_floor_applied`, `effective_density_weights`, `recent_modes`, and `recent_corrections`.
 
 Record:
 
 - the inferred category or blend;
-- final weights;
+- script result and effective weights;
 - selected mode;
-- why this density supports the film.
+- the prompt instruction returned by the script.
 
 Density QA:
 

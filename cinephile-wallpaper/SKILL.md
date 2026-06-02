@@ -37,7 +37,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 4. After base settings are answered, ask the separate image-reference/design-request gate. Do not merge it with base settings.
 5. Only after both gates are complete, research the work enough to verify identity, tone, core characters, props, motifs, and recognition anchors.
 6. If no user-specified style exists, run `scripts/draw-style.mjs` before work interpretation affects style. Use the returned style exactly; work content may shape elements and metaphor, not style choice.
-7. Build a concise visual brief using the relevant reference files listed below.
+7. Run `scripts/draw-density.mjs` after identifying the work profile, then build a concise visual brief using the relevant reference files listed below.
 8. Route generation through an image model when available; otherwise return one unified copyable prompt. Never substitute HTML for image generation.
 9. Save output image(s), compact prompt package, research notes, and manifest. Follow `references/output-schema.md`.
 10. Final response is poster-first: show/link the image path(s) and one short status line. Do not paste research, visual brief, manifest, or prompt unless requested or prompt-only mode is used.
@@ -51,7 +51,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Generate text directly inside the image model when text is requested; keep typography designed, short, and integrated.
 - Do not darken or globally filter text versions just to improve text readability.
 - Default style selection is weighted random and decoupled from work content. Never explain style as "suitable" for the work unless the user specified it.
-- Visual density is weighted by work profile with the minimalism boost from `references/visual-brief.md`.
+- Visual density must be selected by `scripts/draw-density.mjs`; use its mode and prompt instruction exactly.
 - If depicting recognizable real actor/performer faces, attach actual image references; actor names and descriptions are not enough.
 - Uploaded references are identity/shape/atmosphere anchors, not compositing layers. Redesign pose, scale, placement, expression, lighting, and composition.
 - Without usable face references, characters may still appear through non-face strategies; do not invent readable substitute faces.
@@ -86,7 +86,7 @@ Reject or revise outputs that look like:
 - Read `references/design-memory.md` when the user provides design ideas, custom styles, or asks to remember preferences.
 - Read `references/device-size.md` only for device-size lookup.
 - Read `references/model-routing.md` before generation-mode/provider decisions.
-- Read `references/visual-brief.md` when writing the brief or density strategy.
+- Read `references/visual-brief.md` when writing the brief; run `scripts/draw-density.mjs` for density selection.
 - Read `references/film-tone.md` before palette, brightness, contrast, color temperature, or medium decisions.
 - Read `references/style-distillation.md` before style routing/prompting; run `scripts/draw-style.mjs` when style is not user-specified.
 - Read `references/character-reference.md` when characters, props, or scene/object identity need visual anchoring.
