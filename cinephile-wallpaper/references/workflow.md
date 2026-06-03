@@ -126,7 +126,13 @@ Use absolute paths in final responses when running locally.
 
 ## Preference Memory
 
-If the host agent supports persistent local settings, load saved preferences before asking repetitive setup questions. Still let the user override them.
+If the host agent supports persistent local settings, load saved preferences before asking repetitive setup questions. Still let the user override them. In local Codex-like environments, run:
+
+```bash
+node scripts/preferences.mjs get
+```
+
+Use the returned values in the numbered setup prompt. This is the cross-conversation memory source; do not rely on prior chat context.
 
 Remember changed defaults automatically when the runtime supports local settings and the storage path is already approved. Ask only when storing preferences in a new user-visible location.
 
@@ -161,7 +167,21 @@ Setup preference memory is separate from design memory. Show setup defaults in t
 Suggested preference path for local agents:
 
 ```text
-CinephileWallpaper/settings/preferences.json
+~/.codex/skills/cinephile-wallpaper/preferences.json
+```
+
+Fallback/read compatibility paths:
+
+```text
+$CINEPHILE_PREFERENCES_PATH
+~/Documents/电影壁纸/cinephile_preferences.json
+~/Documents/CinephileWallpaper/settings/preferences.json
+```
+
+When the user chooses to remember defaults, save them with:
+
+```bash
+node scripts/preferences.mjs save --size 3456x2234 --output-dir "/absolute/output" --text-variant with_text --generation-mode agent_image_tool
 ```
 
 If no persistent storage is available, explain briefly that defaults cannot be remembered in this agent, then continue normally.

@@ -32,21 +32,23 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 ## Workflow
 
 1. Read `references/workflow.md` for the guided flow, setup prompt, image-reference gate, preference memory, output directory, text variants, and low-token final response.
-2. Confirm the work identity. If ambiguous, ask a concise clarification. If already provided, move to base settings.
-3. Ask the one-turn base settings. It must include only size/device, output folder, text variant, generation mode, and whether to remember defaults.
-4. After base settings are answered, ask the separate image-reference/design-request gate. Do not merge it with base settings.
-5. Only after both gates are complete, research the work enough to verify identity, tone, core characters, props, motifs, and recognition anchors.
-6. If no user-specified style exists, run `scripts/draw-style.mjs` before work interpretation affects style. Use the returned style exactly; work content may shape elements and metaphor, not style choice.
-7. Run `scripts/draw-density.mjs` after identifying the work profile, then build a concise visual brief using the relevant reference files listed below.
-8. Route generation through an image model when available; otherwise return one unified copyable prompt. Never substitute HTML for image generation.
-9. Save output image(s), compact prompt package, research notes, and manifest. Follow `references/output-schema.md`.
-10. Final response is poster-first: show/link the image path(s) and one short status line. Do not paste research, visual brief, manifest, or prompt unless requested or prompt-only mode is used.
+2. Before asking setup, load cross-conversation defaults with `scripts/preferences.mjs get` when local script execution is available.
+3. Confirm the work identity. If ambiguous, ask a concise clarification. If already provided, move to base settings.
+4. Ask the one-turn base settings. It must include only size/device, output folder, text variant, generation mode, and whether to remember defaults.
+5. After base settings are answered, ask the separate image-reference/design-request gate. Do not merge it with base settings.
+6. Only after both gates are complete, research the work enough to verify identity, tone, core characters, props, motifs, and recognition anchors.
+7. If no user-specified style exists, run `scripts/draw-style.mjs` before work interpretation affects style. Use the returned style exactly; work content may shape elements and metaphor, not style choice.
+8. Run `scripts/draw-density.mjs` after identifying the work profile, then build a concise visual brief using the relevant reference files listed below.
+9. Route generation through an image model when available; otherwise return one unified copyable prompt. Never substitute HTML for image generation.
+10. Save output image(s), compact prompt package, research notes, and manifest. Follow `references/output-schema.md`.
+11. Final response is poster-first: show/link the image path(s) and one short status line. Do not paste research, visual brief, manifest, or prompt unless requested or prompt-only mode is used.
 
 ## Non-Negotiables
 
 - Auto-detect interaction language; honor explicit output language.
 - Ask only the two mandatory setup turns before research/generation.
 - Remember defaults for size/device, output folder, text variant, and generation mode when the user asks or the runtime supports it.
+- Cross-conversation defaults must be loaded from persistent JSON before setup, not inferred from chat history.
 - Normalize saved defaults before using them; never display or save `中英双语`/`bilingual` as a text variant.
 - Remember reusable user design ideas, custom styles, typography preferences, and avoid-lists when the user asks to save them.
 - In the base-settings prompt, the text-variant question is only about output variants: with text, no text, or both. Never rewrite it as a language choice such as "Chinese-English bilingual" or any fixed language pair.

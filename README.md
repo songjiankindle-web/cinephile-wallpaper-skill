@@ -35,6 +35,7 @@ Current v1.6 behavior:
 - no shortcut generation: when the initial request already includes a film title, the skill must still ask the numbered setup and image-reference/design-request gate before research or generation;
 - fixed two-step guidance: ask base settings first, then ask image references/design requirements in a separate assistant turn; do not merge them;
 - numbered one-turn setup with default memory for size, output folder, text mode, and generation mode;
+- cross-conversation defaults: `scripts/preferences.mjs get` loads persistent setup defaults before the setup round, preferring `~/.codex/skills/cinephile-wallpaper/preferences.json` and remaining compatible with older output-folder preference files;
 - text-mode setup is fixed to "with text / no text / both"; it must never be rewritten as Chinese-English bilingual or any fixed language pair;
 - saved setup defaults are normalized before use, so legacy `中英双语` / `bilingual` text-mode values migrate to `with_text` and display as "带文字";
 - LEGO-like or other branded material requests are translated into generic interlocking-plastic-brick art direction before image prompting, avoiding brand logos and official marks;

@@ -73,6 +73,8 @@
 
    读取默认设置时必须先做规范化。文字版本默认值只能保存为 `with_text`、`no_text`、`both`。历史偏好文件里的“中英双语”“双语”“bilingual”等旧值只能作为输入别名迁移为 `with_text`，展示给用户时必须显示为“带文字”，不得继续保存或播报为“中英双语”。
 
+   默认设置必须跨对话持久化，不能只依赖当前聊天上下文。Codex 本地环境中，skill 每次进入第一轮基础设置前都要运行 `scripts/preferences.mjs get` 读取偏好；保存默认设置时运行 `scripts/preferences.mjs save ...`。优先路径为 `~/.codex/skills/cinephile-wallpaper/preferences.json`，并兼容 `~/Documents/电影壁纸/cinephile_preferences.json`、`~/Documents/CinephileWallpaper/settings/preferences.json` 等旧路径。
+
 3. 目标尺寸  
    支持：
    - 明确尺寸，如 `3840x2160`；
