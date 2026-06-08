@@ -22,9 +22,9 @@ For Codex-style skills:
 
 ## Version
 
-v1.6 stable release.
+v1.61 stable release.
 
-Current v1.6 behavior:
+Current v1.61 behavior:
 
 - lighter `SKILL.md`: the main skill body is reduced from 220 lines to about 93 lines, while detailed rules stay in references and are loaded only when needed;
 - design memory: learn and remember reusable user design ideas, custom art styles outside the built-in lanes, typography preferences, and avoid-lists when the user asks to save them;
@@ -39,6 +39,7 @@ Current v1.6 behavior:
 - text-mode setup is fixed to "with text / no text / both"; it must never be rewritten as Chinese-English bilingual or any fixed language pair;
 - saved setup defaults are normalized before use, so legacy `中英双语` / `bilingual` text-mode values migrate to `with_text` and display as "带文字";
 - LEGO-like or other branded material requests are translated into generic interlocking-plastic-brick art direction before image prompting, avoiding brand logos and official marks;
+- installation art style lane with site-specific spatial installations, immersive light environments, found-object sculptural installations, and suspended architectural interventions;
 - randomized `style_lane` and `style_variant` selection unless the user specifies a style;
 - style selection is decoupled from film content: draw the style first with the weighted router, then bridge the film into that style; do not choose or explain style as "suitable for the film";
 - random style selection now uses `cinephile-wallpaper/scripts/draw-style.mjs`, a film-input-free draw script that records random source, rolls, effective weights, and `film_inputs_used_for_style: false`;
@@ -69,6 +70,7 @@ Version archive:
 - `v1.03`: stable release carrying forward two-step guidance, independent style draw, identity-only references, strong character stylization, and broad poster-request trigger metadata.
 - `v1.04`: stable release keeping v1.03 behavior while making the main skill more compact and token-efficient.
 - `v1.5`: stable release adding design memory and custom style memory.
-- `v1.6`: current stable release adding scripted visual-density draw with a stronger minimal baseline and high-density recent-run correction.
+- `v1.6`: stable release adding scripted visual-density draw with a stronger minimal baseline and high-density recent-run correction.
+- `v1.61`: current stable release adding the `installation_art` style lane only.
 
-See `docs/迷影桌面 PRD v1.6.md` for the product spec.
+See `docs/迷影桌面 PRD v1.61.md` for the product spec.

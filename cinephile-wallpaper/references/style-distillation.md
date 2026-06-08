@@ -44,6 +44,7 @@ Use these as ingredients, not labels:
 - **Bauhaus/Swiss modernist system**: grid discipline, typography-safe geometry, primary forms, rational rhythm.
 - **Op art/kinetic visual field**: optical vibration, repetition, warped grids, perception as subject.
 - **Arte povera/material poster**: humble material texture, dust, cloth, metal, rope, paper, ash, earth.
+- **Installation art poster**: site-specific spatial intervention, suspended objects, sculptural arrangement, immersive light, viewer-scale voids, and gallery-space tension.
 - **Neo-expressionist figure**: raw mark-making, distorted body, psychological color, aggressive surface.
 - **Conceptual art poster**: idea-first image, sparse objects, diagram logic, negative space, dry tension.
 - **Ukiyo-e transposition**: flat planes, elegant contour, patterned fabric, seasonal atmosphere, theatrical framing.
@@ -88,6 +89,7 @@ Avoid safe illustration as the default. When an output stays conventional, escal
 - conceptual art;
 - neo-expressionism;
 - arte povera;
+- installation art;
 - brutalist graphic design;
 - postmodern collage;
 - vaporwave or digital glitch when justified.
@@ -207,6 +209,7 @@ The skill was producing too few visibly classic fine-art styles. Unless the user
   "gongbi_miniature": 4,
   "social_mural_realism": 3,
   "material_arte_povera": 2,
+  "installation_art": 2,
   "textile_tapestry_map": 1,
   "optical_digital_signal": 1,
   "real_object_still_life": 0
@@ -230,17 +233,18 @@ Choose one lane:
 5. **conceptual_dada_surreal**: Dada, surrealism, conceptual displacement, impossible objects, dry absurdity.
 6. **optical_digital_signal**: op art, kinetic grids, CRT, VHS, datamosh, cybernetic diagrams, signal noise.
 7. **material_arte_povera**: ash, cloth, metal, paper, rope, dust, found-material assemblage, ritual object.
-8. **east_asian_ink**: Chinese ink wash, literati painting, splashed ink, Zen ink, nihonga, empty space, brush rhythm, mist and paper grain.
-9. **gongbi_miniature**: Chinese gongbi, Persian/Indian miniature, precise line, mineral color, dense symbolic detail.
-10. **ukiyo_e_flatworld**: ukiyo-e, flat planes, patterned fabric, seasonal framing, theatrical contour.
-11. **medieval_icon_glass**: illuminated manuscript, Byzantine icon, Gothic stained glass, gold ground, sacred flat space.
-12. **renaissance_baroque_allegory**: fresco, classical allegory, Baroque light, staged human drama, symbolic anatomy.
-13. **social_mural_realism**: Russian realist gravity, Mexican muralism, Soviet poster force, public historical drama.
-14. **print_process**: woodcut, linocut, etching, lithograph, risograph, screen print, tactile ink limits.
-15. **textile_tapestry_map**: tapestry, embroidery, woven grids, map/diagram as image structure.
-16. **impressionist_light_field**: impressionism, post-impressionism, pointillism, broken color, plein-air light logic, atmospheric brushwork.
-17. **minimalist_reduction**: minimalism, hard-edge painting, sparse geometry, one or two charged elements, disciplined emptiness, quiet scale tension.
-18. **real_object_still_life**: realistic/real-world object still life, exact film prop materiality, product-photography clarity, tactile surfaces, controlled light, no visible faces.
+8. **installation_art**: site-specific spatial intervention, suspended sculptural forms, immersive light/shadow environment, architectural intervention, found-object arrangement, viewer-scale void.
+9. **east_asian_ink**: Chinese ink wash, literati painting, splashed ink, Zen ink, nihonga, empty space, brush rhythm, mist and paper grain.
+10. **gongbi_miniature**: Chinese gongbi, Persian/Indian miniature, precise line, mineral color, dense symbolic detail.
+11. **ukiyo_e_flatworld**: ukiyo-e, flat planes, patterned fabric, seasonal framing, theatrical contour.
+12. **medieval_icon_glass**: illuminated manuscript, Byzantine icon, Gothic stained glass, gold ground, sacred flat space.
+13. **renaissance_baroque_allegory**: fresco, classical allegory, Baroque light, staged human drama, symbolic anatomy.
+14. **social_mural_realism**: Russian realist gravity, Mexican muralism, Soviet poster force, public historical drama.
+15. **print_process**: woodcut, linocut, etching, lithograph, risograph, screen print, tactile ink limits.
+16. **textile_tapestry_map**: tapestry, embroidery, woven grids, map/diagram as image structure.
+17. **impressionist_light_field**: impressionism, post-impressionism, pointillism, broken color, plein-air light logic, atmospheric brushwork.
+18. **minimalist_reduction**: minimalism, hard-edge painting, sparse geometry, one or two charged elements, disciplined emptiness, quiet scale tension.
+19. **real_object_still_life**: realistic/real-world object still life, exact film prop materiality, product-photography clarity, tactile surfaces, controlled light, no visible faces.
 
 ## Style Variant Pool
 
@@ -253,6 +257,7 @@ After drawing a lane, draw or choose one specific variant from that lane. Put th
 - `conceptual_dada_surreal`: Magritte-like conceptual displacement described as impossible object logic; Dada photomontage; absurd scale; dry museum-installation metaphor; symbolic object substitution.
 - `optical_digital_signal`: op-art vibration; CRT scanlines; VHS ghosting; datamosh block field; cybernetic diagram.
 - `material_arte_povera`: ash drawing; cloth/rope assemblage; rusted metal and paper; earth pigment; found-object altar.
+- `installation_art`: site-specific spatial installation; suspended-object constellation; immersive light chamber; architectural intervention; found-object sculptural environment.
 - `east_asian_ink`: Chinese ink wash landscape; literati blankness and brush rhythm; splashed-ink abstraction; Zen ink economy; nihonga mineral haze.
 - `gongbi_miniature`: Chinese gongbi line and mineral color; Persian miniature architecture; Indian miniature color fields; dense symbolic border; jewel-like flat space.
 - `ukiyo_e_flatworld`: ukiyo-e theatrical portrait; landscape cartouche; patterned fabric planes; seasonal weather; flattened waves/clouds.

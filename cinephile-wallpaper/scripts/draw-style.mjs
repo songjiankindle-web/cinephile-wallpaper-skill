@@ -24,6 +24,7 @@ const weights = {
   gongbi_miniature: 4,
   social_mural_realism: 3,
   material_arte_povera: 2,
+  installation_art: 2,
   textile_tapestry_map: 1,
   optical_digital_signal: 1,
   real_object_still_life: 0
@@ -119,6 +120,12 @@ const variants = {
     "found-material assemblage",
     "worn paper rope earth texture",
     "humble material shrine"
+  ],
+  installation_art: [
+    "site-specific spatial installation",
+    "immersive light and shadow environment",
+    "found-object sculptural installation",
+    "architectural intervention with suspended forms"
   ],
   textile_tapestry_map: [
     "woven tapestry scene logic",
