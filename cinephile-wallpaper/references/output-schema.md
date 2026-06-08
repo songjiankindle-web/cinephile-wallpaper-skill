@@ -143,8 +143,15 @@ Write one manifest per generated wallpaper:
   },
   "generation_fallback": {
     "image_tool_refusals": [],
+    "image_tool_errors": [],
+    "error_category": "none | server_error | rate_limited | auth_or_quota | prompt_too_large | safety_refusal | unknown_error",
+    "provider": "",
+    "attempt_count": 0,
+    "retry_strategy": "none | same_prompt_retry | compact_prompt_retry | delayed_retry | stopped_no_retry",
+    "last_error_message": "",
     "safe_rewrite_attempted": false,
     "stopped_after_second_refusal": false,
+    "stopped_after_server_retries": false,
     "delivered_variant": "with_text | no_text | abstract_no_text | prompt_only",
     "blocked_variants": []
   },

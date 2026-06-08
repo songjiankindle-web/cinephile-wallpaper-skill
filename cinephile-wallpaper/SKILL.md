@@ -65,6 +65,7 @@ The base-settings prompt and the image-reference/design-request prompt are two s
 - Do not expose internal command counts, sandbox/cache failures, or repeated image-refusal retries unless the user asks for debugging details.
 - If current screen resolution cannot be concretely detected, use a saved confirmed default or ask; do not infer from previous runs.
 - If an image tool refuses a title/character/text variant twice, stop retrying that variant and fall back honestly.
+- Classify image-generation failures before fallback: server/transient errors are not refusals, not copyright blocks, and not user-consent requests for CLI/API.
 - For branded material styles such as LEGO-like bricks, use generic material language in image prompts and avoid brand logos or official marks.
 
 ## Quality Bar

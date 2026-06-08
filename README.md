@@ -50,6 +50,7 @@ Current v1.61 behavior:
 - script history cache defaults to a writable working-directory cache instead of the installed skill directory; `CINEPHILE_CACHE_DIR` and explicit `--history` are supported;
 - current-screen detection cannot invent dimensions from old runs when no concrete pixel size is exposed;
 - image-tool refusals are capped: one safe rewrite, then honest fallback to no-text abstract homage or prompt-only for the blocked variant;
+- image-tool server errors are classified separately from safety refusals, retried with prompt compaction, and recorded in the manifest instead of being misreported as copyright/refusal or CLI/API consent issues;
 - real-object still-life lane for exact film props, with no recognizable faces;
 - intentional negative space and one-point-focus poster logic, without confusing it with dead blank title areas;
 - expanded classic art-history variants including impressionism, cubism, Chinese ink, and minimalism;

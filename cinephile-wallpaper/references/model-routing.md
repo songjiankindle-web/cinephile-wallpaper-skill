@@ -79,6 +79,35 @@ If the image tool refuses a request involving a known title, franchise, characte
 
 Do not expose internal trial-and-error narration such as "first attempt failed, second attempt failed" unless the user asks for debugging details.
 
+## Image Tool Server Errors
+
+Treat provider/server failures separately from safety refusals.
+
+Classify image-generation failures as:
+
+- `server_error`: 5xx errors, service unavailable, overloaded, timeout, transport reset, TLS/DNS failure, empty tool response, or generic "server exception";
+- `rate_limited`: 429, quota throttling, too many requests, retry-after responses;
+- `auth_or_quota`: missing key, invalid key, insufficient credits, billing/quota exhausted;
+- `prompt_too_large`: prompt, attachment set, or image references exceed the provider limit;
+- `safety_refusal`: explicit safety/policy/copyright/trademark/likeness refusal;
+- `unknown_error`: no usable error detail.
+
+Rules:
+
+1. Do not call a `server_error` a refusal, copyright block, or content problem.
+2. For `server_error`, retry the same variant up to three total attempts with shorter prompt text and increasing delay when the runtime allows it. Preserve hard constraints; shorten decorative prose first.
+3. For `rate_limited`, wait if the provider gives a retry interval; otherwise stop after one retry and tell the user it is throttling.
+4. For `prompt_too_large`, compact the prompt and reduce nonessential metadata before retrying.
+5. For `auth_or_quota`, stop and ask the user to fix credentials/quota or choose prompt-only.
+6. Only ask the user to switch to CLI/API/external provider when they selected that route, the current provider is unavailable after retries, or credentials are missing. Do not say user consent is required for CLI/API merely because the built-in image tool had a transient server error.
+7. Always save a failure manifest or run record with `error_category`, provider/tool name, attempt count, retry action, and delivered fallback. If no image was created, final output may be prompt-only, but it must say image generation failed due to provider/server availability.
+
+User-facing language for unresolved server errors should be concise:
+
+```text
+图像服务当前返回服务端异常，不是版权拒绝，也不是提示词内容被拦截。我已重试并保存提示词；可以稍后重试，或切换到你配置的外部生图模型。
+```
+
 ## Brand And Franchise Risk Reduction
 
 When a user asks for a branded toy/material style such as LEGO-like bricks, do not put the protected brand name, brand logo, official packaging, or trademarked marks into the image prompt. Translate it to generic art direction:

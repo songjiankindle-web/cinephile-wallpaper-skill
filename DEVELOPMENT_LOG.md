@@ -160,3 +160,4 @@ npm run dev
 ## v1.61
 
 - 仅新增 `installation_art` 装置艺术风格路线及四个变体；未修改交互流程、默认设置、密度规则或其他功能。
+- v1.61 追加热修：补充图像生成错误分类。`server_error`/服务端异常与 `safety_refusal` 分离；服务端异常应自动退避重试和压缩提示词，失败时保存 manifest，不再误导用户说需要同意切换 CLI/API。

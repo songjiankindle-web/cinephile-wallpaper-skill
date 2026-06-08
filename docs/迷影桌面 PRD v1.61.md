@@ -1001,6 +1001,7 @@ Manifest 必须记录：
 ### v1.61
 
 - 新增 `installation_art` 装置艺术风格路线，包含场域特定空间装置、沉浸式光影环境、现成物雕塑装置和悬挂形态建筑介入。
+- v1.61 追加热修：生图失败必须区分 `server_error`、`rate_limited`、`auth_or_quota`、`prompt_too_large`、`safety_refusal` 和 `unknown_error`。服务端异常不等于版权拒绝，也不等于需要用户同意切换 CLI/API；应自动退避重试、压缩提示词并保存失败 manifest。
 
 ## 8. 非目标
 
